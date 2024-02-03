@@ -1,0 +1,1246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>IntelliJ IDEA 的配置及使用 | 东北的冬DONG</title><meta name="author" content="DONG"><meta name="copyright" content="DONG"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、IntelliJ IDEA 的安装与激活 1.1 IntelliJ IDEA 的安装 （1）Windows （2）Ubuntu   1.2 IntelliJ IDEA 的激活   二、IntelliJ IDEA 的详细配置 2.1 进入设置界面 2.1.1 方式一 2.1.2 方式二   2.2 关闭 Intellij IDEA 自动更新 2.3 配置项目默认路径 2.4 创建项目 2.4.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IntelliJ IDEA 的配置及使用">
+<meta property="og:url" content="http://example.com/idea/">
+<meta property="og:site_name" content="东北的冬DONG">
+<meta property="og:description" content="一、IntelliJ IDEA 的安装与激活 1.1 IntelliJ IDEA 的安装 （1）Windows （2）Ubuntu   1.2 IntelliJ IDEA 的激活   二、IntelliJ IDEA 的详细配置 2.1 进入设置界面 2.1.1 方式一 2.1.2 方式二   2.2 关闭 Intellij IDEA 自动更新 2.3 配置项目默认路径 2.4 创建项目 2.4.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg">
+<meta property="article:published_time" content="2024-01-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-03T07:39:29.054Z">
+<meta property="article:author" content="DONG">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="IDE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/config/favicon.png"><link rel="canonical" href="http://example.com/idea/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":30,"languages":{"author":"作者: DONG","link":"链接: ","source":"来源: 东北的冬DONG","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'IntelliJ IDEA 的配置及使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-03 15:39:29'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xindong2020/ButterflyEffects/footer/heart.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/config/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="东北的冬DONG"><span class="site-name">东北的冬DONG</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">IntelliJ IDEA 的配置及使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-09T16:00:00.000Z" title="发表于 2024-01-10 00:00:00">2024-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-02-03T07:39:29.054Z" title="更新于 2024-02-03 15:39:29">2024-02-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ide/">ide</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="IntelliJ IDEA 的配置及使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ul>
+<li><a href="#%E4%B8%80intellij-idea-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E6%BF%80%E6%B4%BB">一、IntelliJ IDEA 的安装与激活</a><ul>
+<li><a href="#11-intellij-idea-%E7%9A%84%E5%AE%89%E8%A3%85">1.1 IntelliJ IDEA 的安装</a><ul>
+<li><a href="#1windows">（1）Windows</a></li>
+<li><a href="#2ubuntu">（2）Ubuntu</a></li>
+</ul>
+</li>
+<li><a href="#12-intellij-idea-%E7%9A%84%E6%BF%80%E6%B4%BB">1.2 IntelliJ IDEA 的激活</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8Cintellij-idea-%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE">二、IntelliJ IDEA 的详细配置</a><ul>
+<li><a href="#21-%E8%BF%9B%E5%85%A5%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2">2.1 进入设置界面</a><ul>
+<li><a href="#211-%E6%96%B9%E5%BC%8F%E4%B8%80">2.1.1 方式一</a></li>
+<li><a href="#212-%E6%96%B9%E5%BC%8F%E4%BA%8C">2.1.2 方式二</a></li>
+</ul>
+</li>
+<li><a href="#22-%E5%85%B3%E9%97%AD-intellij-idea-%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0">2.2 关闭 Intellij IDEA 自动更新</a></li>
+<li><a href="#23-%E9%85%8D%E7%BD%AE%E9%A1%B9%E7%9B%AE%E9%BB%98%E8%AE%A4%E8%B7%AF%E5%BE%84">2.3 配置项目默认路径</a></li>
+<li><a href="#24-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">2.4 创建项目</a><ul>
+<li><a href="#241-%E6%96%B9%E5%BC%8F%E4%B8%80">2.4.1 方式一</a></li>
+<li><a href="#242-%E6%96%B9%E5%BC%8F%E4%BA%8C">2.4.2 方式二</a></li>
+</ul>
+</li>
+<li><a href="#25-%E9%85%8D%E7%BD%AE-jdk">2.5 配置 JDK</a></li>
+<li><a href="#26-%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E7%BC%96%E8%AF%91%E7%89%88%E6%9C%AC">2.6 统一编译器和编译版本</a></li>
+<li><a href="#27-%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98">2.7 设置主题</a><ul>
+<li><a href="#271-%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98">2.7.1 安装主题</a></li>
+<li><a href="#272-%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98">2.7.2 设置主题</a><ul>
+<li><a href="#1%E6%96%B9%E5%BC%8F%E4%B8%80">（1）方式一</a></li>
+<li><a href="#2%E6%96%B9%E5%BC%8F%E4%BA%8C">（2）方式二</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#28-%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93">2.8 设置字体</a><ul>
+<li><a href="#281-idea-%E7%95%8C%E9%9D%A2%E5%AD%97%E4%BD%93">2.8.1 IDEA 界面字体</a><ul>
+<li><a href="#1%E6%96%B9%E6%B3%95%E4%B8%80">（1）方法一</a></li>
+<li><a href="#2%E6%96%B9%E6%B3%95%E4%BA%8C">（2）方法二</a></li>
+</ul>
+</li>
+<li><a href="#282-%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E7%95%8C%E9%9D%A2%E5%AD%97%E4%BD%93">2.8.2 代码编辑界面字体</a></li>
+<li><a href="#283-ctrl--%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F">2.8.3 Ctrl + 鼠标滚轮修改字体大小</a></li>
+<li><a href="#284-%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%AD%97%E4%BD%93">2.8.4 控制台字体</a></li>
+</ul>
+</li>
+<li><a href="#29-%E8%A1%8C%E5%8F%B7%E5%92%8C%E6%96%B9%E6%B3%95%E5%88%86%E9%9A%94%E7%AC%A6">2.9 行号和方法分隔符</a></li>
+<li><a href="#210-%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8C%B9%E9%85%8D">2.10 忽略大小写匹配</a></li>
+<li><a href="#211-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%8C%85">2.11 配置自动导包</a></li>
+<li><a href="#212-%E9%85%8D%E7%BD%AE%E7%BC%96%E7%A0%81">2.12 配置编码</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89intellij-idea-%E5%BF%AB%E6%8D%B7%E9%94%AE">三、IntelliJ IDEA 快捷键</a><ul>
+<li><a href="#31-ctrl">3.1 Ctrl</a></li>
+<li><a href="#32-alt">3.2 Alt</a></li>
+<li><a href="#33-shift">3.3 Shift</a></li>
+<li><a href="#34-ctrl--alt">3.4 Ctrl + Alt</a></li>
+<li><a href="#35-ctrl--shift">3.5 Ctrl + Shift</a></li>
+<li><a href="#36-alt--shift">3.6 Alt + Shift</a></li>
+<li><a href="#37-ctrl--shift--alt">3.7 Ctrl + Shift + Alt</a></li>
+<li><a href="#38-%E5%85%B6%E4%BB%96">3.8 其他</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89intellij-idea-%E7%9A%84%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C">三、IntelliJ IDEA 的其他操作</a><ul>
+<li><a href="#31-%E5%88%A0%E9%99%A4%E7%B1%BB%E6%96%87%E4%BB%B6">3.1 删除类文件</a></li>
+<li><a href="#32-%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%90%8D%E7%A7%B0">3.2 修改类名称</a></li>
+<li><a href="#33-%E4%BF%AE%E6%94%B9%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0">3.3 修改模块名称</a></li>
+<li><a href="#34-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97">3.4 导入模块</a></li>
+<li><a href="#35-%E5%88%A0%E9%99%A4%E6%A8%A1%E5%9D%97">3.5 删除模块</a><ul>
+<li><a href="#351-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A7%BB%E9%99%A4">3.5.1 项目中移除</a></li>
+<li><a href="#352-%E5%BD%BB%E5%BA%95%E5%88%A0%E9%99%A4">3.5.2 彻底删除</a></li>
+</ul>
+</li>
+<li><a href="#36-%E6%89%93%E5%BC%80%E5%B7%A5%E7%A8%8B">3.6 打开工程</a></li>
+<li><a href="#37-%E5%85%B3%E9%97%AD%E5%B7%A5%E7%A8%8B">3.7 关闭工程</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="一、IntelliJ-IDEA-的安装与激活"><a href="#一、IntelliJ-IDEA-的安装与激活" class="headerlink" title="一、IntelliJ IDEA 的安装与激活"></a>一、IntelliJ IDEA 的安装与激活</h2><h3 id="1-1-IntelliJ-IDEA-的安装"><a href="#1-1-IntelliJ-IDEA-的安装" class="headerlink" title="1.1 IntelliJ IDEA 的安装"></a>1.1 IntelliJ IDEA 的安装</h3><h4 id="（1）Windows"><a href="#（1）Windows" class="headerlink" title="（1）Windows"></a>（1）Windows</h4><ul>
+<li><p>官网：<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/other.html">https://www.jetbrains.com/idea/download/other.html</a> 下载 <code>Version 2021.3.3</code> 的 <code>2021.3.3 - Windows x64 (exe)</code> 版本。</p>
+</li>
+<li><p>双击安装：</p>
+</li>
+</ul>
+<h4 id="（2）Ubuntu"><a href="#（2）Ubuntu" class="headerlink" title="（2）Ubuntu"></a>（2）Ubuntu</h4><ul>
+<li><p>官网：<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/other.html">https://www.jetbrains.com/idea/download/other.html</a> 下载 <code>Version 2021.3.3</code> 的 <code>2021.3.3 - Linux x86_64 (tar.gz)</code> 版本。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/01.png" width=999/>
+</div>
+</li>
+<li><p>解压到指定文件夹：<code>sudo tar -zxvf ideaIU-2021.3.3.tar.gz -C /opt</code>，重命名解压后的文件夹为 <code>idea-IU</code>：<code>sudo mv /opt/idea-IU-213.7172.25/ /opt/idea-IU/</code>。</p>
+</li>
+<li><p>在 <code>Ubuntu 20.04</code> 的 <code>/usr/share/applications</code> 文件夹中创建 <code>idea.desktop</code> 文件：<code>sudo gedit /usr/share/applications/idea.desktop</code>，然后输入下列内容，其中 <code>Exec</code> 与 <code>icon</code> 内容根据实际情况填写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=IntelliJ IDEA</span><br><span class="line">Comment=IntelliJ IDEA</span><br><span class="line">Exec=<span class="string">&quot;/opt/idea-IU/bin/idea.sh&quot;</span> %f</span><br><span class="line">Icon=/opt/idea-IU/bin/idea.png</span><br><span class="line">Terminal=<span class="literal">false</span></span><br><span class="line">Type=Application</span><br><span class="line">Categories=Developer;IDE;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果想要在桌面生成快捷方式，只需在桌面创建 <code>idea.desktop</code> 文件：<code>gedit ~/Desktop/idea.desktop</code>，然后输入下列内容，其中 <code>Exec</code> 与 <code>icon</code> 内容根据实际情况填写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Name=IntelliJ IDEA</span><br><span class="line">Comment=IntelliJ IDEA</span><br><span class="line">Exec=<span class="string">&quot;/opt/idea-IU/bin/idea.sh&quot;</span> %f</span><br><span class="line">Icon=/opt/idea-IU/bin/idea.png</span><br><span class="line">Terminal=<span class="literal">false</span></span><br><span class="line">Type=Application</span><br><span class="line">Categories=Developer;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件 <code>idea.desktop</code> 上右键，选择 <code>Allow Launching</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-IntelliJ-IDEA-的激活"><a href="#1-2-IntelliJ-IDEA-的激活" class="headerlink" title="1.2 IntelliJ IDEA 的激活"></a>1.2 IntelliJ IDEA 的激活</h3><ul>
+<li><p>运行 <code>IntelliJ IDEA</code>，出现 <code>DATA SHARING</code> 页面，自愿选择发送与否。</p>
+</li>
+<li><p>先不导入之前的 <code>IntelliJ IDEA</code> 配置，点击 <code>OK</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/02.png" width=399/>
+</div>
+</li>
+<li><p>启动页面</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/03.png" width=399/>
+</div>
+</li>
+<li><p><code>Intellij IDEA</code> 运行成功后，会弹出下面的对话框，提示我们需要先登录 <code>JetBrains</code> 账户才能使用，这里我们先不管，先点击 <code>Exit</code> 退出，准备开始运行激活脚本。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/04.png" height=399/>
+</div>
+</li>
+<li><p>开始激活</p>
+<ul>
+<li><p>自行下载 <code>JetBrains  2022 最新全家桶激活（10.19）</code> 激活文件夹，然后解压。</p>
+  <div align=center>
+    <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/06.png" height=139/>
+  </div>
+</li>
+<li><p>将上图所示的激活文件夹 <code>方式3：永久激活补丁+脚本（适合最新版本，可显示到2025年）/jetbra</code> 复制电脑某个位置。</p>
+</li>
+<li><p>进入到 <code>jetbra</code> 中的 <code>scripts</code> 文件夹，运行脚本安装破解补丁。</p>
+<ul>
+<li><p><code>Windows</code> 系统，点击运行 <code>install-current-user.vbs</code> 脚本，为当前用户安装破解补丁。</p>
+</li>
+<li><p><code>Mac</code> &#x2F; <code>Linux</code> 系统，运行 <code>bash install.sh</code> 指令。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/05.png" height=32/>
+</div></li>
+</ul>
+</li>
+<li><p>启动 <code>Intellij IDEA</code>，选择 <code>Activation code</code>，填入激活码。</p>
+</li>
+<li><p>点击 <code>Activate</code> 进行激活。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/07.png" height=399/>
+</div></li>
+</ul>
+</li>
+</ul>
+<h2 id="二、IntelliJ-IDEA-的详细配置"><a href="#二、IntelliJ-IDEA-的详细配置" class="headerlink" title="二、IntelliJ IDEA 的详细配置"></a>二、IntelliJ IDEA 的详细配置</h2><h3 id="2-1-进入设置界面"><a href="#2-1-进入设置界面" class="headerlink" title="2.1 进入设置界面"></a>2.1 进入设置界面</h3><h4 id="2-1-1-方式一"><a href="#2-1-1-方式一" class="headerlink" title="2.1.1 方式一"></a>2.1.1 方式一</h4><ul>
+<li><p>欢迎界面下，点击 <code>Customize</code> $\rightarrow$ <code>All settings...</code> 进入设置界面。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/08.png" width=599/>
+</div></li>
+</ul>
+<h4 id="2-1-2-方式二"><a href="#2-1-2-方式二" class="headerlink" title="2.1.2 方式二"></a>2.1.2 方式二</h4><ul>
+<li>项目界面下，点击菜单 <code>File</code> $\rightarrow$ <code>Settings...</code> 进入设置界面。</li>
+</ul>
+<h3 id="2-2-关闭-Intellij-IDEA-自动更新"><a href="#2-2-关闭-Intellij-IDEA-自动更新" class="headerlink" title="2.2 关闭 Intellij IDEA 自动更新"></a>2.2 关闭 Intellij IDEA 自动更新</h3><ul>
+<li><p>进入设置界面 $\rightarrow$ <code>Appearance &amp; Behavior</code> $\rightarrow$ <code>System Settings</code> $\rightarrow$ <code>Updates</code>，取消 <code>Check IDE updates for:</code> 和 <code>Show What&#39;s New in the editor after an IDE update</code> 的勾选 $\rightarrow$ <code>OK</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/10.png" width=699/>
+</div></li>
+</ul>
+<h3 id="2-3-配置项目默认路径"><a href="#2-3-配置项目默认路径" class="headerlink" title="2.3 配置项目默认路径"></a>2.3 配置项目默认路径</h3><ul>
+<li><p>进入设置界面 $\rightarrow$ <code>Appearance &amp; Behavior</code> $\rightarrow$ <code>System Settings</code> $\rightarrow$ <code>Default project directory</code> 选择项目默认路径。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/11.png" width=699/>
+</div></li>
+</ul>
+<h3 id="2-4-创建项目"><a href="#2-4-创建项目" class="headerlink" title="2.4 创建项目"></a>2.4 创建项目</h3><h4 id="2-4-1-方式一"><a href="#2-4-1-方式一" class="headerlink" title="2.4.1 方式一"></a>2.4.1 方式一</h4><ul>
+<li><p><strong>欢迎界面</strong> 下，点击 <code>Projects</code> $\rightarrow$ <code>New Project</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/12.png" width=699/>
+</div>
+</li>
+<li><p>创建 <code>Empty Project</code> 空项目 <code>JavaSE</code> $\rightarrow$ <code>Finish</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/13.png" width=699/>
+</div>
+</li>
+<li><p>创建 <code>Module</code>：项目上右键 $\rightarrow$ <code>New</code> $\rightarrow$ <code>Module...</code></p>
+<ul>
+<li><p>设置 <code>JDK</code>：在新窗口中选择 <code>Java</code> $\rightarrow$ <code>Module SDK</code> $\rightarrow$ <code>Add JDK...</code>，选择 <code>JDK</code> 所在路径 $\rightarrow$ <code>OK</code> $\rightarrow$ <code>Next</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/14.jpg" width=699/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/15.jpg" width=699/>
+</div>
+</li>
+<li><p>在新窗口中设置 <code>Module name</code> $\rightarrow$ <code>Finish</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/16.png" width=699/>
+</div></li>
+</ul>
+</li>
+<li><p>创建包 <code>Package</code>：在新建 <code>Module</code> 的 <code>src</code> 文件夹上右键 $\rightarrow$ <code>New</code> $\rightarrow$ <code>Package</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/17.png" width=299/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/18.png" width=299/>
+</div>
+</li>
+<li><p>创建类 <code>Class</code>：在新建的包 <code>Package</code> 上右键 $\rightarrow$ <code>New</code> $\rightarrow$ <code>Java Class</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/19.png" width=299/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/20.png" width=299/>
+</div></li>
+</ul>
+<h4 id="2-4-2-方式二"><a href="#2-4-2-方式二" class="headerlink" title="2.4.2 方式二"></a>2.4.2 方式二</h4><ul>
+<li><p><strong>项目界面</strong> 下，点击菜单 <code>File</code> $\rightarrow$ <code>New</code> $\rightarrow$ <code>Projects...</code>，然后按照上述步骤进行创建。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/21.png" height=27/>
+</div></li>
+</ul>
+<h3 id="2-5-配置-JDK"><a href="#2-5-配置-JDK" class="headerlink" title="2.5 配置 JDK"></a>2.5 配置 JDK</h3><ul>
+<li><p><code>File</code> $\rightarrow$ <code>Project Structure...</code></p>
+</li>
+<li><p><code>Project</code> $\rightarrow$ <code>SDK</code> $\rightarrow$ 选择环境变量中配置好的<code>JDK</code> $\rightarrow$ <code>Apply</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/22.png" width=666/>
+</div></li>
+</ul>
+<h3 id="2-6-统一编译器和编译版本"><a href="#2-6-统一编译器和编译版本" class="headerlink" title="2.6 统一编译器和编译版本"></a>2.6 统一编译器和编译版本</h3><ul>
+<li><p>进入 <strong>设置界面</strong> $\rightarrow$ <code>Build, Execution, Deployment</code> $\rightarrow$ <code>Compiler</code> $\rightarrow$ <code>Java Compiler</code> $\rightarrow$ <code>Use Compiler:</code> 选择 <code>javac</code> $\rightarrow$ <code>Project bytecode version:</code> 根据当前项目使用的 <code>JDK</code> 版本进行统一 $\rightarrow$ <code>Apply</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/23.png" width=666/>
+</div></li>
+</ul>
+<h3 id="2-7-设置主题"><a href="#2-7-设置主题" class="headerlink" title="2.7 设置主题"></a>2.7 设置主题</h3><h4 id="2-7-1-安装主题"><a href="#2-7-1-安装主题" class="headerlink" title="2.7.1 安装主题"></a>2.7.1 安装主题</h4><ul>
+<li><p>下载网址：<a target="_blank" rel="noopener" href="http://www.themesmap.com/theme.html?t=down">http://www.themesmap.com/theme.html?t=down</a></p>
+</li>
+<li><p>下载主题：<a target="_blank" rel="noopener" href="http://www.themesmap.com/details.html?id=56a%60F4%60d27333ecc1800c392b3">Relax Your Eyes Green</a></p>
+</li>
+<li><p>导入主题</p>
+<ul>
+<li><p>打开 <strong>设置界面</strong> $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>Color Scheme</code> $\rightarrow$ 齿轮设置 $\rightarrow$ <code>Import Scheme</code> $\rightarrow$ <code>Intellij IDEA color scheme(.icis) or settings(.jar)</code> $\rightarrow$ 选择 <code>Relax Your Eyes Green</code> 主题所在路径 $\rightarrow$ <code>OK</code> $\rightarrow$ <code>Apply</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/24.png" width=699/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/25.png" width=699/>
+</div></li>
+</ul>
+</li>
+</ul>
+<h4 id="2-7-2-设置主题"><a href="#2-7-2-设置主题" class="headerlink" title="2.7.2 设置主题"></a>2.7.2 设置主题</h4><h5 id="（1）方式一"><a href="#（1）方式一" class="headerlink" title="（1）方式一"></a>（1）方式一</h5><ul>
+<li><p>欢迎界面点击 <code>Customize</code> $\rightarrow$ <code>Color theme</code>，选择要设置的主题。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/26.png" width=699/>
+</div></li>
+</ul>
+<h5 id="（2）方式二"><a href="#（2）方式二" class="headerlink" title="（2）方式二"></a>（2）方式二</h5><ul>
+<li><p>进入设置界面 $\rightarrow$ <code>Appearance &amp; Behavior</code> $\rightarrow$ <code>Appearance</code> $\rightarrow$ <code>Theme</code>，选择要设置的主题。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/27.png" width=699/>
+</div></li>
+</ul>
+<h3 id="2-8-设置字体"><a href="#2-8-设置字体" class="headerlink" title="2.8 设置字体"></a>2.8 设置字体</h3><h4 id="2-8-1-IDEA-界面字体"><a href="#2-8-1-IDEA-界面字体" class="headerlink" title="2.8.1 IDEA 界面字体"></a>2.8.1 IDEA 界面字体</h4><h5 id="（1）方法一"><a href="#（1）方法一" class="headerlink" title="（1）方法一"></a>（1）方法一</h5><ul>
+<li><p>在欢迎界面下，点击 <code>Customize</code> $\rightarrow$ 在 <code>Accessibility</code> 的 <code>IDE font</code> 中进行设置 <code>IDEA</code> 界面字体大小。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/fandong93/PictureBed/IDE/01/28.png" width=699/>
+</div></li>
+</ul>
+<h5 id="（2）方法二"><a href="#（2）方法二" class="headerlink" title="（2）方法二"></a>（2）方法二</h5><ul>
+<li>进入设置界面 $\rightarrow$ <code>Appearance &amp; Behavior</code> $\rightarrow$ <code>Appearance</code> $\rightarrow$ 设置 <code>IDEA</code> 界面字体大小。</li>
+</ul>
+<h4 id="2-8-2-代码编辑界面字体"><a href="#2-8-2-代码编辑界面字体" class="headerlink" title="2.8.2 代码编辑界面字体"></a>2.8.2 代码编辑界面字体</h4><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>Font</code> $\rightarrow$ 设置代码编辑界面字体大小及行距。</li>
+</ul>
+<h4 id="2-8-3-Ctrl-鼠标滚轮修改字体大小"><a href="#2-8-3-Ctrl-鼠标滚轮修改字体大小" class="headerlink" title="2.8.3 Ctrl + 鼠标滚轮修改字体大小"></a>2.8.3 Ctrl + 鼠标滚轮修改字体大小</h4><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>General</code> $\rightarrow$ 勾选 <code>Change font size with Ctrl+Mouse Wheel in:</code> $\rightarrow$ 自选 <code>Active editor</code> 或 <code>All editors</code></li>
+</ul>
+<h4 id="2-8-4-控制台字体"><a href="#2-8-4-控制台字体" class="headerlink" title="2.8.4 控制台字体"></a>2.8.4 控制台字体</h4><ul>
+<li>默认情况下无需调整，会跟随代码编辑界面使用一致的设置，如需自定义则可以进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>Color Scheme</code> $\rightarrow$ <code>Console Font</code> $\rightarrow$ 勾选 <code>Use console font instead of the default</code>，然后自定义控制台字体</li>
+</ul>
+<h3 id="2-9-行号和方法分隔符"><a href="#2-9-行号和方法分隔符" class="headerlink" title="2.9 行号和方法分隔符"></a>2.9 行号和方法分隔符</h3><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>General</code> $\rightarrow$ <code>Appearance</code> $\rightarrow$ 勾选 <code>Show line numbers</code> 显示行号，勾选 <code>Show method separators</code> 显示方法分隔符</li>
+</ul>
+<h3 id="2-10-忽略大小写匹配"><a href="#2-10-忽略大小写匹配" class="headerlink" title="2.10 忽略大小写匹配"></a>2.10 忽略大小写匹配</h3><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>General</code> $\rightarrow$ <code>Code Completion</code> $\rightarrow$ 取消勾选 <code>Match case</code></li>
+</ul>
+<h3 id="2-11-配置自动导包"><a href="#2-11-配置自动导包" class="headerlink" title="2.11 配置自动导包"></a>2.11 配置自动导包</h3><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>General</code> $\rightarrow$ <code>Auto Import</code> $\rightarrow$ <code>Insert imports on paste:</code> 选择 <code>Always</code> $\rightarrow$ 勾选 <code>Add unambiguous imports on the fly</code> 和 <code>Optimize imports on the fly</code></li>
+</ul>
+<h3 id="2-12-配置编码"><a href="#2-12-配置编码" class="headerlink" title="2.12 配置编码"></a>2.12 配置编码</h3><ul>
+<li>进入设置界面 $\rightarrow$ <code>Editor</code> $\rightarrow$ <code>File Encodings</code> $\rightarrow$ <code>Global Encodings:</code> 和 <code>Project Encodings:</code> 选择 <code>UTF-8</code> $\rightarrow$ <code>Default encoding for properties files:</code> 选择 <code>UTF-8</code> $\rightarrow$ 勾选 <code>Transparent native-to-ascll conversion</code> $\rightarrow$ <code>Create UTF-8 files:</code> 选择 <code>with NO BOM</code> $\rightarrow$ <code>Apply</code></li>
+</ul>
+<h2 id="三、IntelliJ-IDEA-快捷键"><a href="#三、IntelliJ-IDEA-快捷键" class="headerlink" title="三、IntelliJ IDEA 快捷键"></a>三、IntelliJ IDEA 快捷键</h2><h3 id="3-1-Ctrl"><a href="#3-1-Ctrl" class="headerlink" title="3.1 Ctrl"></a>3.1 Ctrl</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Ctrl</code> + <code>F</code></td>
+<td align="center">在当前文件进行文本查找（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>R</code></td>
+<td align="center">在当前文件进行文本替换（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Z</code></td>
+<td align="center">撤销（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>C</code></td>
+<td align="center">复制光标所在行 或 复制选择内容（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>D</code></td>
+<td align="center">复制光标所在行并插入到下一行 或 复制选择内容并插入到右侧（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>X</code></td>
+<td align="center">剪切光标所在行 或 剪切选择内容（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Y</code></td>
+<td align="center">删除光标所在行 或 删除选中的行（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>W</code></td>
+<td align="center">递进式选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展选中范围（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>E</code></td>
+<td align="center">显示最近打开的文件记录列表（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>N</code></td>
+<td align="center">根据输入的 类名 查找类文件（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>G</code></td>
+<td align="center">在当前文件跳转到指定行处</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>J</code></td>
+<td align="center">插入自定义动态代码模板 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>P</code></td>
+<td align="center">方法参数提示显示 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Q</code></td>
+<td align="center">光标所在的变量 &#x2F; 类名 &#x2F; 方法名等上面（也可以在提示补充的时候按），显示文档内容</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>U</code></td>
+<td align="center">前往当前光标所在的方法的父类的方法 &#x2F; 接口定义 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>B</code></td>
+<td align="center">进入光标所在的方法&#x2F;变量的接口或是定义处，等效于 Ctrl + 左键单击 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>K</code></td>
+<td align="center">版本控制 <strong>提交</strong> 项目，需要此项目有加入到版本控制才可用</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>T</code></td>
+<td align="center">版本控制 <strong>更新</strong> 项目，需要此项目有加入到版本控制才可用</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>H</code></td>
+<td align="center">显示当前类的层次结构</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>O</code></td>
+<td align="center">选择可重写的方法</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>I</code></td>
+<td align="center">选择可继承的方法</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>+</code></td>
+<td align="center">展开代码</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>-</code></td>
+<td align="center">折叠代码</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>/</code></td>
+<td align="center">注释光标所在行代码，会根据当前不同文件类型使用不同的注释符号 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>[</code></td>
+<td align="center">移动光标到当前所在代码的花括号开始位置</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>]</code></td>
+<td align="center">移动光标到当前所在代码的花括号结束位置</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F1</code></td>
+<td align="center">在光标所在的错误代码处显示错误信息 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F3</code></td>
+<td align="center">调转到所选中的词的下一个引用位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F4</code></td>
+<td align="center">关闭当前编辑文件</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F8</code></td>
+<td align="center">在 Debug 模式下，设置光标当前行为断点，如果当前已经是断点则去掉断点</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F9</code></td>
+<td align="center">执行 Make Project 操作</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F11</code></td>
+<td align="center">选中文件 &#x2F; 文件夹，使用助记符设定 &#x2F; 取消书签 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>F12</code></td>
+<td align="center">弹出当前文件结构层，可以在弹出的层上直接输入，进行筛选</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Tab</code></td>
+<td align="center">编辑窗口切换，如果在切换的过程又加按上delete，则是关闭对应选中的窗口</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>End</code></td>
+<td align="center">跳到文件尾</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Home</code></td>
+<td align="center">跳到文件头</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Space</code></td>
+<td align="center">基础代码补全，默认在 Windows 系统上被输入法占用，需要进行修改，建议修改为 Ctrl + 逗号 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Delete</code></td>
+<td align="center">删除光标后面的单词或是中文句 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>BackSpace</code></td>
+<td align="center">删除光标前面的单词或是中文句 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>1,2,3...9</code></td>
+<td align="center">定位到对应数值的书签位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>左键单击</code></td>
+<td align="center">在打开的文件标题上，弹出该文件路径 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>光标定位</code></td>
+<td align="center">按 Ctrl 不要松开，会显示光标所在的类信息摘要</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + $\leftarrow$</td>
+<td align="center">光标跳转到当前单词 &#x2F; 中文句的左侧开头位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + $\rightarrow$</td>
+<td align="center">光标跳转到当前单词 &#x2F; 中文句的右侧开头位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + $\uparrow$</td>
+<td align="center">等效于鼠标滚轮向前效果 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + $\downarrow$</td>
+<td align="center">等效于鼠标滚轮向后效果 （<strong>必备</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-Alt"><a href="#3-2-Alt" class="headerlink" title="3.2 Alt"></a>3.2 Alt</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Alt</code> + &#96;</td>
+<td align="center">显示版本控制常用操作菜单弹出层（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + Q</td>
+<td align="center">弹出一个提示，显示当前类的声明 &#x2F; 上下文信息</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>F1</code></td>
+<td align="center">显示当前文件选择目标弹出层，弹出层中有很多目标可以进行选择 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>F2</code></td>
+<td align="center">对于前面页面，显示各类浏览器打开目标选择弹出层</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>F3</code></td>
+<td align="center">选中文本，逐个往下查找相同文本，并高亮显示</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>F7</code></td>
+<td align="center">查找光标所在的方法 &#x2F; 变量 &#x2F; 类被调用的地方</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>F8</code></td>
+<td align="center">在 Debug 的状态下，选中对象，弹出可输入计算表达式调试框，查看该输入内容的调试结果</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + Home</td>
+<td align="center">定位 &#x2F; 显示到当前文件的 Navigation Bar</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + Enter</td>
+<td align="center">IntelliJ IDEA 根据光标所在问题，提供快速修复选择，光标放在的位置不同提示的结果也不同 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + Insert</td>
+<td align="center">代码自动生成，如生成对象的 set &#x2F; get 方法，构造函数，toString() 等 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + $\leftarrow$</td>
+<td align="center">切换当前已打开的窗口中的子视图，比如Debug窗口中有Output、Debugger等子视图，用此快捷键就可以在子视图中切换 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + $\rightarrow$</td>
+<td align="center">按切换当前已打开的窗口中的子视图，比如Debug窗口中有Output、Debugger等子视图，用此快捷键就可以在子视图中切换 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + $\uparrow$</td>
+<td align="center">当前光标跳转到当前文件的前一个方法名位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + $\downarrow$</td>
+<td align="center">当前光标跳转到当前文件的后一个方法名位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>1,2,3...9</code></td>
+<td align="center">显示对应数值的选项卡，其中 1 是 Project 用得最多 （<strong>必备</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-Shift"><a href="#3-3-Shift" class="headerlink" title="3.3 Shift"></a>3.3 Shift</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Shift</code> + <code>F1</code></td>
+<td align="center">如果有外部文档可以连接外部文档</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F2</code></td>
+<td align="center">跳转到上一个高亮错误 或 警告位置</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F3</code></td>
+<td align="center">在查找模式下，查找匹配上一个</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F4</code></td>
+<td align="center">对当前打开的文件，使用新Windows窗口打开，旧窗口保留</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F6</code></td>
+<td align="center">对文件 &#x2F; 文件夹 重命名</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F7</code></td>
+<td align="center">在 Debug 模式下，智能步入。断点所在行上有多个方法调用，会弹出进入哪个方法</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F8</code></td>
+<td align="center">在 Debug 模式下，跳出，表现出来的效果跟 <code>F9</code> 一样</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F9</code></td>
+<td align="center">等效于点击工具栏的 Debug 按钮</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F10</code></td>
+<td align="center">等效于点击工具栏的 Run 按钮</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + <code>F11</code></td>
+<td align="center">弹出书签显示层 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + Tab</td>
+<td align="center">取消缩进 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + ESC</td>
+<td align="center">隐藏当前 或 最后一个激活的工具窗口</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + End</td>
+<td align="center">选中光标到当前行尾位置</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + Home</td>
+<td align="center">选中光标到当前行头位置</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + Enter</td>
+<td align="center">开始新一行。光标所在行下空出一行，光标定位到新行位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + 左键单击</td>
+<td align="center">在打开的文件名上按此快捷键，可以关闭当前打开文件 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Shift</code> + 滚轮前后滚动</td>
+<td align="center">当前文件的横向滚动轴滚动 （<strong>必备</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-Ctrl-Alt"><a href="#3-4-Ctrl-Alt" class="headerlink" title="3.4 Ctrl + Alt"></a>3.4 Ctrl + Alt</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + L</td>
+<td align="center">格式化代码，可以对当前文件和整个包目录使用 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + O</td>
+<td align="center">优化导入的类，可以对当前文件和整个包目录使用 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + I</td>
+<td align="center">光标所在行 或 选中部分进行自动代码缩进，有点类似格式化</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + T</td>
+<td align="center">对选中的代码弹出环绕选项弹出层 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + J</td>
+<td align="center">弹出模板选择窗口，将选定的代码加入动态模板中</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + H</td>
+<td align="center">调用层次</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + B</td>
+<td align="center">在某个调用的方法名上使用会跳到具体的实现处，可以跳过接口</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + C</td>
+<td align="center">重构-快速提取常量</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + F</td>
+<td align="center">重构-快速提取成员变量</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + V</td>
+<td align="center">重构-快速提取变量</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + Y</td>
+<td align="center">同步、刷新</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + S</td>
+<td align="center">打开 IntelliJ IDEA 系统设置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + <code>F7</code></td>
+<td align="center">显示使用的地方。寻找被该类或是变量被调用的地方，用弹出框的方式找出来</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + <code>F11</code></td>
+<td align="center">切换全屏模式</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + Enter</td>
+<td align="center">光标所在行上空出一行，光标定位到新行 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + Home</td>
+<td align="center">弹出跟当前文件有关联的文件弹出层</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + Space</td>
+<td align="center">类名自动完成</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + $\leftarrow$</td>
+<td align="center">退回到上一个操作的地方 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + $\rightarrow$</td>
+<td align="center">前进到上一个操作的地方 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + $\uparrow$</td>
+<td align="center">在查找模式下，跳到上个查找的文件</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + $\downarrow$</td>
+<td align="center">在查找模式下，跳到下个查找的文件</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code>+ <code>]</code></td>
+<td align="center">在打开多个项目的情况下，切换下一个项目窗口</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Alt</code> + <code>[</code></td>
+<td align="center">在打开多个项目的情况下，切换上一个项目窗口</td>
+</tr>
+</tbody></table>
+<h3 id="3-5-Ctrl-Shift"><a href="#3-5-Ctrl-Shift" class="headerlink" title="3.5 Ctrl + Shift"></a>3.5 Ctrl + Shift</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>F</code></td>
+<td align="center">根据输入内容查找整个项目 或 指定目录内文件 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>R</code></td>
+<td align="center">根据输入内容替换对应内容，范围为整个项目 或 指定目录内文件 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>J</code></td>
+<td align="center">自动将下一行合并到当前行末尾 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Z</code></td>
+<td align="center">取消撤销 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>W</code></td>
+<td align="center">递进式取消选择代码块。可选中光标所在的单词或段落，连续按会在原有选中的基础上再扩展取消选中范围 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>N</code></td>
+<td align="center">通过文件名定位 &#x2F; 打开文件 &#x2F; 目录，打开目录需要在输入的内容后面多加一个正斜杠 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>U</code></td>
+<td align="center">对选中的代码进行大 &#x2F; 小写轮流转换 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>T</code></td>
+<td align="center">对当前类生成单元测试类，如果已经存在的单元测试类则可以进行选择 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>C</code></td>
+<td align="center">复制当前文件磁盘路径到剪贴板 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>V</code></td>
+<td align="center">弹出缓存的最近拷贝的内容管理器弹出层</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>E</code></td>
+<td align="center">显示最近修改的文件列表的弹出层</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>H</code></td>
+<td align="center">显示方法层次结构</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>B</code></td>
+<td align="center">跳转到类型声明处 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>I</code></td>
+<td align="center">快速查看光标所在的方法 或 类的定义</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>A</code></td>
+<td align="center">查找动作 &#x2F; 设置</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>/</code></td>
+<td align="center">代码块注释 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>[</code></td>
+<td align="center">选中从光标所在位置到它的顶部中括号位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>]</code></td>
+<td align="center">选中从光标所在位置到它的底部中括号位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>+</code></td>
+<td align="center">展开所有代码 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>-</code></td>
+<td align="center">折叠所有代码 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>F7</code></td>
+<td align="center">高亮显示所有该选中文本，按Esc高亮消失 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>F8</code></td>
+<td align="center">在 Debug 模式下，指定断点进入条件</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>F9</code></td>
+<td align="center">编译选中的文件 &#x2F; 包 &#x2F; Module</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>F12</code></td>
+<td align="center">编辑器最大化 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Space</code></td>
+<td align="center">智能代码提示</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Enter</code></td>
+<td align="center">自动结束代码，行末自动添加分号 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Backspace</code></td>
+<td align="center">退回到上次修改的地方 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>1,2,3...9</code></td>
+<td align="center">快速添加指定数值的书签 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + 左键单击</td>
+<td align="center">把光标放在某个类变量上，按此快捷键可以直接定位到该类中 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + $\leftarrow$</td>
+<td align="center">在代码文件上，光标跳转到当前单词 &#x2F; 中文句的左侧开头位置，同时选中该单词 &#x2F; 中文句 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + $\rightarrow$</td>
+<td align="center">在代码文件上，光标跳转到当前单词 &#x2F; 中文句的右侧开头位置，同时选中该单词 &#x2F; 中文句 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + $\uparrow$</td>
+<td align="center">光标放在方法名上，将方法移动到上一个方法前面，调整方法排序 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + $\downarrow$</td>
+<td align="center">光标放在方法名上，将方法移动到下一个方法前面，调整方法排序 （<strong>必备</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-Alt-Shift"><a href="#3-6-Alt-Shift" class="headerlink" title="3.6 Alt + Shift"></a>3.6 Alt + Shift</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>N</code></td>
+<td align="center">选择 &#x2F; 添加 task （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>F</code></td>
+<td align="center">显示添加到收藏夹弹出层 &#x2F; 添加到收藏夹</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>C</code></td>
+<td align="center">查看最近操作项目的变化情况列表</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>I</code></td>
+<td align="center">查看项目当前文件</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>F7</code></td>
+<td align="center">在 Debug 模式下，下一步，进入当前方法体内，如果方法体还有方法，则会进入该内嵌的方法中，依此循环进入</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>F9</code></td>
+<td align="center">弹出 Debug 的可选择菜单</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + <code>F10</code></td>
+<td align="center">弹出 Run 的可选择菜单</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + 左键双击</td>
+<td align="center">选择被双击的单词 &#x2F; 中文句，按住不放，可以同时选择其他单词 &#x2F; 中文句 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + $\uparrow$</td>
+<td align="center">向上移动光标所在行（<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Alt</code> + <code>Shift</code> + $\downarrow$</td>
+<td align="center">向下移动光标所在行（<strong>必备</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="3-7-Ctrl-Shift-Alt"><a href="#3-7-Ctrl-Shift-Alt" class="headerlink" title="3.7 Ctrl + Shift + Alt"></a>3.7 Ctrl + Shift + Alt</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Alt</code> + <code>V</code></td>
+<td align="center">无格式黏贴 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Alt</code> + <code>N</code></td>
+<td align="center">前往指定的变量 &#x2F; 方法</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Alt</code> + <code>S</code></td>
+<td align="center">打开当前项目设置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl</code> + <code>Shift</code> + <code>Alt</code> + <code>C</code></td>
+<td align="center">复制参考信息</td>
+</tr>
+</tbody></table>
+<h3 id="3-8-其他"><a href="#3-8-其他" class="headerlink" title="3.8 其他"></a>3.8 其他</h3><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>F2</code></td>
+<td align="center">跳转到下一个高亮错误 或 警告位置 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>F3</code></td>
+<td align="center">在查找模式下，定位到下一个匹配处</td>
+</tr>
+<tr>
+<td align="center"><code>F4</code></td>
+<td align="center">编辑源 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>F7</code></td>
+<td align="center">在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则进入当前方法体内，如果该方法体还有方法，则不会进入该内嵌的方法中</td>
+</tr>
+<tr>
+<td align="center"><code>F8</code></td>
+<td align="center">在 Debug 模式下，进入下一步，如果当前行断点是一个方法，则不进入当前方法体内</td>
+</tr>
+<tr>
+<td align="center"><code>F9</code></td>
+<td align="center">在 Debug 模式下，恢复程序运行，但是如果该断点下面代码还有断点则停在下一个断点上</td>
+</tr>
+<tr>
+<td align="center"><code>F11</code></td>
+<td align="center">添加书签 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>F12</code></td>
+<td align="center">回到前一个工具窗口 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>Tab</code></td>
+<td align="center">缩进 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center"><code>ESC</code></td>
+<td align="center">从工具窗口进入代码文件窗口 （<strong>必备</strong>）</td>
+</tr>
+<tr>
+<td align="center">连按两次 <code>Shift</code></td>
+<td align="center">弹出 Search Everywhere 弹出层</td>
+</tr>
+</tbody></table>
+<h2 id="三、IntelliJ-IDEA-的其他操作"><a href="#三、IntelliJ-IDEA-的其他操作" class="headerlink" title="三、IntelliJ IDEA 的其他操作"></a>三、IntelliJ IDEA 的其他操作</h2><h3 id="3-1-删除类文件"><a href="#3-1-删除类文件" class="headerlink" title="3.1 删除类文件"></a>3.1 删除类文件</h3><ul>
+<li>文件名上右键 $\rightarrow$ <code>Delete...</code></li>
+</ul>
+<h3 id="3-2-修改类名称"><a href="#3-2-修改类名称" class="headerlink" title="3.2 修改类名称"></a>3.2 修改类名称</h3><ul>
+<li>文件名上右键 $\rightarrow$ <code>Refactor</code> $\rightarrow$ <code>Rename</code> $\rightarrow$ 改名 $\rightarrow$ <code>Refactor</code></li>
+</ul>
+<h3 id="3-3-修改模块名称"><a href="#3-3-修改模块名称" class="headerlink" title="3.3 修改模块名称"></a>3.3 修改模块名称</h3><ul>
+<li>模块名上右键 $\rightarrow$ <code>Refactor</code> $\rightarrow$ <code>Rename</code> $\rightarrow$ <code>Rename module and directory</code> $\rightarrow$ 改名 $\rightarrow$ <code>Refactor</code></li>
+</ul>
+<h3 id="3-4-导入模块"><a href="#3-4-导入模块" class="headerlink" title="3.4 导入模块"></a>3.4 导入模块</h3><ul>
+<li><code>File</code> $\rightarrow$ <code>New</code> $\rightarrow$ <code>Module from Existing Sources...</code> $\rightarrow$ 填写模块所在路径 $\rightarrow$ <code>OK</code></li>
+</ul>
+<h3 id="3-5-删除模块"><a href="#3-5-删除模块" class="headerlink" title="3.5 删除模块"></a>3.5 删除模块</h3><h4 id="3-5-1-项目中移除"><a href="#3-5-1-项目中移除" class="headerlink" title="3.5.1 项目中移除"></a>3.5.1 项目中移除</h4><ul>
+<li>模块名上右键 $\rightarrow$ <code>Remove Module</code> $\rightarrow$ <code>Remove</code></li>
+</ul>
+<h4 id="3-5-2-彻底删除"><a href="#3-5-2-彻底删除" class="headerlink" title="3.5.2 彻底删除"></a>3.5.2 彻底删除</h4><ul>
+<li>在项目中移除模块 $\rightarrow$ 再次在模块名上右键 $\rightarrow$ <code>Delete...</code> $\rightarrow$ <code>Delete</code></li>
+</ul>
+<h3 id="3-6-打开工程"><a href="#3-6-打开工程" class="headerlink" title="3.6 打开工程"></a>3.6 打开工程</h3><ul>
+<li><p>菜单栏 <code>File</code> $\rightarrow$ <code>Open</code> $\rightarrow$ 找到工程所在路径 $\rightarrow$ <code>OK</code></p>
+</li>
+<li><p>菜单栏 <code>File</code> $\rightarrow$ <code>Close Project</code></p>
+</li>
+</ul>
+<h3 id="3-7-关闭工程"><a href="#3-7-关闭工程" class="headerlink" title="3.7 关闭工程"></a>3.7 关闭工程</h3><ul>
+<li>菜单栏 <code>File</code> $\rightarrow$ <code>Close Project</code></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="一个学渣">DONG</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/idea/">http://example.com/idea/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">东北的冬DONG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/IDE/">IDE</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/hexo/butterfly10/" title="Butterfly 主题首页轮播图"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover37.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Butterfly 主题首页轮播图</div></div></a></div><div class="next-post pull-right"><a href="/hexo/butterfly09/" title="Butterfly 主题电子时钟"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover41.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Butterfly 主题电子时钟</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/IDE/Eclipse/" title="Eclipse 的配置及使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover01.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-25</div><div class="title">Eclipse 的配置及使用</div></div></a></div><div><a href="/IDE/PyCharm/" title="PyCharm 的配置及使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover41.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-03</div><div class="title">PyCharm 的配置及使用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/config/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">DONG</div><div class="author-info__description">一个还未入门人工智能的学渣</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xindong2020"><i class="iconfont icon-GitHub"></i><span>点个关注不迷路</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:641743220@qq.com" target="_blank" title="Email"><i class="iconfont icon-mail-fill"></i></a><a class="social-icon" href="https://github.com/xindong2020" target="_blank" title="Github"><i class="iconfont icon-GitHub"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">走过路过不要错过，点个关注，打个赏，你的鼓励是我坚持下去的动力</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81IntelliJ-IDEA-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E6%BF%80%E6%B4%BB"><span class="toc-number">1.</span> <span class="toc-text">一、IntelliJ IDEA 的安装与激活</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-IntelliJ-IDEA-%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 IntelliJ IDEA 的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89Windows"><span class="toc-number">1.1.1.</span> <span class="toc-text">（1）Windows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89Ubuntu"><span class="toc-number">1.1.2.</span> <span class="toc-text">（2）Ubuntu</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-IntelliJ-IDEA-%E7%9A%84%E6%BF%80%E6%B4%BB"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 IntelliJ IDEA 的激活</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81IntelliJ-IDEA-%E7%9A%84%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">二、IntelliJ IDEA 的详细配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%BF%9B%E5%85%A5%E8%AE%BE%E7%BD%AE%E7%95%8C%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 进入设置界面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 方式一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 方式二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%85%B3%E9%97%AD-Intellij-IDEA-%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 关闭 Intellij IDEA 自动更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE%E9%A1%B9%E7%9B%AE%E9%BB%98%E8%AE%A4%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 配置项目默认路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 创建项目</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-number">2.4.1.</span> <span class="toc-text">2.4.1 方式一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-number">2.4.2.</span> <span class="toc-text">2.4.2 方式二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%85%8D%E7%BD%AE-JDK"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 配置 JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E7%BB%9F%E4%B8%80%E7%BC%96%E8%AF%91%E5%99%A8%E5%92%8C%E7%BC%96%E8%AF%91%E7%89%88%E6%9C%AC"><span class="toc-number">2.6.</span> <span class="toc-text">2.6 统一编译器和编译版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98"><span class="toc-number">2.7.</span> <span class="toc-text">2.7 设置主题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-7-1-%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98"><span class="toc-number">2.7.1.</span> <span class="toc-text">2.7.1 安装主题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-7-2-%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98"><span class="toc-number">2.7.2.</span> <span class="toc-text">2.7.2 设置主题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="toc-number">2.7.2.1.</span> <span class="toc-text">（1）方式一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="toc-number">2.7.2.2.</span> <span class="toc-text">（2）方式二</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93"><span class="toc-number">2.8.</span> <span class="toc-text">2.8 设置字体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-8-1-IDEA-%E7%95%8C%E9%9D%A2%E5%AD%97%E4%BD%93"><span class="toc-number">2.8.1.</span> <span class="toc-text">2.8.1 IDEA 界面字体</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E6%B3%95%E4%B8%80"><span class="toc-number">2.8.1.1.</span> <span class="toc-text">（1）方法一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-number">2.8.1.2.</span> <span class="toc-text">（2）方法二</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-8-2-%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E7%95%8C%E9%9D%A2%E5%AD%97%E4%BD%93"><span class="toc-number">2.8.2.</span> <span class="toc-text">2.8.2 代码编辑界面字体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-8-3-Ctrl-%E9%BC%A0%E6%A0%87%E6%BB%9A%E8%BD%AE%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93%E5%A4%A7%E5%B0%8F"><span class="toc-number">2.8.3.</span> <span class="toc-text">2.8.3 Ctrl + 鼠标滚轮修改字体大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-8-4-%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%AD%97%E4%BD%93"><span class="toc-number">2.8.4.</span> <span class="toc-text">2.8.4 控制台字体</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-%E8%A1%8C%E5%8F%B7%E5%92%8C%E6%96%B9%E6%B3%95%E5%88%86%E9%9A%94%E7%AC%A6"><span class="toc-number">2.9.</span> <span class="toc-text">2.9 行号和方法分隔符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-10-%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8C%B9%E9%85%8D"><span class="toc-number">2.10.</span> <span class="toc-text">2.10 忽略大小写匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-11-%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%8C%85"><span class="toc-number">2.11.</span> <span class="toc-text">2.11 配置自动导包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-12-%E9%85%8D%E7%BD%AE%E7%BC%96%E7%A0%81"><span class="toc-number">2.12.</span> <span class="toc-text">2.12 配置编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81IntelliJ-IDEA-%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">3.</span> <span class="toc-text">三、IntelliJ IDEA 快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Ctrl"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 Ctrl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Alt"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 Alt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Shift"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 Shift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Ctrl-Alt"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 Ctrl + Alt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-Ctrl-Shift"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 Ctrl + Shift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-Alt-Shift"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 Alt + Shift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-Ctrl-Shift-Alt"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 Ctrl + Shift + Alt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-%E5%85%B6%E4%BB%96"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81IntelliJ-IDEA-%E7%9A%84%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">三、IntelliJ IDEA 的其他操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%A0%E9%99%A4%E7%B1%BB%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 删除类文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%90%8D%E7%A7%B0"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 修改类名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BF%AE%E6%94%B9%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 修改模块名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 导入模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E5%88%A0%E9%99%A4%E6%A8%A1%E5%9D%97"><span class="toc-number">4.5.</span> <span class="toc-text">3.5 删除模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-1-%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A7%BB%E9%99%A4"><span class="toc-number">4.5.1.</span> <span class="toc-text">3.5.1 项目中移除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-2-%E5%BD%BB%E5%BA%95%E5%88%A0%E9%99%A4"><span class="toc-number">4.5.2.</span> <span class="toc-text">3.5.2 彻底删除</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E6%89%93%E5%BC%80%E5%B7%A5%E7%A8%8B"><span class="toc-number">4.6.</span> <span class="toc-text">3.6 打开工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E5%85%B3%E9%97%AD%E5%B7%A5%E7%A8%8B"><span class="toc-number">4.7.</span> <span class="toc-text">3.7 关闭工程</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/git/" title="Git &amp; Github 完全指南"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover37.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git &amp; Github 完全指南"/></a><div class="content"><a class="title" href="/git/" title="Git &amp; Github 完全指南">Git &amp; Github 完全指南</a><time datetime="2024-01-16T16:00:00.000Z" title="发表于 2024-01-17 00:00:00">2024-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/hexo/butterfly10/" title="Butterfly 主题首页轮播图"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover37.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Butterfly 主题首页轮播图"/></a><div class="content"><a class="title" href="/hexo/butterfly10/" title="Butterfly 主题首页轮播图">Butterfly 主题首页轮播图</a><time datetime="2024-01-09T16:00:00.000Z" title="发表于 2024-01-10 00:00:00">2024-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/idea/" title="IntelliJ IDEA 的配置及使用"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IntelliJ IDEA 的配置及使用"/></a><div class="content"><a class="title" href="/idea/" title="IntelliJ IDEA 的配置及使用">IntelliJ IDEA 的配置及使用</a><time datetime="2024-01-09T16:00:00.000Z" title="发表于 2024-01-10 00:00:00">2024-01-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover42.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 By DONG</div><div class="footer_custom_text"><img src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/config/beian.png"> <a href="https://beian.miit.gov.cn/" target="_blank">琼ICP备2022012184号-1</a> <p> <a style="margin-inline:5px" target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=plastic&logo=Hexo" title="本站框架使用 Hexo 7.0.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://github.com/jerryc127/hexo-theme-butterfly"><img src="https://img.shields.io/badge/Theme-Butterfly-pink?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACEAAAAZCAYAAAC%2FzUevAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAISUlEQVRIiZVWW2xcVxVde59z78yd8TtOHD9iOzi10yQtgYa8SiGRUgpFrSiQSPzRH6p%2B0A9EK%2FgazQcIKGpVCRDhA8QXUlK1qPRBafOoqjYtoa2a4KRp3DhxnDh%2Be2zPzJ17z9mbj8TFOJGA%2FXV19%2BOsu9e6%2B2zCMhtGIduEuvsEuFuhNYWerAHvp6hMrUcxxv9pV1DI5ZBdkxq73Xr6HECqoOOnUDq6F0W3FEdLD4pCWELjnQ7uUQXtJlAqpNNCdNqLHjHAiTY8PkWA%2FLfDD2G%2F2YltbaHhL5HSXlK9nVRXMQgKOhKCfvUxzg1vw%2B9SALBLieOoCxhuPYM2ElAnwKgCgZLuJIP2Gmv3xbRw%2BBgwtfwrVto%2FUQgZQbu39B0F7QK0gxSxAhUPdDJ0QKBdd6F9BMB%2FgmAsEqM%2Bq1AF9A2FPOeVlRQbxNBdnnFAolzYrslzGhcuEYo3deQYClbDXF%2FAZj9Ev%2BpUPzGCY1AMeyBngW8rtDkBsqNo%2FJSFT0GkgFjoIhOmvOK9KVRejDGmLdLTQhyc9oJ9PjD3phy5k5r%2BRWoYZkCXU9Bal7vNEn%2FDidxDTo%2BSw5EKKqcXMFYC2oN1qNsA4m1QLDqU9CYQFazyDYgnPPGMkFS3SDEBAAEmTrsfvmnClhFQ%2BF0h2s75oHwiePIFLD4%2BsZS%2FOtrWXrX0lVBxZ6B42zv54wQmxnbi6fgG2HQcv6g6QklVJnvR4f%2FNwg3bgDedRTKipGWAs3JDtAzoZ%2FHL8qbkR2eTNP51wjKcMu2RPHa8iifzAOhYU6GJGsw9acC7EsYp0fQ3A%2Fjxhd14urrUrfP4fkaZAiGdy6ByRfGIuwkE4bBvwetjnmheGPm38fO65XwzWIfiD0erwKHYYDKxZq%2Fv4P6DOGhdVL%2FFG9rrQENVr88%2BW04mV%2BolQtdqbzUgorFVKM4vp5KXBxKOO0864iywOjSdKwsdwGFfg7%2BUAscqrG3O6MbmrnJ91WBj1VB9jd2x8fnyWPEWok0j25Uyi2MMr%2FTxyhcJ63CNVTWQ3pU%2BANg3W12IIadTIBbDa41xvWK51ZFOLKQ4NwhUbpWXGOlNGeL1fwAh8EPeGO%2FI9N2qGKEoCxk3p4wropqzZPs9NOsZw1514VZdAABP6HFGxGXSCyt99iM8UZ%2FJt%2FZ5CfLe%2B2lT05lKVmdJsead%2FE%2FadpSTyZUzoa7CLq3DGARrnOp6JjJgf7UcmpuG2DEUbH0m35MazhroxeoccDb%2FszvY20YrXAqTy0M2F639uvOyV9i3%2BlCnK5FeTI1GwqbOUXbPK5nkFcxgfnnhkmGpIzOlJB2AtirJovc8vW583q%2FAQL4%2B0xhnsFehjSzUaxrCR1XRQ4omIRlLMu0vc43k3pSwzxMGlDUHpdVKRM4APsC2MGrafAhPRcsrZ8eNiGJeCZaI1kDJetX505jR5XGv4slcmjNbXcCbEgvxpBbQVVDkPXCnAPvE8N3Wk84I8Zw3%2BndV98zcQm3UtOb7vaF%2BH6AzVtkRdmvp0Mj%2Bcwdw2ANAHayUvauQVQtFMxFfzZIvZ7DlU9oKKNiFDtefY7stYVziFJdI%2BJNr86VPupuyA1bsE%2FDUB%2Bg0J0xvpUYmUgIqGvJxoLI4lR2M4tLLZe9f86qxEO3MdO1arygwACxiWkOgyteFXQ8V48BxP64qcH2E39HdOEBBZldqeNI7%2B9fZ1B%2BZmx3%2B%2BD0U41jBqWFJjF5zrCftQhp%2FEEbZ8451bWK0az8wtAWP1TCD2h9mCh%2FXd9VFTLTDBbTnuc5cfPDK98Zn0aGrdD4xyqxAXgHOCGqT2KyHUAjRYztB2GcYaerxQe3q7PABXL8GDuGpKLGyDqR1FjRYS%2FQ8J3E67onecIaMZnjbWHu0dmlkP4xiLDCnXConSWRAQ%2Fu11s6%2BtmZcJTaSiqoBKEsgSjM%2BncXrzN3ZLoP8N1X9Kuf1RC4IziwBEAg1tkuPC3R3YlB1hKMXy%2BUZ%2FjKKtQWdP1llvF01tL1ied%2BfO3%2FaIhACgAOjP6jGbvwU%2BephBvphzYO2J9fnGKIgVtVQoAQAjZ2f2UQUPASWJo394RE%2F%2BtH9Q4%2FVbmiEn299Zm1icF9s%2BPYa4%2BhirXbqAIoJAcA%2FcDCYbl%2FoSww%2F4I32KGjYef%2BeonY%2BTufmWuu73WJpOuCgcSeF%2BgVAvSFzwbM%2BSKL3QfA3MfiTet1KrKmV8K35S8mHrRsybrE0HRhbv4otDwjpXUbRyarnOElfyk%2FEI3tRdAYAfosX9CydgI90tTK1KAMAZSwFXUHU3O1Z202UbzD1MkfXf8J1AG1m0FYoOggEIjZMHJtMMOgincw08LoEGOAgu5ksbmMyq8lQozKcKJ2ZqZY%2FeiguVgHAAEAvkLVtUT8MdgMYUsWbqjQPgzxIQyGFhXU2sosuTC%2BhQiVVWg9gC4AmJSkx8KFafY1yuJBVG7oUDQamDqDIQGpQHUpFzhIhz8wbTBhc3lf61tyLeFEsAOTRSJ4oY6FrAIwJZcdweWLGo9FgdclkWrop8OUken%2FaV3BGY2yfynbqrLFUIWCjkr6fJvo8Ll4b8RhNmrCJJnphe3NrbDJd0dK4EaDkfUfQZsIoEkhb4E3YjKsE3NisBlGqfT5uHkpzOA3lvOFqPzbkLgQssc%2F1ulpT3j1w%2FOGEwTcm4uHyoSuFM9SZqRCZJuNkYvra8JVHbmzPAKAXC3J8D2wltEG20VvxDVEiutEIW1F9N13QkQMopsCylb%2BAAm9tQoNraPiitdhAGbsYRJlRY%2FiycHz5%2FncfW8CyRWQpZzM20yAGdeXtKRB6dtfvm6PYrSNNuiRGl09c1gOD4wuldx6dLJaXFpt%2FAVb5XJ1uIF%2BlAAAAAElFTkSuQmCC&labelColor=%23EBF948&color=%23EE6C95" title="本站主题使用 Butterfly 4.11.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-yellow?style=plastic&logo=jsDelivr" title="本站使用 jsdelivr 加速静态资源"></a> <a style="margin-inline:5px" target="_blank" href="https://pages.github.com/"><img src="https://img.shields.io/badge/source-GitHub-pink?style=plastic&logo=GitHub&labelColor=%235DF5DC&color=%23F5805D" title="本站托管于 Github"></a> <a style="margin-inline:5px" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright%20-%20CC%20BY--NC--SA%204.0%20-%20red?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAvXpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjabZBRDsQgCET%2FOcUeAUQFj6MpTXqDPf5isWmb7HzAc0xwEOx77PCZIs2Qi2httaIrt9xSd1AMuUsdCYszhVVqdBpvH4oFJHWL7wtM0Zjcmbyt2WsQp%2FApr0GyoDYVzPcgvVItbWpMMyEm%2BXcGk2FqVtoYZtJFMWq8yp6IK%2Fezdz9LmpRPVq%2BFZ0LfBOYnPFfaXbGa%2B4%2BE7SJ%2B%2B2pBcEWHH954UN5i%2FAOVAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAGbElEQVRYhc1Ya4hcZxl%2B3ve7nfvZmZ3J7uzMJtsk5jLBEhtqL3hZxF7SLrRWa0WL%2BkMKiph6KdQoBC1WWvpDsJT8ESWCWMGKgQq2ylICpaU2RkuMgsVm7c0aE%2BMmu%2Bvuzjn%2BmDlnzsycmcxefvjCgQPf8zzvc77vvN95vwP8nwath1SrjVbPn7t8cGVl5YYIqMdxPAnAtCQvE9FZMP1RG3OiXLzq2bm5Vy5soueeEJ5t36OknCWiBoB4mIuIF6U0P7P8wvs33ZGn9V2S%2Bc8DDEQANQA0mvf5GCnNrOOMXrthQxXfL2khnupNRgtE4hfM6ou2bV%2FvbtkyVq%2FXvd27d%2Fu2bVellNPM%2FCABswBWurirUtuPAgfUukwVPb1PMP8NHcsi%2FsmsHwTCwhqktjH4ewAWslpCmFmEW9eiA1RdtZ%2BJzrWFqCGU%2FXihsD1ck1AmLGCrIDqOzOwTm1NDmyu7GBfMc6kp4kvaHrlrvYa6giTzAwBWE30hzW%2BBaXlFohHiN2gv3UXLKr9vmIQzMzPO9PS0d%2BTIEb4SWAnx2Yy5SGrvoYGE0FKfQ%2BYlFSY42A9bLdo1S%2BtvKKmeE0KcI6IIQCSEnJdSvyi19S17dLTajy%2BZDyNdVl7W7ti7c4GVChxB9FZiTCr3sTxcHdC20Y8S0RJ6t4TuPeySMt6X%2BngjSfRsCxsJ6TyTiwqMuj8VZHUWlQNON6ZchmeknO00QKtSqpeVUseUUj8WQryAzi0iktr%2Fbl5O32AXgf6L5j4Y2UHtuh73WvCriZgyhfvyhFytfpJNKIT%2BpQnDHd04Y7C9swIp0s7YHXmaivloqqfcYx2DE759YyJCJN%2FB1LTVLbDFNTcRKC11obyjAAa96KyYf5rgWdlngN7C8DTqrdwRsbo0dvXNbmYm5MOZhE%2FkZXGUfAbpUutTw%2BzcRSAQRP8gogUh1YnS5Hsm8nCS6OWWduT41Zl0wFbiRGrMKd3eTTxQ8UtMtJxidPFjVzKVRBiGO2q1mj0Io5m%2FnRjTVvhwe0DwBbTeBW%2Fsxi3dxJJjZpBWmlhEZaanMDYSvsAdiTFp%2FOMAgPsOFEJu7kExsT6fRwyNfAAdy7i5Me7pfWi9Z1K7vwcA%2FtVrS14UxwQARHI%2BjxitRCPJPQvzr802tmrJZEIoiuMCALAxmcpixHnERrbTZV7dbGO0SNm8BAB8jRMuEVqGooabR2TJl9sul73NNlb2qZjmIvpP0wtASvA8mt%2Bsxsj%2BO0e6iQVLfArtVuWtTTfmiNsSfWm8XwMAMxBLxl%2BakIiW%2FvrSNd3EESV%2F1yIijpbHdHHnvmGThpb%2BulTqhOX4h0vV7bvyMPPL8f7knlieSQc8o77fdhw%2BksMlLds9vzDe48OYuqEGWzGfTXjKLh7KwylBzzUxFNvBxCfSgWrBuT0hs7Bew3Rv4%2BYaPoT2XrZseZUPXMmYY8TRlMPycnnq2vFuTKVgbSXQaqJb3fPe0XTw7jq0ZHq7JRLZYeWj3QI7AaOYXmmbkxe1PfKRPEO1IChaSvwQmTZaWv538rC2lo%2BkGOM%2F3ft0WiafhZil%2FQfgbtGNGdV6LxO9k%2BAARFLplxzHeygIgi%2B4rvtlS6sfMSVfkqR9tmZRr%2BtuvUnHmWCi%2BUTLBOO39Rir%2BH6pA%2BQWv5L3hJ7WeyXTn7KJB1yR1M7Py%2BV67hZjK%2FFkezLMSfT7M%2BBIPoz2e7TgBJO5h9MpwFLM9zPRaeQecKkhhHxe217fQ0yrjU%2F7NRNO3NQPizqgFfGp1BzLN0xQ29mXgGb34DjOnZZlfcayrE8bxzlYKm2rDOKUXXMrZ1pzof1jg%2FAAgFGt9zDh3xlzbzrB%2BMaP9a0ILP3JrCmW5kyxeF0wFNk18sNEWER7WReN7X81ryCGjZ3FYmAp9QQ6DrzidRNO9rTmA8Oz5IeIkK2uSEp92vaK9%2BTtc%2F2iXi57rlGHBHN6AgMQs9CvBkHtXWsylYSv9R5JfBJdlcZC%2Fl0p85jrBrfu2HF1R2MZAXRVpbLNtu2PKyF%2BQEQXuvlC28f9yq7SukxlQknmrxFwHj3Vl8ykuqSUnlNKzQkhFtHnVxSzmNNWcO9GDXVECBQk8zeZqP1fY6iLIpbqtDLO5zE11XP66hfr%2BdXJnmV9cGl5%2BZZGHF%2BPON4bA%2BWWVnICfxtMpwWJ57UbHF%2B4eO7kOvJsPKaaMzHuuu7Y9BoKY1D8D95GAkC2cGOlAAAAAElFTkSuQmCC&labelColor=%238FE79B" title="本站使用 CC BY-NC-SA 4.0 许可协议进行授权"></a> </p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0176d32a129f49c7bc56e84867580f55';
+  var gaud_map_key = '959bdc1c930d3f31e1b6ac5a6e1685e8';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '121.455708,31.249574';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/01/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover25.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-01</span><a class="blog-slider__title" href="butterfly/01/" alt="">Hexo 框架 + Butterfly 主题打造个人博客</a><div class="blog-slider__text">使用 Hexo 框架与 Butterfly 主题，快速打造属于自己的个人网站</div><a class="blog-slider__button" href="butterfly/01/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/05/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/PictureBed/hexo/butterfly/cover/cover24.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-05</span><a class="blog-slider__title" href="butterfly/05/" alt="">Butterfly 主题自带美化效果</a><div class="blog-slider__text">详细讲解 Butterfly 主题自带的美化效果</div><a class="blog-slider__button" href="butterfly/05/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
