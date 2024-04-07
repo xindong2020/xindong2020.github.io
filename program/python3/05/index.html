@@ -1,0 +1,795 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python3 字典和集合 | 东北的冬DONG</title><meta name="author" content="DONG"><meta name="copyright" content="DONG"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 一、dict 字典 1.1 概述 1.2 创建字典的六种方式 1.2.1 使用 { } 创建字典 （1）直接在空字典 {} 里面写键值对 （2）定义一个空字典，再向其中添加键值对   1.2.2 使用 dict 内置函数创建字典 （1）方式一：使用关键字参数创建 （2）方式二：使用映射对象创建字典 （3）方式三：使用可迭代对象创建字典   1.2.3 使用类方法 fromkeys() 创建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3 字典和集合">
+<meta property="og:url" content="http://example.com/program/python3/05/">
+<meta property="og:site_name" content="东北的冬DONG">
+<meta property="og:description" content="前言 一、dict 字典 1.1 概述 1.2 创建字典的六种方式 1.2.1 使用 { } 创建字典 （1）直接在空字典 {} 里面写键值对 （2）定义一个空字典，再向其中添加键值对   1.2.2 使用 dict 内置函数创建字典 （1）方式一：使用关键字参数创建 （2）方式二：使用映射对象创建字典 （3）方式三：使用可迭代对象创建字典   1.2.3 使用类方法 fromkeys() 创建">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg">
+<meta property="article:published_time" content="2024-01-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:46:26.703Z">
+<meta property="article:author" content="DONG">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/favicon.png"><link rel="canonical" href="http://example.com/program/python3/05/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":30,"languages":{"author":"作者: DONG","link":"链接: ","source":"来源: 东北的冬DONG","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python3 字典和集合',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:46:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xindong2020/ButterflyEffects/footer/heart.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="东北的冬DONG"><span class="site-name">东北的冬DONG</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python3 字典和集合</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-14T16:00:00.000Z" title="发表于 2024-01-15 00:00:00">2024-01-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:46:26.703Z" title="更新于 2024-04-07 15:46:26">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>40分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python3 字典和集合"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E4%B8%80dict-%E5%AD%97%E5%85%B8">一、dict 字典</a><ul>
+<li><a href="#11-%E6%A6%82%E8%BF%B0">1.1 概述</a></li>
+<li><a href="#12-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8%E7%9A%84%E5%85%AD%E7%A7%8D%E6%96%B9%E5%BC%8F">1.2 创建字典的六种方式</a><ul>
+<li><a href="#121-%E4%BD%BF%E7%94%A8---%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">1.2.1 使用 { } 创建字典</a><ul>
+<li><a href="#1%E7%9B%B4%E6%8E%A5%E5%9C%A8%E7%A9%BA%E5%AD%97%E5%85%B8--%E9%87%8C%E9%9D%A2%E5%86%99%E9%94%AE%E5%80%BC%E5%AF%B9">（1）直接在空字典 {} 里面写键值对</a></li>
+<li><a href="#2%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%A9%BA%E5%AD%97%E5%85%B8%E5%86%8D%E5%90%91%E5%85%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%94%AE%E5%80%BC%E5%AF%B9">（2）定义一个空字典，再向其中添加键值对</a></li>
+</ul>
+</li>
+<li><a href="#122-%E4%BD%BF%E7%94%A8-dict-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">1.2.2 使用 dict 内置函数创建字典</a><ul>
+<li><a href="#1%E6%96%B9%E5%BC%8F%E4%B8%80%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0%E5%88%9B%E5%BB%BA">（1）方式一：使用关键字参数创建</a></li>
+<li><a href="#2%E6%96%B9%E5%BC%8F%E4%BA%8C%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">（2）方式二：使用映射对象创建字典</a></li>
+<li><a href="#3%E6%96%B9%E5%BC%8F%E4%B8%89%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">（3）方式三：使用可迭代对象创建字典</a></li>
+</ul>
+</li>
+<li><a href="#123-%E4%BD%BF%E7%94%A8%E7%B1%BB%E6%96%B9%E6%B3%95-fromkeys-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">1.2.3 使用类方法 fromkeys() 创建字典</a></li>
+</ul>
+</li>
+<li><a href="#13-%E8%AE%BF%E9%97%AE%E5%AD%97%E5%85%B8">1.3 访问字典</a><ul>
+<li><a href="#131-%E4%BD%BF%E7%94%A8%E9%94%AE%E8%AE%BF%E9%97%AE">1.3.1 使用键访问</a></li>
+<li><a href="#132-%E4%BD%BF%E7%94%A8-get-%E6%96%B9%E6%B3%95%E8%AE%BF%E9%97%AE">1.3.2 使用 get 方法访问</a></li>
+</ul>
+</li>
+<li><a href="#14-%E5%88%A0%E9%99%A4%E5%AD%97%E5%85%B8">1.4 删除字典</a></li>
+<li><a href="#15-%E9%94%AE%E5%80%BC%E5%AF%B9%E6%93%8D%E4%BD%9C">1.5 键值对操作</a><ul>
+<li><a href="#151-%E6%B7%BB%E5%8A%A0%E9%94%AE%E5%80%BC%E5%AF%B9">1.5.1 添加键值对</a></li>
+<li><a href="#152-%E4%BF%AE%E6%94%B9%E9%94%AE%E5%80%BC%E5%AF%B9">1.5.2 修改键值对</a></li>
+<li><a href="#153-%E5%88%A0%E9%99%A4%E9%94%AE%E5%80%BC%E5%AF%B9">1.5.3 删除键值对</a></li>
+<li><a href="#154-%E5%88%A4%E6%96%AD%E5%AD%97%E5%85%B8%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E6%8C%87%E5%AE%9A%E9%94%AE%E5%80%BC%E5%AF%B9">1.5.4 判断字典中是否存在指定键值对</a></li>
+</ul>
+</li>
+<li><a href="#16-%E5%AD%97%E5%85%B8%E6%96%B9%E6%B3%95">1.6 字典方法</a><ul>
+<li><a href="#161-clear-%E6%96%B9%E6%B3%95">1.6.1 clear() 方法</a></li>
+<li><a href="#162-copy-%E6%96%B9%E6%B3%95">1.6.2 copy() 方法</a></li>
+<li><a href="#163-items-%E6%96%B9%E6%B3%95">1.6.3 items() 方法</a></li>
+<li><a href="#164-keys-%E6%96%B9%E6%B3%95">1.6.4 keys() 方法</a></li>
+<li><a href="#165-pop-%E6%96%B9%E6%B3%95">1.6.5 pop() 方法</a></li>
+<li><a href="#166-popitem-%E6%96%B9%E6%B3%95">1.6.6 popitem() 方法</a></li>
+<li><a href="#167-setdefault-%E6%96%B9%E6%B3%95">1.6.7 setdefault() 方法</a></li>
+<li><a href="#168-update-%E6%96%B9%E6%B3%95">1.6.8 update() 方法</a></li>
+<li><a href="#169-values-%E6%96%B9%E6%B3%95">1.6.9 values() 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8Cset-%E9%9B%86%E5%90%88">二、set 集合</a><ul>
+<li><a href="#21-%E6%A6%82%E8%BF%B0">2.1 概述</a></li>
+<li><a href="#22-set-%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%86%E5%90%88">2.2 set 类型的集合</a><ul>
+<li><a href="#221-%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88">2.2.1 创建 set 集合</a><ul>
+<li><a href="#1%E4%BD%BF%E7%94%A8---%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88">（1）使用 { } 创建 set 集合</a></li>
+<li><a href="#2%E4%BD%BF%E7%94%A8-set-%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88">（2）使用 set() 函数创建 set 集合</a></li>
+</ul>
+</li>
+<li><a href="#222-%E8%AE%BF%E9%97%AE-set-%E9%9B%86%E5%90%88%E5%85%83%E7%B4%A0">2.2.2 访问 set 集合元素</a></li>
+<li><a href="#223-%E5%88%A0%E9%99%A4-set-%E9%9B%86%E5%90%88">2.2.3 删除 set 集合</a></li>
+<li><a href="#224-%E9%9B%86%E5%90%88%E7%89%B9%E6%80%A7">2.2.4 集合特性</a><ul>
+<li><a href="#1%E5%8E%BB%E9%87%8D">（1）去重</a></li>
+<li><a href="#2%E5%85%B3%E7%B3%BB%E6%B5%8B%E8%AF%95">（2）关系测试</a></li>
+</ul>
+</li>
+<li><a href="#225-set-%E9%9B%86%E5%90%88%E6%96%B9%E6%B3%95">2.2.5 set 集合方法</a><ul>
+<li><a href="#1add-%E6%96%B9%E6%B3%95">（1）add() 方法</a></li>
+<li><a href="#2clear-%E6%96%B9%E6%B3%95">（2）clear() 方法</a></li>
+<li><a href="#3copy-%E6%96%B9%E6%B3%95-">（3）copy() 方法 *</a></li>
+<li><a href="#4difference-%E6%96%B9%E6%B3%95-">（4）difference() 方法 *</a></li>
+<li><a href="#5difference_update-%E6%96%B9%E6%B3%95">（5）difference_update() 方法</a></li>
+<li><a href="#6discard-%E6%96%B9%E6%B3%95">（6）discard() 方法</a></li>
+<li><a href="#7intersection-%E6%96%B9%E6%B3%95-">（7）intersection() 方法 *</a></li>
+<li><a href="#8intersection_update-%E6%96%B9%E6%B3%95">（8）intersection_update() 方法</a></li>
+<li><a href="#9isdisjoint-%E6%96%B9%E6%B3%95-">（9）isdisjoint() 方法 *</a></li>
+<li><a href="#10issubset-%E6%96%B9%E6%B3%95-">（10）issubset() 方法 *</a></li>
+<li><a href="#11issuperset-%E6%96%B9%E6%B3%95-">（11）issuperset() 方法 *</a></li>
+<li><a href="#12pop-%E6%96%B9%E6%B3%95">（12）pop() 方法</a></li>
+<li><a href="#13remove-%E6%96%B9%E6%B3%95">（13）remove() 方法</a></li>
+<li><a href="#14symmetric_difference-%E6%96%B9%E6%B3%95">（14）symmetric_difference() 方法</a></li>
+<li><a href="#15symmetric_difference_update-%E6%96%B9%E6%B3%95">（15）symmetric_difference_update() 方法</a></li>
+<li><a href="#16union-%E6%96%B9%E6%B3%95-">（16）union() 方法 *</a></li>
+<li><a href="#17update-%E6%96%B9%E6%B3%95">（17）update() 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#23-frozenset-%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%86%E5%90%88set-%E9%9B%86%E5%90%88%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%89%88%E6%9C%AC">2.3 frozenset 类型的集合（set 集合的不可变版本）</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p><strong>字典</strong>（<code>&lt;class &#39;dict&#39;&gt;</code>）和 <strong>集合</strong>（<code>&lt;class &#39;set&#39;&gt;</code>）不是序列，但是可迭代对象，可以使用 <code>collections</code> 库中的 <code>abc</code> 模块里面的 <code>Sequence</code> <strong>基类</strong> 来判断一个类型是不是属于序列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> abc</span><br><span class="line"></span><br><span class="line">lst = <span class="built_in">list</span>() <span class="comment"># 创建空列表</span></span><br><span class="line">tup = <span class="built_in">tuple</span>() <span class="comment"># 创建空元组</span></span><br><span class="line">ss = <span class="built_in">str</span>() <span class="comment"># 创建空字符串</span></span><br><span class="line">d = <span class="built_in">dict</span>() <span class="comment"># 创建空字典</span></span><br><span class="line">st = <span class="built_in">set</span>() <span class="comment"># 创建空集合</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(lst, abc.<span class="type">Sequence</span>)) <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(tup, abc.<span class="type">Sequence</span>)) <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(ss, abc.<span class="type">Sequence</span>)) <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(d, abc.<span class="type">Sequence</span>)) <span class="comment"># False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(st, abc.<span class="type">Sequence</span>)) <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>集合和字典不支持索引</strong>、<strong>切片</strong>、<strong>相加和相乘操作</strong>。</p>
+</li>
+</ul>
+<h2 id="一、dict-字典"><a href="#一、dict-字典" class="headerlink" title="一、dict 字典"></a>一、dict 字典</h2><h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><ul>
+<li><p>类型 <code>&lt;class &#39;dict&#39;&gt;</code>。</p>
+</li>
+<li><p>字典类型是 <code>Python</code> 中唯一的 <strong>映射类型</strong>，即通过一个元素，可以唯一找到另一个元素。</p>
+</li>
+<li><p>字典中，习惯将各元素对应的 <strong>索引</strong> 称为 <strong>键</strong>（<code>key</code>），各个键对应的 <strong>元素</strong> 称为 <strong>值</strong>（<code>value</code>），键及其关联的值称为 “<strong>键值对</strong>”。</p>
+</li>
+<li><p>字典的每个键值对使用冒号 <code>:</code> 隔开写成 <code>key: value</code> 的格式，每个键值对<br>之间用逗号 <code>,</code> 隔开，包括在花括号 <code>&#123;&#125;</code> 中。例：<code>&#123;&quot;name&quot;: &quot;dong&quot;, &quot;age&quot;: 18&#125;</code>。</p>
+</li>
+<li><p>字典是一种 <strong>可变数据类型</strong>。</p>
+</li>
+<li><p><strong>字典作为可迭代对象时</strong>，<strong>只有键参与迭代</strong>。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tup = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(tup))  <span class="comment"># [&#x27;name&#x27;, &#x27;age&#x27;]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字典中，<strong>键</strong> 必须 <strong>唯一</strong>，但值可不唯一，即为不同键赋同一值。</p>
+<ul>
+<li>如果字典的键重复，会自动去重，即键保持不变，留下最新的值，相当于更新键值对。</li>
+</ul>
+</li>
+<li><p>字典中，值可以取任何数据类型，但 <strong>键</strong> 必须是 <strong>不可变类型</strong> 且内部不包含可变数据类型（例：元组中包含列表，这种也是不允许的）。</p>
+</li>
+</ul>
+<h3 id="1-2-创建字典的六种方式"><a href="#1-2-创建字典的六种方式" class="headerlink" title="1.2 创建字典的六种方式"></a>1.2 创建字典的六种方式</h3><h4 id="1-2-1-使用-创建字典"><a href="#1-2-1-使用-创建字典" class="headerlink" title="1.2.1 使用 { } 创建字典"></a>1.2.1 使用 { } 创建字典</h4><h5 id="（1）直接在空字典-里面写键值对"><a href="#（1）直接在空字典-里面写键值对" class="headerlink" title="（1）直接在空字典 {} 里面写键值对"></a>（1）直接在空字典 {} 里面写键值对</h5><ul>
+<li><p>由于字典中每个元素都包含 <strong>两部分</strong>，分别是 <strong>键</strong>（<code>key</code>）和 <strong>值</strong>（<code>value</code>），因此在创建字典时，键和值之间使用 <strong>冒号</strong> <code>:</code> 分隔，相邻元素之间使用 <strong>逗号</strong> <code>,</code> 分隔，所有元素放在大括号 <code>&#123;&#125;</code> 中。</p>
+</li>
+<li><p>格式：<code>dictname = &#123;&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: &#39;value2&#39;, ..., &#39;keyN&#39;: valueN&#125;</code>，其中 <code>dictname</code> 表示字典变量名，<code>&#39;keyN&#39;: valueN</code> 表示各个元素的键值对。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（2）定义一个空字典，再向其中添加键值对"><a href="#（2）定义一个空字典，再向其中添加键值对" class="headerlink" title="（2）定义一个空字典，再向其中添加键值对"></a>（2）定义一个空字典，再向其中添加键值对</h5><ul>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line">d[<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;dong&quot;</span></span><br><span class="line">d[<span class="string">&quot;age&quot;</span>] = <span class="number">18</span></span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 18&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-2-2-使用-dict-内置函数创建字典"><a href="#1-2-2-使用-dict-内置函数创建字典" class="headerlink" title="1.2.2 使用 dict 内置函数创建字典"></a>1.2.2 使用 dict 内置函数创建字典</h4><h5 id="（1）方式一：使用关键字参数创建"><a href="#（1）方式一：使用关键字参数创建" class="headerlink" title="（1）方式一：使用关键字参数创建"></a>（1）方式一：使用关键字参数创建</h5><ul>
+<li><p>格式：<code>dict(**kwarg)</code> 用于创建字典。当不传递 <code>**kwarg</code> 参数时，创建一个空字典，即 <code>dict()</code> 创建空字典。</p>
+<ul>
+<li><p><code>**kwarg</code> 是 <strong>双星号</strong> 参数，即 <strong>字典可变长</strong> 参数，表示 <code>dict</code> 函数可以接受 <strong>0个或多个参数</strong>，并且这些传进来的参数要求以 <strong>关键字参数</strong> 的形式导入，且都被存放在字典 <code>kwarg</code> 中。</p>
+</li>
+<li><p>双星号（<code>**</code>）参数与单星号（<code>*</code>）参数都是 <strong>不定长参数</strong>。</p>
+</li>
+<li><p>关键字参数中的 <strong>关键字</strong> 会自动变成 <strong>字符串</strong> 类型，作为字典中的 <strong>键</strong>。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出 &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 18, &#x27;height&#x27;: 226&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>(name=<span class="string">&#x27;dong&#x27;</span>, age=<span class="number">18</span>, height=<span class="number">226</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用此方式创建字典时，字符串键不能带引号。</li>
+</ul>
+</li>
+</ul>
+<h5 id="（2）方式二：使用映射对象创建字典"><a href="#（2）方式二：使用映射对象创建字典" class="headerlink" title="（2）方式二：使用映射对象创建字典"></a>（2）方式二：使用映射对象创建字典</h5><ul>
+<li><p>格式：<code>dict(mapping, **kwarg)</code> 用于创建字典。<code>mapping</code> 是一种关联式的容器类型，它存储了对象与对象之间的映射关系。</p>
+</li>
+<li><p>通过 <code>zip</code> 函数、<code>map</code> 函数等可以直接生成 <code>mapping</code> 类型的数据。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">7</span>))</span><br><span class="line">han = [<span class="string">&quot;壹&quot;</span>, <span class="string">&quot;贰&quot;</span>, <span class="string">&quot;叁&quot;</span>, <span class="string">&quot;肆&quot;</span>, <span class="string">&quot;伍&quot;</span>, <span class="string">&quot;陆&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>(<span class="built_in">zip</span>(num, han)))  <span class="comment"># &#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 4: &#x27;肆&#x27;, 5: &#x27;伍&#x27;, 6: &#x27;陆&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>(<span class="built_in">zip</span>(num, han), name=<span class="string">&quot;dong&quot;</span>))  <span class="comment"># &#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 4: &#x27;肆&#x27;, 5: &#x27;伍&#x27;, 6: &#x27;陆&#x27;, &#x27;name&#x27;: &#x27;dong&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（3）方式三：使用可迭代对象创建字典"><a href="#（3）方式三：使用可迭代对象创建字典" class="headerlink" title="（3）方式三：使用可迭代对象创建字典"></a>（3）方式三：使用可迭代对象创建字典</h5><ul>
+<li><p>格式：<code>dict(iterable, **kwarg)</code> 用于创建字典。<code>iterable</code> 数据中每一项的长度必须为 <code>2</code>，其中第 <code>1</code> 个元素作为键，第 <code>2</code> 个元素作为值。否则抛出异常：<code>ValueError: dictionary update sequence element #0 has length 3; 2 is required</code>。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)]))</span><br><span class="line"><span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, &#x27;name&#x27;: &#x27;dong&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)], name=<span class="string">&quot;dong&quot;</span>))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-2-3-使用类方法-fromkeys-创建字典"><a href="#1-2-3-使用类方法-fromkeys-创建字典" class="headerlink" title="1.2.3 使用类方法 fromkeys() 创建字典"></a>1.2.3 使用类方法 fromkeys() 创建字典</h4><ul>
+<li><p>格式：<code>dictname = dict.fromkeys(iterable[，value=None])</code>，用于创建带有默认值的字典。其中 <code>iterable</code> 参数表示字典中的所有键，<code>value</code> 参数表示默认值，如果不写，则为空值 <code>None</code>。这种创建方式通常用于 <strong>初始化字典</strong>。</p>
+</li>
+<li><p><code>fromkeys</code> 是一种 <strong>类方法</strong>，直接使用字典类型 <code>dict</code> 进行调用。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>.fromkeys(<span class="string">&quot;hello&quot;</span>))  <span class="comment"># &#123;&#x27;h&#x27;: None, &#x27;e&#x27;: None, &#x27;l&#x27;: None, &#x27;o&#x27;: None&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dict</span>.fromkeys(<span class="string">&quot;dong&quot;</span>, <span class="string">&quot;cool&quot;</span>))  <span class="comment"># &#123;&#x27;d&#x27;: &#x27;cool&#x27;, &#x27;o&#x27;: &#x27;cool&#x27;, &#x27;n&#x27;: &#x27;cool&#x27;, &#x27;g&#x27;: &#x27;cool&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-3-访问字典"><a href="#1-3-访问字典" class="headerlink" title="1.3 访问字典"></a>1.3 访问字典</h3><h4 id="1-3-1-使用键访问"><a href="#1-3-1-使用键访问" class="headerlink" title="1.3.1 使用键访问"></a>1.3.1 使用键访问</h4><ul>
+<li><p>列表和元组是通过下标来访问元素的，而字典是 <strong>通过键来访问对应的值</strong>。格式：<code>dictname[key]</code>，其中 <code>dictname</code> 表示字典的名称，<code>key</code> 表示键名。<strong>注</strong>：当键不存在时，会抛出 <code>KeyError</code> 异常。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="number">6</span>, <span class="string">&#x27;陆&#x27;</span>)])</span><br><span class="line"><span class="built_in">print</span>(han[<span class="number">6</span>]) <span class="comment"># 输出：陆</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字典中的元素是无序的，每个元素的位置都不固定，所以字典不能像列表和元组那样采用切片的方式一次性访问多个元素。</p>
+</li>
+</ul>
+<h4 id="1-3-2-使用-get-方法访问"><a href="#1-3-2-使用-get-方法访问" class="headerlink" title="1.3.2 使用 get 方法访问"></a>1.3.2 使用 get 方法访问</h4><ul>
+<li><p>字典提供了 <code>get()</code> 方法来获取指定键对应的值（<strong>推荐</strong>）。当指定键不存在时，<code>get()</code> 方法不会抛出异常。</p>
+</li>
+<li><p>格式：<code>dictname.get(key, default=None)</code>，其中 <code>dictname</code> 表示字典的名称，<code>key</code> 表示要访问的键，<code>default</code> 表示键不存在时，此方法返回的默认值，默认为 <code>None</code>。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="number">6</span>, <span class="string">&#x27;陆&#x27;</span>)])</span><br><span class="line"><span class="built_in">print</span>(han.get(<span class="number">6</span>)) <span class="comment"># 输出：陆</span></span><br><span class="line"><span class="built_in">print</span>(han.get(<span class="number">8</span>)) <span class="comment"># 输出：None</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-4-删除字典"><a href="#1-4-删除字典" class="headerlink" title="1.4 删除字典"></a>1.4 删除字典</h3><ul>
+<li><p>对于已经创建的字典，如果不再使用，可以使用 <code>del</code> 关键字将其删除。格式为：<code>del dictname</code>，其中 <code>dictname</code> 表示要删除字典的名称。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="number">6</span>, <span class="string">&#x27;陆&#x27;</span>)])</span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># &#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 4: &#x27;肆&#x27;, 5: &#x27;伍&#x27;, 6: &#x27;陆&#x27;&#125;</span></span><br><span class="line"><span class="keyword">del</span> han</span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 抛出异常：NameError: name &#x27;han&#x27; is not defined</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-5-键值对操作"><a href="#1-5-键值对操作" class="headerlink" title="1.5 键值对操作"></a>1.5 键值对操作</h3><h4 id="1-5-1-添加键值对"><a href="#1-5-1-添加键值对" class="headerlink" title="1.5.1 添加键值对"></a>1.5.1 添加键值对</h4><ul>
+<li><p>添加新的键值对直接给不存在的 <code>key</code> 赋值即可，语法格式：<code>dictname[key] = value</code>，其中 <code>dictname</code> 表示字典的名称；<code>key</code> 和 <code>value</code> 表示新添加的键值对。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 18&#125;</span></span><br><span class="line">d[<span class="string">&quot;height&quot;</span>] = <span class="number">188</span></span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 18, &#x27;height&#x27;: 188&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-5-2-修改键值对"><a href="#1-5-2-修改键值对" class="headerlink" title="1.5.2 修改键值对"></a>1.5.2 修改键值对</h4><ul>
+<li><p>字典中的键（<code>key</code>）不能被修改，只能修改值（<code>value</code>）。当修改的键不存在时，会新增键值对。</p>
+</li>
+<li><p>字典中各元素的键必须是唯一的，因此，如果新添加元素的键与已存在元素的键相同，那么键所对应的值就会被新的值替换掉，以此达到修改元素值的目的。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 18&#125;</span></span><br><span class="line">d[<span class="string">&quot;age&quot;</span>] = <span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 20&#125;</span></span><br><span class="line">d[<span class="string">&quot;height&quot;</span>] = <span class="number">188</span></span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 20, &#x27;height&#x27;: 188&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-5-3-删除键值对"><a href="#1-5-3-删除键值对" class="headerlink" title="1.5.3 删除键值对"></a>1.5.3 删除键值对</h4><ul>
+<li><p>格式：<code>del dictname[key]</code>，用于删除字典中的键值对，其中 <code>dictname</code> 表示字典的名称，<code>key</code> 表示键。<strong>注</strong>：当键不存在时，会抛出 <code>KeyError</code> 异常。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">d = &#123;&#125;</span><br><span class="line">d[<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;dong&quot;</span></span><br><span class="line">d[<span class="string">&quot;age&quot;</span>] = <span class="number">18</span></span><br><span class="line"><span class="keyword">del</span> d[<span class="string">&quot;age&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;dong&#x27;&#125;</span></span><br><span class="line"><span class="keyword">del</span> d[<span class="string">&quot;height&quot;</span>]  <span class="comment"># KeyError: &#x27;height&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-5-4-判断字典中是否存在指定键值对"><a href="#1-5-4-判断字典中是否存在指定键值对" class="headerlink" title="1.5.4 判断字典中是否存在指定键值对"></a>1.5.4 判断字典中是否存在指定键值对</h4><ul>
+<li><p>如果要判断字典中是否存在指定键值对，首先应判断字典中是否有对应的键。</p>
+</li>
+<li><p>判断字典是否包含指定键值对的键，可以使用 <code>in</code> 或 <code>not in</code> 运算符。示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="number">6</span>, <span class="string">&#x27;陆&#x27;</span>)])</span><br><span class="line"><span class="built_in">print</span>(<span class="number">6</span> <span class="keyword">in</span> han) <span class="comment"># 输出：True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="number">8</span> <span class="keyword">not</span> <span class="keyword">in</span> han) <span class="comment"># 输出：True</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 <code>in</code>（或 <code>not in</code>）运算符，我们可以判断字典中是否包含某个键，如果存在，可以通过键获取对应的值，判断是否有指定的键值对存在。</p>
+</li>
+</ul>
+<h3 id="1-6-字典方法"><a href="#1-6-字典方法" class="headerlink" title="1.6 字典方法"></a>1.6 字典方法</h3><ul>
+<li><p><code>Python</code> 字典的数据类型为 <code>dict</code>，我们可使用 <code>dir(dict)</code> 来查看该类型包含哪些方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">dir</span>(<span class="built_in">dict</span>))</span><br><span class="line"><span class="comment"># [&#x27;__class__&#x27;, &#x27;__contains__&#x27;, &#x27;__delattr__&#x27;, &#x27;__delitem__&#x27;, &#x27;__dir__&#x27;, &#x27;__doc__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__eq__&#x27;, &#x27;__format__&#x27;, &#x27;__ge__&#x27;, &#x27;__getattribute__&#x27;, &#x27;__getitem__&#x27;, &#x27;__gt__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__hash__&#x27;, &#x27;__init__&#x27;, &#x27;__init_subclass__&#x27;, &#x27;__iter__&#x27;, &#x27;__le__&#x27;, &#x27;__len__&#x27;, &#x27;__lt__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__ne__&#x27;, &#x27;__new__&#x27;, &#x27;__reduce__&#x27;, &#x27;__reduce_ex__&#x27;, &#x27;__repr__&#x27;, &#x27;__reversed__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__setattr__&#x27;, &#x27;__setitem__&#x27;, &#x27;__sizeof__&#x27;, &#x27;__str__&#x27;, &#x27;__subclasshook__&#x27;, &#x27;clear&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;copy&#x27;, &#x27;fromkeys&#x27;, &#x27;get&#x27;, &#x27;items&#x27;, &#x27;keys&#x27;, &#x27;pop&#x27;, &#x27;popitem&#x27;, &#x27;setdefault&#x27;, &#x27;update&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;values&#x27;]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>不以双下划线 <code>__</code> 开头结尾的方法都是字典的对象方法，即 <code>clear</code>, <code>copy</code>, <code>fromkeys</code>, <code>get</code>, <code>items</code>, <code>keys</code>, <code>pop</code>, <code>popitem</code>, <code>setdefault</code>, <code>update</code>, <code>values</code>。</p>
+</li>
+<li><p><code>fromkeys()</code> 和 <code>get()</code> 的用法在 <a href="#123-%E4%BD%BF%E7%94%A8%E7%B1%BB%E6%96%B9%E6%B3%95-fromkeys-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8">1.2.3 使用类方法 fromkeys() 创建字典</a> 与 <a href="#13-%E8%AE%BF%E9%97%AE%E5%AD%97%E5%85%B8">1.3 访问字典</a> 中进行了介绍。</p>
+</li>
+<li><p><strong>修改字典的方法都是对原字典进行修改</strong>，即 <code>in-place</code> 操作（原地操作），无返回值，或者说返回值为 <code>None</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-6-1-clear-方法"><a href="#1-6-1-clear-方法" class="headerlink" title="1.6.1 clear() 方法"></a>1.6.1 clear() 方法</h4><ul>
+<li><p>格式：<code>dictname.clear()</code>，用于删除字典内所有元素。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="string">&#x27;weekend&#x27;</span>, [<span class="string">&#x27;陆&#x27;</span>, <span class="string">&#x27;柒&#x27;</span>])])</span><br><span class="line">han.clear()</span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-6-2-copy-方法"><a href="#1-6-2-copy-方法" class="headerlink" title="1.6.2 copy() 方法"></a>1.6.2 copy() 方法</h4><ul>
+<li><p>格式：<code>dictname.copy()</code>，返回一个字典的 <strong>浅拷贝</strong>（如果属性是基本类型，拷贝的是基本类型的值；如果属性是引用类型，拷贝的是内存地址）。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">p = Person(<span class="string">&quot;dong&quot;</span>, <span class="number">18</span>) <span class="comment"># 创建 Person 类对象 p</span></span><br><span class="line">dict_test = &#123;<span class="string">&quot;work&quot;</span>:<span class="string">&quot;student&quot;</span>, <span class="string">&quot;person&quot;</span>:p&#125; <span class="comment"># 创建字典 dict_test</span></span><br><span class="line">dict_copy = dict_test.copy() <span class="comment"># 浅拷贝字典</span></span><br><span class="line">dict_copy[<span class="string">&quot;work&quot;</span>] = <span class="string">&quot;coder&quot;</span> <span class="comment"># 基本类型拷贝的是值，修改字典拷贝不会影响源字典</span></span><br><span class="line"><span class="built_in">print</span>(dict_test[<span class="string">&quot;work&quot;</span>],dict_test[<span class="string">&quot;person&quot;</span>].name,dict_test[<span class="string">&quot;person&quot;</span>].age) <span class="comment"># 输出：student dong 18</span></span><br><span class="line">dict_copy[<span class="string">&quot;person&quot;</span>].name = <span class="string">&quot;kexin&quot;</span> <span class="comment"># 引用类型拷贝的是内存地址，修改字典拷贝会影响源字典</span></span><br><span class="line"><span class="built_in">print</span>(dict_test[<span class="string">&quot;work&quot;</span>],dict_test[<span class="string">&quot;person&quot;</span>].name,dict_test[<span class="string">&quot;person&quot;</span>].age) <span class="comment"># 输出：student kexin 18</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-6-3-items-方法"><a href="#1-6-3-items-方法" class="headerlink" title="1.6.3 items() 方法"></a>1.6.3 items() 方法</h4><ul>
+<li><p>格式：<code>dictname.items()</code>，用于返回字典中所有的键值对（<code>key-value</code>）组成的 <strong>视图对象</strong>。</p>
+<ul>
+<li><p>视图并不真正的存储数据，但透过视图，可以看到真实的数据，这意味着，当真实数据发生变化时，视图对象也会相应地更新。</p>
+</li>
+<li><p>视图对象不是迭代器，但是一种可迭代对象。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> types <span class="keyword">import</span> GeneratorType</span><br><span class="line"><span class="keyword">from</span> collections.abc <span class="keyword">import</span> Iterable</span><br><span class="line"></span><br><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)])</span><br><span class="line">items = han.items()</span><br><span class="line"><span class="built_in">print</span>(items)  <span class="comment"># 输出：dict_items([(1, &#x27;壹&#x27;), (2, &#x27;贰&#x27;), (3, &#x27;叁&#x27;)])</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.items(), GeneratorType))  <span class="comment"># False，不是迭代器</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.items(), Iterable))  <span class="comment"># True，是可迭代对象</span></span><br><span class="line">han[<span class="number">6</span>] = <span class="string">&quot;陆&quot;</span>  <span class="comment"># 修改原数据</span></span><br><span class="line"><span class="built_in">print</span>(items)  <span class="comment"># 视图对象更新，输出：dict_items([(1, &#x27;壹&#x27;), (2, &#x27;贰&#x27;), (3, &#x27;叁&#x27;), (6, &#x27;陆&#x27;)])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以使用 <code>list()</code> 函数将返回值转换成列表，或使用 <code>for in</code> 循环遍历返回值。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-6-4-keys-方法"><a href="#1-6-4-keys-方法" class="headerlink" title="1.6.4 keys() 方法"></a>1.6.4 keys() 方法</h4><ul>
+<li><p>格式：<code>dictname.keys()</code>，用于返回字典中的所有键（<code>key</code>）组成的 <strong>视图对象</strong>。</p>
+<ul>
+<li><p>视图并不真正的存储数据，但透过视图，可以看到真实的数据，这意味着，当真实数据发生变化时，视图对象也会相应地更新。</p>
+</li>
+<li><p>视图对象不是迭代器，但是一种可迭代对象。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> types <span class="keyword">import</span> GeneratorType</span><br><span class="line"><span class="keyword">from</span> collections.abc <span class="keyword">import</span> Iterable</span><br><span class="line"></span><br><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)])</span><br><span class="line">keys = han.keys()</span><br><span class="line"><span class="built_in">print</span>(keys)  <span class="comment"># 输出：dict_keys([1, 2, 3])</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.keys(), GeneratorType))  <span class="comment"># False，不是迭代器</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.keys(), Iterable))  <span class="comment"># True，是可迭代对象</span></span><br><span class="line">han[<span class="number">6</span>] = <span class="string">&quot;陆&quot;</span>  <span class="comment"># 修改原数据</span></span><br><span class="line"><span class="built_in">print</span>(keys)  <span class="comment"># 视图对象更新，输出：dict_keys([1, 2, 3, 6])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以使用 <code>list()</code> 函数将返回值转换成列表，或使用 <code>for in</code> 循环遍历返回值。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-6-5-pop-方法"><a href="#1-6-5-pop-方法" class="headerlink" title="1.6.5 pop() 方法"></a>1.6.5 pop() 方法</h4><ul>
+<li><p>格式：<code>dictname.pop(key[, default])</code>，用于删除字典中指定的键值对，返回键 <code>key</code> 对应的值，未找到 <code>key</code> 则返回 <code>default</code>。</p>
+<ul>
+<li><code>default</code>：指定当键不存在时应该返回的值，如果 <code>default</code> 未给出且 <code>key</code> 不存在于字典中，则会抛出异常 <code>KeyError</code>。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="string">&#x27;weekend&#x27;</span>, [<span class="string">&#x27;陆&#x27;</span>, <span class="string">&#x27;柒&#x27;</span>])])</span><br><span class="line"><span class="built_in">print</span>(han.pop(<span class="string">&#x27;weekend&#x27;</span>))  <span class="comment"># 输出：[&#x27;陆&#x27;, &#x27;柒&#x27;]</span></span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(han.pop(<span class="string">&quot;workday&quot;</span>, <span class="string">&quot;未找到&quot;</span>))  <span class="comment"># 输出：未找到</span></span><br><span class="line"><span class="built_in">print</span>(han.pop(<span class="string">&quot;workday&quot;</span>))  <span class="comment"># 抛出异常 KeyError: &#x27;workday&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-6-6-popitem-方法"><a href="#1-6-6-popitem-方法" class="headerlink" title="1.6.6 popitem() 方法"></a>1.6.6 popitem() 方法</h4><ul>
+<li><p>格式：<code>dictname.popitem()</code>，用于删除并返回字典中的 <strong>最后一个</strong> 键值对。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="string">&#x27;weekend&#x27;</span>, [<span class="string">&#x27;陆&#x27;</span>, <span class="string">&#x27;柒&#x27;</span>])])</span><br><span class="line"><span class="built_in">print</span>(han.popitem())  <span class="comment"># 输出：(&#x27;weekend&#x27;, [&#x27;陆&#x27;, &#x27;柒&#x27;])</span></span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-6-7-setdefault-方法"><a href="#1-6-7-setdefault-方法" class="headerlink" title="1.6.7 setdefault() 方法"></a>1.6.7 setdefault() 方法</h4><ul>
+<li><p>格式：<code>dictname.setdefault(key, default=None)</code>，用于返回某个 <code>key</code> 对应的 <code>value</code>。</p>
+<ul>
+<li><p>如果 <code>key</code> 存在，则返回对应的 <code>value</code>。</p>
+</li>
+<li><p>如果 <code>key</code> 不存在，则加入值为 <code>default</code> 的键值对，并返回 <code>default</code>（默认为 <code>None</code>）。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>), (<span class="number">4</span>, <span class="string">&#x27;肆&#x27;</span>), (<span class="number">5</span>, <span class="string">&#x27;伍&#x27;</span>), (<span class="string">&#x27;weekend&#x27;</span>, [<span class="string">&#x27;陆&#x27;</span>, <span class="string">&#x27;柒&#x27;</span>])])</span><br><span class="line"><span class="built_in">print</span>(han.setdefault(<span class="string">&quot;weekend&quot;</span>,[<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>])) <span class="comment"># 输出：[&#x27;陆&#x27;, &#x27;柒&#x27;]</span></span><br><span class="line"><span class="built_in">print</span>(han) <span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 4: &#x27;肆&#x27;, 5: &#x27;伍&#x27;, &#x27;weekend&#x27;: [&#x27;陆&#x27;, &#x27;柒&#x27;]&#125;</span></span><br><span class="line"><span class="built_in">print</span>(han.setdefault(<span class="string">&quot;workday&quot;</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])) <span class="comment"># 输出：[1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="built_in">print</span>(han) <span class="comment"># 输出：&#123;1: &#x27;壹&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 4: &#x27;肆&#x27;, 5: &#x27;伍&#x27;, &#x27;weekend&#x27;: [&#x27;陆&#x27;, &#x27;柒&#x27;], &#x27;workday&#x27;: [1, 2, 3, 4, 5]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果指定的 <code>key</code> 存在，那么直接返回该 <code>key</code> 对应的 <code>value</code>。</p>
+</li>
+<li><p>如果指定的 <code>key</code> 不存在，那么先为该 <code>key</code> 设置默认值 <code>defaultvalue</code>，然后再返回该 <code>key</code> 对应的 <code>defaultvalue</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-6-8-update-方法"><a href="#1-6-8-update-方法" class="headerlink" title="1.6.8 update() 方法"></a>1.6.8 update() 方法</h4><ul>
+<li><p>格式：<code>dictname.update([other])</code>，用于使用 <strong>键值对</strong> 参数来更新己有的字典。</p>
+<ul>
+<li><code>other</code> 可以是另一个字典对象；可以是一个包含键值对的可迭代对象；可以是关键字参数。</li>
+</ul>
+</li>
+<li><p>在执行 <code>update</code> 方法时，如果被更新的字典中己包含对应的键值对，那么原 <code>value</code> 会被覆盖；如果被更新的字典中不包含对应的键值对，则将键值对添加到已有字典中。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)])</span><br><span class="line">han.update(&#123;<span class="number">1</span>: <span class="string">&quot;一&quot;</span>&#125;)  <span class="comment"># 更新原有键值对</span></span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;一&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;&#125;</span></span><br><span class="line">other = &#123;<span class="number">6</span>: <span class="string">&quot;陆&quot;</span>, <span class="number">9</span>: <span class="string">&quot;玖&quot;</span>&#125;  <span class="comment"># other 为另一个字典对象</span></span><br><span class="line">han.update(other)</span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;一&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 6: &#x27;陆&#x27;, 9: &#x27;玖&#x27;&#125;</span></span><br><span class="line">other = [(<span class="string">&#x27;weekend&#x27;</span>, <span class="string">&quot;[&#x27;陆&#x27;, &#x27;柒&#x27;]&quot;</span>)]   <span class="comment"># other 为一个包含键/值对的可迭代对象</span></span><br><span class="line">han.update(other)</span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;一&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 6: &#x27;陆&#x27;, 9: &#x27;玖&#x27;, &#x27;weekend&#x27;: &quot;[&#x27;陆&#x27;, &#x27;柒&#x27;]&quot;&#125;</span></span><br><span class="line">han.update(workday=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])  <span class="comment"># other 为关键字参数</span></span><br><span class="line"><span class="built_in">print</span>(han)  <span class="comment"># 输出：&#123;1: &#x27;一&#x27;, 2: &#x27;贰&#x27;, 3: &#x27;叁&#x27;, 6: &#x27;陆&#x27;, 9: &#x27;玖&#x27;, &#x27;weekend&#x27;: &quot;[&#x27;陆&#x27;, &#x27;柒&#x27;]&quot;, &#x27;workday&#x27;: [1, 2, 3, 4, 5]&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="1-6-9-values-方法"><a href="#1-6-9-values-方法" class="headerlink" title="1.6.9 values() 方法"></a>1.6.9 values() 方法</h4><ul>
+<li><p>格式：<code>dictname.value()</code>，用于返回字典中的所有值（<code>value</code>）组成的 <strong>视图对象</strong>。</p>
+<ul>
+<li><p>视图并不真正的存储数据，但透过视图，可以看到真实的数据，这意味着，当真实数据发生变化时，视图对象也会相应地更新。</p>
+</li>
+<li><p>视图对象不是迭代器，但是一种可迭代对象。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> types <span class="keyword">import</span> GeneratorType</span><br><span class="line"><span class="keyword">from</span> collections.abc <span class="keyword">import</span> Iterable</span><br><span class="line"></span><br><span class="line">han = <span class="built_in">dict</span>([(<span class="number">1</span>, <span class="string">&#x27;壹&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;贰&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;叁&#x27;</span>)])</span><br><span class="line">values = han.values()</span><br><span class="line"><span class="built_in">print</span>(values)  <span class="comment"># 输出：dict_values([&#x27;壹&#x27;, &#x27;贰&#x27;, &#x27;叁&#x27;])</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.values(), GeneratorType))  <span class="comment"># False，不是迭代器</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(han.values(), Iterable))  <span class="comment"># True，是可迭代对象</span></span><br><span class="line">han[<span class="number">6</span>] = <span class="string">&quot;陆&quot;</span>  <span class="comment"># 修改原数据</span></span><br><span class="line"><span class="built_in">print</span>(values)  <span class="comment"># 视图对象更新，输出：dict_values([&#x27;壹&#x27;, &#x27;贰&#x27;, &#x27;叁&#x27;, &#x27;陆&#x27;])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以使用 <code>list()</code> 函数将返回值转换成列表，或使用 <code>for in</code> 循环遍历返回值。</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、set-集合"><a href="#二、set-集合" class="headerlink" title="二、set 集合"></a>二、set 集合</h2><h3 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h3><ul>
+<li><p>类型 <code>&lt;class &#39;set&#39;&gt;</code>。</p>
+</li>
+<li><p><code>Python</code> 中的集合用来保存 <strong>不重复</strong> 的元素，即集合中的元素都是 <strong>唯一</strong> 的，互不相同。</p>
+</li>
+<li><p><code>Python</code> 中的集合是 <strong>无序</strong> 的，所以每次输出时元素的排序顺序可能会不同。</p>
+</li>
+<li><p>集合不是序列，但是可迭代对象，是 <strong>可变</strong> 的。<strong>注</strong>：这里的可变不是指元素可变。</p>
+</li>
+<li><p>从 <strong>形式</strong> 上看，集合与字典类似，<code>Python</code> 集合会将所有元素放在一对大括号 <code>&#123;&#125;</code> 中，相邻元素之间用 “<code>,</code>” 分隔：<code>&#123;element1, element2, ..., elementn&#125;</code>。</p>
+</li>
+<li><p>从 <strong>内容</strong> 上看，同一集合中，只能存储 <strong>不可变</strong> 的数据类型（数值、字符串、元组等），无法存储可变的数据类型（列表、元组套列表、字典、集合等），否则 <code>Python</code> 解释器会抛出 <code>TypeError</code> 异常。</p>
+</li>
+<li><p><code>Python</code> 中有 <strong>两种集合</strong> 类型，一种是 <code>set</code> <strong>类型</strong> 的集合，另一种是 <code>frozenset</code> <strong>类型</strong> 的集合，它们唯一的区别是：<code>set</code> 类型集合可以进行添加、删除元素的操作，而 <code>forzenset</code> 类型集合不可以。因此，<code>set</code> 集合是可变的，<code>forzenset</code> 集合是不可变的。</p>
+</li>
+</ul>
+<h3 id="2-2-set-类型的集合"><a href="#2-2-set-类型的集合" class="headerlink" title="2.2 set 类型的集合"></a>2.2 set 类型的集合</h3><h4 id="2-2-1-创建-set-集合"><a href="#2-2-1-创建-set-集合" class="headerlink" title="2.2.1 创建 set 集合"></a>2.2.1 创建 set 集合</h4><h5 id="（1）使用-创建-set-集合"><a href="#（1）使用-创建-set-集合" class="headerlink" title="（1）使用 { } 创建 set 集合"></a>（1）使用 { } 创建 set 集合</h5><ul>
+<li><p>通过 <code>( )</code> 创建 <code>set</code> 集合后，一般使用 <code>=</code> 将它赋值给某个变量，格式：<code>setname = &#123;element1,element2,...,elementn&#125;</code>，其中 <code>setname</code> 表示集合名，<code>element1 ~ elementn</code> 表示集合的元素。</p>
+<ul>
+<li><strong>注</strong>：不能使用 <code>&#123; &#125;</code> 创建 <strong>空集合</strong>，因为 <code>Python</code> 解释器会将 <code>&#123; &#125;</code> 视为一个空字典。</li>
+</ul>
+</li>
+</ul>
+<h5 id="（2）使用-set-函数创建-set-集合"><a href="#（2）使用-set-函数创建-set-集合" class="headerlink" title="（2）使用 set() 函数创建 set 集合"></a>（2）使用 set() 函数创建 set 集合</h5><ul>
+<li><p>格式：<code>set([iterable])</code>，用于创建集合并返回，其中 <code>iterable</code> 表示字符串、列表、元组、<code>range</code> 对象等可迭代对象。如果未指定 <code>iterable</code>，则返回空集合，即 <code>set()</code> 返回空集合。</p>
+<ul>
+<li><strong>注</strong>：只能使用 <code>set()</code> 函数创建 <strong>空集合</strong>。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>) <span class="comment"># 只会保存一个重复元素，空格也是一个元素</span></span><br><span class="line"><span class="built_in">print</span>(s) <span class="comment"># 输出：&#123;&#x27;e&#x27;, &#x27;l&#x27;, &#x27; &#x27;, &#x27;r&#x27;, &#x27;d&#x27;, &#x27;w&#x27;, &#x27;o&#x27;, &#x27;h&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-2-2-访问-set-集合元素"><a href="#2-2-2-访问-set-集合元素" class="headerlink" title="2.2.2 访问 set 集合元素"></a>2.2.2 访问 set 集合元素</h4><ul>
+<li><p>由于集合中的元素是无序的，因此无法像列表一样使用索引访问元素。<code>Python</code> 中，<strong>访问</strong> 集合元素 <strong>最常用</strong> 的方法是使用 <strong>循环结构</strong>，将集合中的数据逐一读取出来。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> ele <span class="keyword">in</span> s:</span><br><span class="line">    <span class="built_in">print</span>(ele,end=<span class="string">&#x27; &#x27;</span>) <span class="comment"># 输出：h w   o l e r d </span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-2-3-删除-set-集合"><a href="#2-2-3-删除-set-集合" class="headerlink" title="2.2.3 删除 set 集合"></a>2.2.3 删除 set 集合</h4><ul>
+<li>格式：<code>del setname</code>，对于已经创建的集合，如果不再使用，可以使用 <code>del</code> 关键字将其删除，其中 <code>setname</code> 表示要删除的集合名称。</li>
+</ul>
+<h4 id="2-2-4-集合特性"><a href="#2-2-4-集合特性" class="headerlink" title="2.2.4 集合特性"></a>2.2.4 集合特性</h4><h5 id="（1）去重"><a href="#（1）去重" class="headerlink" title="（1）去重"></a>（1）去重</h5><ul>
+<li><p>利用集合特性，可以实现数据的去重。</p>
+</li>
+<li><p>示例：把一个列表变成集合，自动就会去掉重复的元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(lst)  <span class="comment"># [&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;o&#x27;, &#x27;r&#x27;, &#x27;l&#x27;, &#x27;d&#x27;]</span></span><br><span class="line">s = <span class="built_in">set</span>(lst)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27; &#x27;, &#x27;d&#x27;, &#x27;h&#x27;, &#x27;l&#x27;, &#x27;e&#x27;, &#x27;r&#x27;, &#x27;w&#x27;, &#x27;o&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（2）关系测试"><a href="#（2）关系测试" class="headerlink" title="（2）关系测试"></a>（2）关系测试</h5><ul>
+<li><p>利用集合特性，可以使用集合测试多组数据之间的交集、差集、并集等关系。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)  <span class="comment"># &#123;&#x27;r&#x27;, &#x27;o&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;h&#x27;&#125;</span></span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;hello world dong&quot;</span>)  <span class="comment"># &#123;&#x27;g&#x27;, &#x27;r&#x27;, &#x27;o&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;n&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;h&#x27;&#125;</span></span><br><span class="line">s3 = <span class="built_in">set</span>(<span class="string">&quot;welcome to python&quot;</span>)  <span class="comment"># &#123;&#x27;c&#x27;, &#x27;t&#x27;, &#x27;o&#x27;, &#x27;m&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;p&#x27;, &#x27;n&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;h&#x27;, &#x27;y&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s1 &lt; s2)  <span class="comment"># 判断 s1 是否为 s2 的真子集, True</span></span><br><span class="line"><span class="built_in">print</span>(s2 &gt; s1)  <span class="comment"># 判断 s2 是否为 s1 的真父集, True</span></span><br><span class="line"><span class="built_in">print</span>(s1 &lt;= s2)  <span class="comment"># 判断 s1 是否为 s2 的子集, True</span></span><br><span class="line"><span class="built_in">print</span>(s2 &gt;= s1)  <span class="comment"># 判断 s2 是否为 s1 的父集, True</span></span><br><span class="line"><span class="built_in">print</span>(s2 &amp; s3)  <span class="comment"># 返回 s2 和 s3 的交集：&#123;&#x27;l&#x27;, &#x27;o&#x27;, &#x27;h&#x27;, &#x27;n&#x27;, &#x27; &#x27;, &#x27;e&#x27;, &#x27;w&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s2 | s3)  <span class="comment"># 返回 s2 和 s3 的并集：&#123;&#x27;h&#x27;, &#x27;n&#x27;, &#x27;y&#x27;, &#x27;t&#x27;, &#x27;l&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;m&#x27;, &#x27;p&#x27;, &#x27;d&#x27;, &#x27;o&#x27;, &#x27;r&#x27;, &#x27;e&#x27;, &#x27;c&#x27;, &#x27;g&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s3 - s2)  <span class="comment"># 返回 s3 和 s2 的差集：&#123;&#x27;y&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;c&#x27;, &#x27;p&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s2 ^ s3)  <span class="comment"># 返回 s1 和 s2 中不同时存在的元素（对称差集）：&#123;&#x27;d&#x27;, &#x27;p&#x27;, &#x27;y&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;r&#x27;, &#x27;c&#x27;, &#x27;g&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>((s2 | s3) - (s2 &amp; s3))  <span class="comment"># 等价于 (s2 和 s3 的并集) - (s2 和 s3 的交集)：&#123;&#x27;d&#x27;, &#x27;p&#x27;, &#x27;y&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;r&#x27;, &#x27;c&#x27;, &#x27;g&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>((s2 - s3) | (s3 - s2))  <span class="comment"># 等价于 (s3 和 s2 的差集) 与 (s2 和 s3 的差集) 的并集：&#123;&#x27;d&#x27;, &#x27;p&#x27;, &#x27;y&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;r&#x27;, &#x27;c&#x27;, &#x27;g&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2-2-5-set-集合方法"><a href="#2-2-5-set-集合方法" class="headerlink" title="2.2.5 set 集合方法"></a>2.2.5 set 集合方法</h4><ul>
+<li><p><code>Python</code> 集合的数据类型为 <code>set</code>，我们可使用 <code>dir(set)</code> 来查看该类型包含哪些方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">dir</span>(<span class="built_in">set</span>))</span><br><span class="line"><span class="comment"># [&#x27;__and__&#x27;, &#x27;__class__&#x27;, &#x27;__contains__&#x27;, &#x27;__delattr__&#x27;, &#x27;__dir__&#x27;, &#x27;__doc__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__eq__&#x27;, &#x27;__format__&#x27;, &#x27;__ge__&#x27;, &#x27;__getattribute__&#x27;, &#x27;__gt__&#x27;, &#x27;__hash__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__iand__&#x27;, &#x27;__init__&#x27;, &#x27;__init_subclass__&#x27;, &#x27;__ior__&#x27;, &#x27;__isub__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__iter__&#x27;, &#x27;__ixor__&#x27;, &#x27;__le__&#x27;, &#x27;__len__&#x27;, &#x27;__lt__&#x27;, &#x27;__ne__&#x27;, &#x27;__new__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__or__&#x27;, &#x27;__rand__&#x27;, &#x27;__reduce__&#x27;, &#x27;__reduce_ex__&#x27;, &#x27;__repr__&#x27;, &#x27;__ror__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__rsub__&#x27;, &#x27;__rxor__&#x27;, &#x27;__setattr__&#x27;, &#x27;__sizeof__&#x27;, &#x27;__str__&#x27;, &#x27;__sub__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__subclasshook__&#x27;, &#x27;__xor__&#x27;, &#x27;add&#x27;, &#x27;clear&#x27;, &#x27;copy&#x27;, &#x27;difference&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;difference_update&#x27;, &#x27;discard&#x27;, &#x27;intersection&#x27;, &#x27;intersection_update&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;isdisjoint&#x27;, &#x27;issubset&#x27;, &#x27;issuperset&#x27;, &#x27;pop&#x27;, &#x27;remove&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;symmetric_difference&#x27;, &#x27;symmetric_difference_update&#x27;, &#x27;union&#x27;, &#x27;update&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>不以双下划线 <code>__</code> 开头结尾的方法都是集合的对象方法，即 <code>add</code>, <code>clear</code>, <code>copy</code>, <code>difference</code>, <code>difference_update</code>, <code>discard</code>, <code>intersection</code>, <code>intersection_update</code>, <code>isdisjoint</code>, <code>issubset</code>, <code>issuperset</code>, <code>pop</code>, <code>remove</code>, <code>symmetric_difference</code>, <code>symmetric_difference_update</code>, <code>union</code>, <code>update</code>。</p>
+</li>
+<li><p>下方带星号（<code>*</code>）的方法表示 <code>frozenset</code> 集合也可以调用，用法与 <code>set</code> 集合相同。不带星号（<code>*</code>）的方法表示仅 <code>set</code> 集合可以调用。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="（1）add-方法"><a href="#（1）add-方法" class="headerlink" title="（1）add() 方法"></a>（1）add() 方法</h5><ul>
+<li><p>格式：<code>setname.add(element)</code>，用于向 <code>set</code> 集合中 <strong>添加不可变类型</strong> 元素，无返回值。如果元素存在，则对集合没有影响。</p>
+<ul>
+<li>注：使用 <code>add()</code> 方法只能添加 <strong>数字</strong>、<strong>字符串</strong>、<strong>元组</strong> 或 <strong>布尔类型</strong>（<code>True</code> 和 <code>False</code>）这类不可变的数据，不能添加列表、字典、集合这类可变的数据，否则 <code>Python</code> 解释器会抛出 <code>TypeError</code> 异常。如果添加的元素在集合中已存在，则该元素只会出现一次，重复的会忽略。</li>
+</ul>
+</li>
+<li><p><code>add</code> 方法每次只能添加一个元素，即 <code>element</code> 会被当做一个整体添加到集合中。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">s.add(<span class="string">&quot;dong&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;w&#x27;, &#x27;e&#x27;, &#x27;h&#x27;, &#x27;d&#x27;, &#x27;dong&#x27;, &#x27;r&#x27;, &#x27;l&#x27;, &#x27;o&#x27;, &#x27; &#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（2）clear-方法"><a href="#（2）clear-方法" class="headerlink" title="（2）clear() 方法"></a>（2）clear() 方法</h5><ul>
+<li><p>格式：<code>setname.clear()</code>，用于移除集合中的所有元素，变成空集合，无返回值。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;h&#x27;, &#x27;w&#x27;, &#x27;r&#x27;, &#x27;d&#x27;, &#x27; &#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;o&#x27;&#125;</span></span><br><span class="line">s.clear()</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># set()</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（3）copy-方法"><a href="#（3）copy-方法" class="headerlink" title="（3）copy() 方法 *"></a>（3）copy() 方法 *</h5><ul>
+<li><p>格式：<code>setname.copy()</code>，返回一个集合的浅拷贝。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;l&#x27;, &#x27;d&#x27;, &#x27;o&#x27;, &#x27; &#x27;, &#x27;e&#x27;, &#x27;h&#x27;, &#x27;w&#x27;, &#x27;r&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s.copy())  <span class="comment"># &#123;&#x27;l&#x27;, &#x27;d&#x27;, &#x27;o&#x27;, &#x27; &#x27;, &#x27;e&#x27;, &#x27;h&#x27;, &#x27;w&#x27;, &#x27;r&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（4）difference-方法"><a href="#（4）difference-方法" class="headerlink" title="（4）difference() 方法 *"></a>（4）difference() 方法 *</h5><ul>
+<li><p>格式：<code>setname.difference(*iterable)</code>，用于返回一个新的集合，集合元素为两个或多个可迭代对象的 <strong>差集</strong>，即包含在 <code>setname</code>，但不在 <code>*iterable</code> 中的元素。</p>
+</li>
+<li><p>对应的运算符 <code>-</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;python&quot;</span>)</span><br><span class="line">s3 = <span class="built_in">set</span>(<span class="string">&quot;python&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s1.difference(lst, tup))  <span class="comment"># set()</span></span><br><span class="line"><span class="built_in">print</span>(s1 - s2 - s3)  <span class="comment"># set()</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（5）difference-update-方法"><a href="#（5）difference-update-方法" class="headerlink" title="（5）difference_update() 方法"></a>（5）difference_update() 方法</h5><ul>
+<li><p>格式：<code>setname.difference_update(*iterable)</code>，用于移除集合  <code>setname</code> 中与可迭代对象 <code>*iterable</code> 共有的元素。</p>
+<ul>
+<li><code>difference_update</code> 方法与 <code>difference</code> 方法的区别：<code>difference</code> 方法返回一个移除相同元素的 <strong>新集合</strong>，而 <code>difference_update</code> 方法是直接在 <strong>原集合</strong> 中移除元素，没有返回值。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;this is a tuple&quot;</span>)</span><br><span class="line">s.difference_update(lst, tup)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;d&#x27;, &#x27;r&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（6）discard-方法"><a href="#（6）discard-方法" class="headerlink" title="（6）discard() 方法"></a>（6）discard() 方法</h5><ul>
+<li><p>格式：<code>setname.discard(element)</code>，用于移除集合中的 <strong>指定元素</strong>，无返回值。如果元素不存在，则不做任何操作。</p>
+<ul>
+<li>注：该方法不同于 <code>remove</code> 方法，因为 <code>remove</code> 方法在移除一个不存在的元素时会抛出 <code>KeyError</code> 异常，而 <code>discard</code> 方法不做任何操作。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;l&#x27;, &#x27;t&#x27;, &#x27;y&#x27;, &#x27;n&#x27;, &#x27;e&#x27;, &#x27;c&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;o&#x27;, &#x27;w&#x27;, &#x27;h&#x27;, &#x27;p&#x27;&#125;</span></span><br><span class="line">s.discard(<span class="string">&quot;l&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;t&#x27;, &#x27;y&#x27;, &#x27;n&#x27;, &#x27;e&#x27;, &#x27;c&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;o&#x27;, &#x27;w&#x27;, &#x27;h&#x27;, &#x27;p&#x27;&#125;</span></span><br><span class="line">s.discard(<span class="string">&quot;A&quot;</span>)  <span class="comment"># 不做任何操作</span></span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;t&#x27;, &#x27;y&#x27;, &#x27;n&#x27;, &#x27;e&#x27;, &#x27;c&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;o&#x27;, &#x27;w&#x27;, &#x27;h&#x27;, &#x27;p&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（7）intersection-方法"><a href="#（7）intersection-方法" class="headerlink" title="（7）intersection() 方法 *"></a>（7）intersection() 方法 *</h5><ul>
+<li><p>格式：<code>setname.intersection(*iterable)</code>，用于返回一个新的集合，集合元素为两个或多个可迭代对象中共有的元素，即 <strong>交集</strong>。</p>
+</li>
+<li><p>对应的运算符 <code>&amp;</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;python&quot;</span>)</span><br><span class="line">s3 = <span class="built_in">set</span>(<span class="string">&quot;python&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s1.intersection(lst, tup))  <span class="comment"># &#123;&#x27;o&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s1 &amp; s2 &amp; s3)  <span class="comment"># &#123;&#x27;o&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（8）intersection-update-方法"><a href="#（8）intersection-update-方法" class="headerlink" title="（8）intersection_update() 方法"></a>（8）intersection_update() 方法</h5><ul>
+<li><p>格式：<code>intersection_update(*iterable)</code>，用于保留两个或更多可迭代对象中 <strong>都存在</strong> 的元素，即 <strong>交集</strong>，移除非交集元素，无返回值。</p>
+</li>
+<li><p><code>intersection_update</code> 方法与 <code>intersection</code> 方法的区别：<code>intersection</code> 方法返回一个 <strong>新集合</strong>，而 <code>intersection_update</code> 方法是在 <strong>原集合</strong> 上移除非交集的元素，无返回值。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;this is a tuple&quot;</span>)</span><br><span class="line">s.intersection_update(lst, tup)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;l&#x27;, &#x27;h&#x27;, &#x27; &#x27;, &#x27;e&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（9）isdisjoint-方法"><a href="#（9）isdisjoint-方法" class="headerlink" title="（9）isdisjoint() 方法 *"></a>（9）isdisjoint() 方法 *</h5><ul>
+<li><p>格式：<code>setname.isdisjoint(iterable)</code>，用于判断集合与可迭代对象是否 <strong>不包含</strong> 相同的元素，如果 <strong>不包含</strong> 返回 <code>True</code>，否则返回 <code>False</code>。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)  <span class="comment"># &#123;&#x27;r&#x27;, &#x27;o&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;h&#x27;&#125;</span></span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;fan&quot;</span>)  <span class="comment"># [&#x27;f&#x27;, &#x27;a&#x27;, &#x27;n&#x27;]</span></span><br><span class="line"><span class="built_in">print</span>(s.isdisjoint(lst))  <span class="comment"># True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（10）issubset-方法"><a href="#（10）issubset-方法" class="headerlink" title="（10）issubset() 方法 *"></a>（10）issubset() 方法 *</h5><ul>
+<li><p>格式：<code>setname.issubset(iterable)</code>，用于判断 <code>setname</code> 是否为 <code>iterable</code> 的 <strong>子集</strong>，即 <code>setname</code> 的所有元素是否都被包含在 <code>iterable</code> 中，如果是则返回 <code>True</code>，否则返回 <code>False</code>。</p>
+</li>
+<li><p>对应的运算符 <code>&lt;=</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)  <span class="comment"># &#123;&#x27;w&#x27;, &#x27;r&#x27;, &#x27; &#x27;, &#x27;l&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;o&#x27;, &#x27;h&#x27;&#125;</span></span><br><span class="line"><span class="comment"># &#123;&#x27;D&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;w&#x27;, &#x27;i&#x27;, &#x27;g&#x27;, &#x27;l&#x27;, &#x27;y&#x27;, &#x27;t&#x27;, &#x27;n&#x27;, &#x27;.&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;c&#x27;, &#x27;h&#x27;, &#x27;p&#x27;, &#x27;,&#x27;, &#x27;o&#x27;, &#x27;r&#x27;&#125;</span></span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;hi, Dr.dong, welcome to python&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;hi, Dr.dong, welcome to python&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s1.issubset(tup))  <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(s1 &lt;= s2)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（11）issuperset-方法"><a href="#（11）issuperset-方法" class="headerlink" title="（11）issuperset() 方法 *"></a>（11）issuperset() 方法 *</h5><ul>
+<li><p>格式：<code>setname.issuperset(iterable)</code>，用于判断 <code>setname</code> 是否为 <code>iterable</code> 的 <strong>父集</strong>，即 <code>iterable</code> 的所有元素是否都被包含在 <code>setname</code> 中，如果是则返回 <code>True</code>，否则返回 <code>False</code>。</p>
+</li>
+<li><p>对应的运算符 <code>&gt;=</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)  <span class="comment"># &#123;&#x27;w&#x27;, &#x27;r&#x27;, &#x27; &#x27;, &#x27;l&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;o&#x27;, &#x27;h&#x27;&#125;</span></span><br><span class="line"><span class="comment"># &#123;&#x27;D&#x27;, &#x27;d&#x27;, &#x27;e&#x27;, &#x27;w&#x27;, &#x27;i&#x27;, &#x27;g&#x27;, &#x27;l&#x27;, &#x27;y&#x27;, &#x27;t&#x27;, &#x27;n&#x27;, &#x27;.&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;c&#x27;, &#x27;h&#x27;, &#x27;p&#x27;, &#x27;,&#x27;, &#x27;o&#x27;, &#x27;r&#x27;&#125;</span></span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;hi, Dr.dong, welcome to python&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s2.issuperset(lst))  <span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(s2 &gt;= s1)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（12）pop-方法"><a href="#（12）pop-方法" class="headerlink" title="（12）pop() 方法"></a>（12）pop() 方法</h5><ul>
+<li><p>格式：<code>setname.pop()</code>，用于 <strong>随机移除</strong> 一个元素，返回移除的元素。如果集合为空则抛出 <code>KeyError</code> 异常。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>()</span><br><span class="line">s.add(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;hello&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s.pop())  <span class="comment"># hello</span></span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># set()</span></span><br><span class="line">s.pop()  <span class="comment"># KeyError: &#x27;pop from an empty set&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（13）remove-方法"><a href="#（13）remove-方法" class="headerlink" title="（13）remove() 方法"></a>（13）remove() 方法</h5><ul>
+<li><p>格式：<code>setname.remove(element)</code>，用于移除集合中的 <strong>指定元素</strong>，无返回值。如果元素不存在，则抛出 <code>KeyError</code> 异常。</p>
+<ul>
+<li>注：该方法不同于 <code>discard</code> 方法，因为 <code>discard</code> 方法在移除一个不存在的元素不做任何操作，而 <code>remove</code> 方法会抛出 <code>KeyError</code> 异常。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;l&#x27;, &#x27;w&#x27;, &#x27;o&#x27;, &#x27;d&#x27;, &#x27;r&#x27;, &#x27;h&#x27;, &#x27; &#x27;, &#x27;e&#x27;&#125;</span></span><br><span class="line">s.remove(<span class="string">&quot;l&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;w&#x27;, &#x27;o&#x27;, &#x27;d&#x27;, &#x27;r&#x27;, &#x27;h&#x27;, &#x27; &#x27;, &#x27;e&#x27;&#125;</span></span><br><span class="line">s.remove(<span class="string">&quot;A&quot;</span>)  <span class="comment"># 抛出异常 KeyError: &#x27;A&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（14）symmetric-difference-方法"><a href="#（14）symmetric-difference-方法" class="headerlink" title="（14）symmetric_difference() 方法"></a>（14）symmetric_difference() 方法</h5><ul>
+<li><p>格式：<code>setname.symmetric_difference(iterable)</code>，返回一个新的集合，集合元素为两个集合中不重叠的元素（对称差集）。</p>
+</li>
+<li><p>对应的运算符 <code>^</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s1.symmetric_difference(lst))  <span class="comment"># &#123;&#x27;d&#x27;, &#x27;p&#x27;, &#x27;y&#x27;, &#x27;c&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;n&#x27;, &#x27;r&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s1 ^ s2)  <span class="comment"># &#123;&#x27;d&#x27;, &#x27;p&#x27;, &#x27;y&#x27;, &#x27;c&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;n&#x27;, &#x27;r&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（15）symmetric-difference-update-方法"><a href="#（15）symmetric-difference-update-方法" class="headerlink" title="（15）symmetric_difference_update() 方法"></a>（15）symmetric_difference_update() 方法</h5><ul>
+<li><p>格式：<code>setname.symmetric_difference_update(iterable)</code>，用于将 <code>iterable</code> 中的元素插入到 <code>setname</code> 中，然后再删除 <code>setname</code> 与 <code>iterable</code> 的交集。</p>
+<ul>
+<li><code>symmetric_difference_update</code> 方法与 <code>symmetric_difference</code> 方法的区别：<code>symmetric_difference</code> 方法返回一个 <strong>新集合</strong>，而 <code>symmetric_difference_update</code> 方法是在 <strong>原集合</strong> 上插入可迭代对象中的元素，然后移除两个对象的交集。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome to python&quot;</span>)</span><br><span class="line">s.symmetric_difference_update(lst)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;y&#x27;, &#x27;c&#x27;, &#x27;r&#x27;, &#x27;d&#x27;, &#x27;p&#x27;, &#x27;m&#x27;, &#x27;t&#x27;, &#x27;n&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（16）union-方法"><a href="#（16）union-方法" class="headerlink" title="（16）union() 方法 *"></a>（16）union() 方法 *</h5><ul>
+<li><p>格式：<code>setname.union(*iterable)</code>，返回一个新集合，新集合是两个或多个可迭代对象的 <strong>并集</strong>，重复的元素只会出现一次。</p>
+</li>
+<li><p>对应的运算符 <code>|</code> 要求符号两端参数都为集合。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="built_in">set</span>(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">s2 = <span class="built_in">set</span>(<span class="string">&quot;welcome&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;dong&quot;</span>)</span><br><span class="line">s3 = <span class="built_in">set</span>(<span class="string">&quot;dong&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s1.union(lst, tup))  <span class="comment"># &#123;&#x27;d&#x27;, &#x27;e&#x27;, &#x27;o&#x27;, &#x27;w&#x27;, &#x27;n&#x27;, &#x27;g&#x27;, &#x27;h&#x27;, &#x27;c&#x27;, &#x27;l&#x27;, &#x27;m&#x27;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(s1 | s2 | s3)  <span class="comment"># &#123;&#x27;d&#x27;, &#x27;e&#x27;, &#x27;o&#x27;, &#x27;w&#x27;, &#x27;n&#x27;, &#x27;g&#x27;, &#x27;h&#x27;, &#x27;c&#x27;, &#x27;l&#x27;, &#x27;m&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（17）update-方法"><a href="#（17）update-方法" class="headerlink" title="（17）update() 方法"></a>（17）update() 方法</h5><ul>
+<li><p>格式：<code>setname.update(*iterable)</code>，用于向 <code>set</code> 集合中添加可迭代对象中的所有元素，无返回值。</p>
+<ul>
+<li>注：使用 <code>update()</code> 方法只能添加 <strong>字符串</strong>、<strong>列表</strong>、<strong>元组</strong>、<strong>字典</strong> 这类可迭代的数据，不能添加 <strong>数字</strong> 或 <strong>布尔类型</strong>（<code>True</code> 和 <code>False</code>）这类不可迭代的数据，否则 <code>Python</code> 解释器会抛出 <code>TypeError</code> 异常。如果添加的元素在集合中已存在，则该元素只会出现一次，重复的会忽略。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">set</span>(<span class="string">&quot;Hello world&quot;</span>)</span><br><span class="line">lst = <span class="built_in">list</span>(<span class="string">&quot;This is a list&quot;</span>)</span><br><span class="line">tup = <span class="built_in">tuple</span>(<span class="string">&quot;This is a tuple&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;o&#x27;, &#x27;r&#x27;, &#x27;H&#x27;, &#x27;l&#x27;, &#x27;w&#x27;, &#x27; &#x27;, &#x27;d&#x27;, &#x27;e&#x27;&#125;</span></span><br><span class="line">s.update(lst, tup)</span><br><span class="line"><span class="built_in">print</span>(s)  <span class="comment"># &#123;&#x27;o&#x27;, &#x27;r&#x27;, &#x27;t&#x27;, &#x27;H&#x27;, &#x27;l&#x27;, &#x27;T&#x27;, &#x27;u&#x27;, &#x27;h&#x27;, &#x27;w&#x27;, &#x27;i&#x27;, &#x27; &#x27;, &#x27;d&#x27;, &#x27;s&#x27;, &#x27;p&#x27;, &#x27;a&#x27;, &#x27;e&#x27;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-3-frozenset-类型的集合（set-集合的不可变版本）"><a href="#2-3-frozenset-类型的集合（set-集合的不可变版本）" class="headerlink" title="2.3 frozenset 类型的集合（set 集合的不可变版本）"></a>2.3 frozenset 类型的集合（set 集合的不可变版本）</h3><ul>
+<li><p>格式：<code>frozenset([iterable])</code>，用于创建一个新的 <code>frozenset</code> 类型集合，即 <strong>冻结集合</strong>。其中 <code>iterable</code> 表示字符串、列表、元组、<code>range</code> 对象等可迭代对象。如果未指定 <code>iterable</code>，则返回空的冻结集合，即 <code>frozenset()</code> 返回空的冻结集合。</p>
+</li>
+<li><p><code>set</code> 中的元素必须是不可变类型的，而 <code>frozenset</code> 是可以作为 <code>set</code> 元素的。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs = <span class="built_in">frozenset</span>(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(fs)</span><br><span class="line"><span class="built_in">print</span>(&#123;fs&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>set</code> 集合中所有能修改集合的方法（<code>remove()</code>、<code>discard()</code>、<code>add()</code> 等），<code>frozenset</code> 都不支持；<code>set</code> 集合中不修改集合的方法 <code>fronzenset</code> 都支持。</p>
+</li>
+<li><p>可以通过 <code>dir(frozenset)</code> 来查看 <code>frozenset</code> 集合支持的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">dir</span>(<span class="built_in">frozenset</span>))</span><br><span class="line"><span class="comment"># [&#x27;__and__&#x27;, &#x27;__class__&#x27;, &#x27;__contains__&#x27;, &#x27;__delattr__&#x27;, &#x27;__dir__&#x27;, &#x27;__doc__&#x27;, &#x27;__eq__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__format__&#x27;, &#x27;__ge__&#x27;, &#x27;__getattribute__&#x27;, &#x27;__gt__&#x27;, &#x27;__hash__&#x27;, &#x27;__init__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__init_subclass__&#x27;, &#x27;__iter__&#x27;, &#x27;__le__&#x27;, &#x27;__len__&#x27;, &#x27;__lt__&#x27;, &#x27;__ne__&#x27;, &#x27;__new__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__or__&#x27;, &#x27;__rand__&#x27;, &#x27;__reduce__&#x27;, &#x27;__reduce_ex__&#x27;, &#x27;__repr__&#x27;, &#x27;__ror__&#x27;, &#x27;__rsub__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__rxor__&#x27;, &#x27;__setattr__&#x27;, &#x27;__sizeof__&#x27;, &#x27;__str__&#x27;, &#x27;__sub__&#x27;, &#x27;__subclasshook__&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;__xor__&#x27;, &#x27;copy&#x27;, &#x27;difference&#x27;, &#x27;intersection&#x27;, &#x27;isdisjoint&#x27;, &#x27;issubset&#x27;, &#x27;issuperset&#x27;, </span></span><br><span class="line"><span class="comment">#  &#x27;symmetric_difference&#x27;, &#x27;union&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>不以双下划线 <code>__</code> 开头结尾的方法都是 <code>frozenset</code> 集合的对象方法，即 <code>copy</code>, <code>difference</code>, <code>intersection</code>, <code>isdisjoint</code>, <code>issubset</code>, <code>issuperset</code>, <code>symmetric_difference</code>, <code>union</code>。</p>
+</li>
+<li><p><code>frozenset</code> 集合的这些方法和 <code>set</code> 集合中同名方法的功能是一样的。</p>
+</li>
+</ul>
+</li>
+<li><p>两种情况下可以使用 <code>fronzenset</code>：</p>
+<ul>
+<li><p>当集合的元素不需要改变时，我们可以使用 <code>fronzenset</code> 替代 <code>set</code>，这样更加安全。</p>
+</li>
+<li><p>程序要求必须是不可变对象时也可以使用 <code>fronzenset</code> 替代 <code>set</code>。例：字典（<code>dict</code>）的键（<code>key</code>）就要求是不可变对象。<code>set</code> 集合中的元素要求是不可变的，可以使用 <code>fronzenset</code> 集合作为 <code>set</code> 集合中的元素。</p>
+</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="一个学渣">DONG</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/program/python3/05/">http://example.com/program/python3/05/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">东北的冬DONG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/program/python3/06/" title="Python3 深拷贝和浅拷贝"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover46.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python3 深拷贝和浅拷贝</div></div></a></div><div class="next-post pull-right"><a href="/program/python3/04/" title="Python3 序列（下）"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover19.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python3 序列（下）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ide/pycharm/" title="PyCharm 的配置及使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover38.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">PyCharm 的配置及使用</div></div></a></div><div><a href="/program/python3/01/" title="Python3 入门"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover44.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">Python3 入门</div></div></a></div><div><a href="/program/python3/02/" title="Python3 基本数据类型"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover40.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">Python3 基本数据类型</div></div></a></div><div><a href="/program/python3/03/" title="Python3 序列（上）"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover02.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-13</div><div class="title">Python3 序列（上）</div></div></a></div><div><a href="/program/python3/04/" title="Python3 序列（下）"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover19.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-14</div><div class="title">Python3 序列（下）</div></div></a></div><div><a href="/program/python3/06/" title="Python3 深拷贝和浅拷贝"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover46.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-16</div><div class="title">Python3 深拷贝和浅拷贝</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">DONG</div><div class="author-info__description">一个还未入门人工智能的学渣</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xindong2020"><i class="iconfont icon-GitHub"></i><span>点个关注不迷路</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:641743220@qq.com" target="_blank" title="Email"><i class="iconfont icon-mail-fill"></i></a><a class="social-icon" href="https://github.com/xindong2020" target="_blank" title="Github"><i class="iconfont icon-GitHub"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">走过路过不要错过，点个关注，打个赏，你的鼓励是我坚持下去的动力</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81dict-%E5%AD%97%E5%85%B8"><span class="toc-number">2.</span> <span class="toc-text">一、dict 字典</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8%E7%9A%84%E5%85%AD%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 创建字典的六种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E4%BD%BF%E7%94%A8-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.2.1 使用 { } 创建字典</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E7%9B%B4%E6%8E%A5%E5%9C%A8%E7%A9%BA%E5%AD%97%E5%85%B8-%E9%87%8C%E9%9D%A2%E5%86%99%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">（1）直接在空字典 {} 里面写键值对</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%A9%BA%E5%AD%97%E5%85%B8%EF%BC%8C%E5%86%8D%E5%90%91%E5%85%B6%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">（2）定义一个空字典，再向其中添加键值对</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E4%BD%BF%E7%94%A8-dict-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.2.</span> <span class="toc-text">1.2.2 使用 dict 内置函数创建字典</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">（1）方式一：使用关键字参数创建</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">（2）方式二：使用映射对象创建字典</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.2.3.</span> <span class="toc-text">（3）方式三：使用可迭代对象创建字典</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E4%BD%BF%E7%94%A8%E7%B1%BB%E6%96%B9%E6%B3%95-fromkeys-%E5%88%9B%E5%BB%BA%E5%AD%97%E5%85%B8"><span class="toc-number">2.2.3.</span> <span class="toc-text">1.2.3 使用类方法 fromkeys() 创建字典</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%AE%BF%E9%97%AE%E5%AD%97%E5%85%B8"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 访问字典</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E4%BD%BF%E7%94%A8%E9%94%AE%E8%AE%BF%E9%97%AE"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.3.1 使用键访问</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E4%BD%BF%E7%94%A8-get-%E6%96%B9%E6%B3%95%E8%AE%BF%E9%97%AE"><span class="toc-number">2.3.2.</span> <span class="toc-text">1.3.2 使用 get 方法访问</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%88%A0%E9%99%A4%E5%AD%97%E5%85%B8"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 删除字典</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E9%94%AE%E5%80%BC%E5%AF%B9%E6%93%8D%E4%BD%9C"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 键值对操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-1-%E6%B7%BB%E5%8A%A0%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.5.1.</span> <span class="toc-text">1.5.1 添加键值对</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-2-%E4%BF%AE%E6%94%B9%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.5.2.</span> <span class="toc-text">1.5.2 修改键值对</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-3-%E5%88%A0%E9%99%A4%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.5.3.</span> <span class="toc-text">1.5.3 删除键值对</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-4-%E5%88%A4%E6%96%AD%E5%AD%97%E5%85%B8%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E6%8C%87%E5%AE%9A%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-number">2.5.4.</span> <span class="toc-text">1.5.4 判断字典中是否存在指定键值对</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E5%AD%97%E5%85%B8%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.</span> <span class="toc-text">1.6 字典方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-1-clear-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.1.</span> <span class="toc-text">1.6.1 clear() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-2-copy-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.2.</span> <span class="toc-text">1.6.2 copy() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-3-items-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.3.</span> <span class="toc-text">1.6.3 items() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-4-keys-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.4.</span> <span class="toc-text">1.6.4 keys() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-5-pop-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.5.</span> <span class="toc-text">1.6.5 pop() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-6-popitem-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.6.</span> <span class="toc-text">1.6.6 popitem() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-7-setdefault-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.7.</span> <span class="toc-text">1.6.7 setdefault() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-8-update-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.8.</span> <span class="toc-text">1.6.8 update() 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-9-values-%E6%96%B9%E6%B3%95"><span class="toc-number">2.6.9.</span> <span class="toc-text">1.6.9 values() 方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81set-%E9%9B%86%E5%90%88"><span class="toc-number">3.</span> <span class="toc-text">二、set 集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-set-%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%86%E5%90%88"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 set 类型的集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88"><span class="toc-number">3.2.1.</span> <span class="toc-text">2.2.1 创建 set 集合</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BD%BF%E7%94%A8-%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">（1）使用 { } 创建 set 集合</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8-set-%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA-set-%E9%9B%86%E5%90%88"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">（2）使用 set() 函数创建 set 集合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E8%AE%BF%E9%97%AE-set-%E9%9B%86%E5%90%88%E5%85%83%E7%B4%A0"><span class="toc-number">3.2.2.</span> <span class="toc-text">2.2.2 访问 set 集合元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E5%88%A0%E9%99%A4-set-%E9%9B%86%E5%90%88"><span class="toc-number">3.2.3.</span> <span class="toc-text">2.2.3 删除 set 集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E9%9B%86%E5%90%88%E7%89%B9%E6%80%A7"><span class="toc-number">3.2.4.</span> <span class="toc-text">2.2.4 集合特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%8E%BB%E9%87%8D"><span class="toc-number">3.2.4.1.</span> <span class="toc-text">（1）去重</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E7%B3%BB%E6%B5%8B%E8%AF%95"><span class="toc-number">3.2.4.2.</span> <span class="toc-text">（2）关系测试</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-set-%E9%9B%86%E5%90%88%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.</span> <span class="toc-text">2.2.5 set 集合方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89add-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.1.</span> <span class="toc-text">（1）add() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89clear-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.2.</span> <span class="toc-text">（2）clear() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89copy-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.3.</span> <span class="toc-text">（3）copy() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89difference-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.4.</span> <span class="toc-text">（4）difference() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%885%EF%BC%89difference-update-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.5.</span> <span class="toc-text">（5）difference_update() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%886%EF%BC%89discard-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.6.</span> <span class="toc-text">（6）discard() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%887%EF%BC%89intersection-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.7.</span> <span class="toc-text">（7）intersection() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%888%EF%BC%89intersection-update-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.8.</span> <span class="toc-text">（8）intersection_update() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%889%EF%BC%89isdisjoint-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.9.</span> <span class="toc-text">（9）isdisjoint() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8810%EF%BC%89issubset-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.10.</span> <span class="toc-text">（10）issubset() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8811%EF%BC%89issuperset-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.11.</span> <span class="toc-text">（11）issuperset() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8812%EF%BC%89pop-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.12.</span> <span class="toc-text">（12）pop() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8813%EF%BC%89remove-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.13.</span> <span class="toc-text">（13）remove() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8814%EF%BC%89symmetric-difference-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.14.</span> <span class="toc-text">（14）symmetric_difference() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8815%EF%BC%89symmetric-difference-update-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.15.</span> <span class="toc-text">（15）symmetric_difference_update() 方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8816%EF%BC%89union-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.16.</span> <span class="toc-text">（16）union() 方法 *</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%8817%EF%BC%89update-%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.5.17.</span> <span class="toc-text">（17）update() 方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-frozenset-%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%86%E5%90%88%EF%BC%88set-%E9%9B%86%E5%90%88%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 frozenset 类型的集合（set 集合的不可变版本）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/deeplearning/pytorch/01/" title="配置 GPU 版本 PyTorch"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover03.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置 GPU 版本 PyTorch"/></a><div class="content"><a class="title" href="/deeplearning/pytorch/01/" title="配置 GPU 版本 PyTorch">配置 GPU 版本 PyTorch</a><time datetime="2024-01-19T16:00:00.000Z" title="发表于 2024-01-20 00:00:00">2024-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/program/python3/09/" title="Python3 函数（上）"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 函数（上）"/></a><div class="content"><a class="title" href="/program/python3/09/" title="Python3 函数（上）">Python3 函数（上）</a><time datetime="2024-01-18T16:00:00.000Z" title="发表于 2024-01-19 00:00:00">2024-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/program/python3/08/" title="Python3 迭代问题"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover39.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 迭代问题"/></a><div class="content"><a class="title" href="/program/python3/08/" title="Python3 迭代问题">Python3 迭代问题</a><time datetime="2024-01-17T16:00:00.000Z" title="发表于 2024-01-18 00:00:00">2024-01-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 <i id="heartbeat" class="fa fas fa-heartbeat"></i> By DONG</div><div class="footer_custom_text"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/beian.png"> <a href="https://beian.miit.gov.cn/" target="_blank">琼ICP备2022012184号-1</a> <p> <a style="margin-inline:5px" target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=plastic&logo=Hexo" title="本站框架使用 Hexo 7.0.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://github.com/jerryc127/hexo-theme-butterfly"><img src="https://img.shields.io/badge/Theme-Butterfly-pink?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACEAAAAZCAYAAAC%2FzUevAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAISUlEQVRIiZVWW2xcVxVde59z78yd8TtOHD9iOzi10yQtgYa8SiGRUgpFrSiQSPzRH6p%2B0A9EK%2FgazQcIKGpVCRDhA8QXUlK1qPRBafOoqjYtoa2a4KRp3DhxnDh%2Be2zPzJ17z9mbj8TFOJGA%2FXV19%2BOsu9e6%2B2zCMhtGIduEuvsEuFuhNYWerAHvp6hMrUcxxv9pV1DI5ZBdkxq73Xr6HECqoOOnUDq6F0W3FEdLD4pCWELjnQ7uUQXtJlAqpNNCdNqLHjHAiTY8PkWA%2FLfDD2G%2F2YltbaHhL5HSXlK9nVRXMQgKOhKCfvUxzg1vw%2B9SALBLieOoCxhuPYM2ElAnwKgCgZLuJIP2Gmv3xbRw%2BBgwtfwrVto%2FUQgZQbu39B0F7QK0gxSxAhUPdDJ0QKBdd6F9BMB%2FgmAsEqM%2Bq1AF9A2FPOeVlRQbxNBdnnFAolzYrslzGhcuEYo3deQYClbDXF%2FAZj9Ev%2BpUPzGCY1AMeyBngW8rtDkBsqNo%2FJSFT0GkgFjoIhOmvOK9KVRejDGmLdLTQhyc9oJ9PjD3phy5k5r%2BRWoYZkCXU9Bal7vNEn%2FDidxDTo%2BSw5EKKqcXMFYC2oN1qNsA4m1QLDqU9CYQFazyDYgnPPGMkFS3SDEBAAEmTrsfvmnClhFQ%2BF0h2s75oHwiePIFLD4%2BsZS%2FOtrWXrX0lVBxZ6B42zv54wQmxnbi6fgG2HQcv6g6QklVJnvR4f%2FNwg3bgDedRTKipGWAs3JDtAzoZ%2FHL8qbkR2eTNP51wjKcMu2RPHa8iifzAOhYU6GJGsw9acC7EsYp0fQ3A%2Fjxhd14urrUrfP4fkaZAiGdy6ByRfGIuwkE4bBvwetjnmheGPm38fO65XwzWIfiD0erwKHYYDKxZq%2Fv4P6DOGhdVL%2FFG9rrQENVr88%2BW04mV%2BolQtdqbzUgorFVKM4vp5KXBxKOO0864iywOjSdKwsdwGFfg7%2BUAscqrG3O6MbmrnJ91WBj1VB9jd2x8fnyWPEWok0j25Uyi2MMr%2FTxyhcJ63CNVTWQ3pU%2BANg3W12IIadTIBbDa41xvWK51ZFOLKQ4NwhUbpWXGOlNGeL1fwAh8EPeGO%2FI9N2qGKEoCxk3p4wropqzZPs9NOsZw1514VZdAABP6HFGxGXSCyt99iM8UZ%2FJt%2FZ5CfLe%2B2lT05lKVmdJsead%2FE%2FadpSTyZUzoa7CLq3DGARrnOp6JjJgf7UcmpuG2DEUbH0m35MazhroxeoccDb%2FszvY20YrXAqTy0M2F639uvOyV9i3%2BlCnK5FeTI1GwqbOUXbPK5nkFcxgfnnhkmGpIzOlJB2AtirJovc8vW583q%2FAQL4%2B0xhnsFehjSzUaxrCR1XRQ4omIRlLMu0vc43k3pSwzxMGlDUHpdVKRM4APsC2MGrafAhPRcsrZ8eNiGJeCZaI1kDJetX505jR5XGv4slcmjNbXcCbEgvxpBbQVVDkPXCnAPvE8N3Wk84I8Zw3%2BndV98zcQm3UtOb7vaF%2BH6AzVtkRdmvp0Mj%2Bcwdw2ANAHayUvauQVQtFMxFfzZIvZ7DlU9oKKNiFDtefY7stYVziFJdI%2BJNr86VPupuyA1bsE%2FDUB%2Bg0J0xvpUYmUgIqGvJxoLI4lR2M4tLLZe9f86qxEO3MdO1arygwACxiWkOgyteFXQ8V48BxP64qcH2E39HdOEBBZldqeNI7%2B9fZ1B%2BZmx3%2B%2BD0U41jBqWFJjF5zrCftQhp%2FEEbZ8451bWK0az8wtAWP1TCD2h9mCh%2FXd9VFTLTDBbTnuc5cfPDK98Zn0aGrdD4xyqxAXgHOCGqT2KyHUAjRYztB2GcYaerxQe3q7PABXL8GDuGpKLGyDqR1FjRYS%2FQ8J3E67onecIaMZnjbWHu0dmlkP4xiLDCnXConSWRAQ%2Fu11s6%2BtmZcJTaSiqoBKEsgSjM%2BncXrzN3ZLoP8N1X9Kuf1RC4IziwBEAg1tkuPC3R3YlB1hKMXy%2BUZ%2FjKKtQWdP1llvF01tL1ied%2BfO3%2FaIhACgAOjP6jGbvwU%2BephBvphzYO2J9fnGKIgVtVQoAQAjZ2f2UQUPASWJo394RE%2F%2BtH9Q4%2FVbmiEn299Zm1icF9s%2BPYa4%2BhirXbqAIoJAcA%2FcDCYbl%2FoSww%2F4I32KGjYef%2BeonY%2BTufmWuu73WJpOuCgcSeF%2BgVAvSFzwbM%2BSKL3QfA3MfiTet1KrKmV8K35S8mHrRsybrE0HRhbv4otDwjpXUbRyarnOElfyk%2FEI3tRdAYAfosX9CydgI90tTK1KAMAZSwFXUHU3O1Z202UbzD1MkfXf8J1AG1m0FYoOggEIjZMHJtMMOgincw08LoEGOAgu5ksbmMyq8lQozKcKJ2ZqZY%2FeiguVgHAAEAvkLVtUT8MdgMYUsWbqjQPgzxIQyGFhXU2sosuTC%2BhQiVVWg9gC4AmJSkx8KFafY1yuJBVG7oUDQamDqDIQGpQHUpFzhIhz8wbTBhc3lf61tyLeFEsAOTRSJ4oY6FrAIwJZcdweWLGo9FgdclkWrop8OUken%2FaV3BGY2yfynbqrLFUIWCjkr6fJvo8Ll4b8RhNmrCJJnphe3NrbDJd0dK4EaDkfUfQZsIoEkhb4E3YjKsE3NisBlGqfT5uHkpzOA3lvOFqPzbkLgQssc%2F1ulpT3j1w%2FOGEwTcm4uHyoSuFM9SZqRCZJuNkYvra8JVHbmzPAKAXC3J8D2wltEG20VvxDVEiutEIW1F9N13QkQMopsCylb%2BAAm9tQoNraPiitdhAGbsYRJlRY%2FiycHz5%2FncfW8CyRWQpZzM20yAGdeXtKRB6dtfvm6PYrSNNuiRGl09c1gOD4wuldx6dLJaXFpt%2FAVb5XJ1uIF%2BlAAAAAElFTkSuQmCC&labelColor=%23EBF948&color=%23EE6C95" title="本站主题使用 Butterfly 4.11.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-yellow?style=plastic&logo=jsDelivr" title="本站使用 jsdelivr 加速静态资源"></a> <a style="margin-inline:5px" target="_blank" href="https://pages.github.com/"><img src="https://img.shields.io/badge/source-GitHub-pink?style=plastic&logo=GitHub&labelColor=%235DF5DC&color=%23F5805D" title="本站托管于 Github"></a> <a style="margin-inline:5px" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright%20-%20CC%20BY--NC--SA%204.0%20-%20red?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAvXpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjabZBRDsQgCET%2FOcUeAUQFj6MpTXqDPf5isWmb7HzAc0xwEOx77PCZIs2Qi2httaIrt9xSd1AMuUsdCYszhVVqdBpvH4oFJHWL7wtM0Zjcmbyt2WsQp%2FApr0GyoDYVzPcgvVItbWpMMyEm%2BXcGk2FqVtoYZtJFMWq8yp6IK%2Fezdz9LmpRPVq%2BFZ0LfBOYnPFfaXbGa%2B4%2BE7SJ%2B%2B2pBcEWHH954UN5i%2FAOVAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAGbElEQVRYhc1Ya4hcZxl%2B3ve7nfvZmZ3J7uzMJtsk5jLBEhtqL3hZxF7SLrRWa0WL%2BkMKiph6KdQoBC1WWvpDsJT8ESWCWMGKgQq2ylICpaU2RkuMgsVm7c0aE%2BMmu%2Bvuzjn%2BmDlnzsycmcxefvjCgQPf8zzvc77vvN95vwP8nwath1SrjVbPn7t8cGVl5YYIqMdxPAnAtCQvE9FZMP1RG3OiXLzq2bm5Vy5soueeEJ5t36OknCWiBoB4mIuIF6U0P7P8wvs33ZGn9V2S%2Bc8DDEQANQA0mvf5GCnNrOOMXrthQxXfL2khnupNRgtE4hfM6ou2bV%2FvbtkyVq%2FXvd27d%2Fu2bVellNPM%2FCABswBWurirUtuPAgfUukwVPb1PMP8NHcsi%2FsmsHwTCwhqktjH4ewAWslpCmFmEW9eiA1RdtZ%2BJzrWFqCGU%2FXihsD1ck1AmLGCrIDqOzOwTm1NDmyu7GBfMc6kp4kvaHrlrvYa6giTzAwBWE30hzW%2BBaXlFohHiN2gv3UXLKr9vmIQzMzPO9PS0d%2BTIEb4SWAnx2Yy5SGrvoYGE0FKfQ%2BYlFSY42A9bLdo1S%2BtvKKmeE0KcI6IIQCSEnJdSvyi19S17dLTajy%2BZDyNdVl7W7ti7c4GVChxB9FZiTCr3sTxcHdC20Y8S0RJ6t4TuPeySMt6X%2BngjSfRsCxsJ6TyTiwqMuj8VZHUWlQNON6ZchmeknO00QKtSqpeVUseUUj8WQryAzi0iktr%2Fbl5O32AXgf6L5j4Y2UHtuh73WvCriZgyhfvyhFytfpJNKIT%2BpQnDHd04Y7C9swIp0s7YHXmaivloqqfcYx2DE759YyJCJN%2FB1LTVLbDFNTcRKC11obyjAAa96KyYf5rgWdlngN7C8DTqrdwRsbo0dvXNbmYm5MOZhE%2FkZXGUfAbpUutTw%2BzcRSAQRP8gogUh1YnS5Hsm8nCS6OWWduT41Zl0wFbiRGrMKd3eTTxQ8UtMtJxidPFjVzKVRBiGO2q1mj0Io5m%2FnRjTVvhwe0DwBbTeBW%2Fsxi3dxJJjZpBWmlhEZaanMDYSvsAdiTFp%2FOMAgPsOFEJu7kExsT6fRwyNfAAdy7i5Me7pfWi9Z1K7vwcA%2FtVrS14UxwQARHI%2BjxitRCPJPQvzr802tmrJZEIoiuMCALAxmcpixHnERrbTZV7dbGO0SNm8BAB8jRMuEVqGooabR2TJl9sul73NNlb2qZjmIvpP0wtASvA8mt%2Bsxsj%2BO0e6iQVLfArtVuWtTTfmiNsSfWm8XwMAMxBLxl%2BakIiW%2FvrSNd3EESV%2F1yIijpbHdHHnvmGThpb%2BulTqhOX4h0vV7bvyMPPL8f7knlieSQc8o77fdhw%2BksMlLds9vzDe48OYuqEGWzGfTXjKLh7KwylBzzUxFNvBxCfSgWrBuT0hs7Bew3Rv4%2BYaPoT2XrZseZUPXMmYY8TRlMPycnnq2vFuTKVgbSXQaqJb3fPe0XTw7jq0ZHq7JRLZYeWj3QI7AaOYXmmbkxe1PfKRPEO1IChaSvwQmTZaWv538rC2lo%2BkGOM%2F3ft0WiafhZil%2FQfgbtGNGdV6LxO9k%2BAARFLplxzHeygIgi%2B4rvtlS6sfMSVfkqR9tmZRr%2BtuvUnHmWCi%2BUTLBOO39Rir%2BH6pA%2BQWv5L3hJ7WeyXTn7KJB1yR1M7Py%2BV67hZjK%2FFkezLMSfT7M%2BBIPoz2e7TgBJO5h9MpwFLM9zPRaeQecKkhhHxe217fQ0yrjU%2F7NRNO3NQPizqgFfGp1BzLN0xQ29mXgGb34DjOnZZlfcayrE8bxzlYKm2rDOKUXXMrZ1pzof1jg%2FAAgFGt9zDh3xlzbzrB%2BMaP9a0ILP3JrCmW5kyxeF0wFNk18sNEWER7WReN7X81ryCGjZ3FYmAp9QQ6DrzidRNO9rTmA8Oz5IeIkK2uSEp92vaK9%2BTtc%2F2iXi57rlGHBHN6AgMQs9CvBkHtXWsylYSv9R5JfBJdlcZC%2Fl0p85jrBrfu2HF1R2MZAXRVpbLNtu2PKyF%2BQEQXuvlC28f9yq7SukxlQknmrxFwHj3Vl8ykuqSUnlNKzQkhFtHnVxSzmNNWcO9GDXVECBQk8zeZqP1fY6iLIpbqtDLO5zE11XP66hfr%2BdXJnmV9cGl5%2BZZGHF%2BPON4bA%2BWWVnICfxtMpwWJ57UbHF%2B4eO7kOvJsPKaaMzHuuu7Y9BoKY1D8D95GAkC2cGOlAAAAAElFTkSuQmCC&labelColor=%238FE79B" title="本站使用 CC BY-NC-SA 4.0 许可协议进行授权"></a> </p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0176d32a129f49c7bc56e84867580f55';
+  var gaud_map_key = '959bdc1c930d3f31e1b6ac5a6e1685e8';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '121.455708,31.249574';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/01/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover16.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-01</span><a class="blog-slider__title" href="butterfly/01/" alt="">Hexo 框架 + Butterfly 主题打造个人博客</a><div class="blog-slider__text">使用 Hexo 框架与 Butterfly 主题，快速打造属于自己的个人网站</div><a class="blog-slider__button" href="butterfly/01/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/05/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover21.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-05</span><a class="blog-slider__title" href="butterfly/05/" alt="">Butterfly 主题自带美化效果</a><div class="blog-slider__text">详细讲解 Butterfly 主题自带的美化效果</div><a class="blog-slider__button" href="butterfly/05/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python3 函数（上） | 东北的冬DONG</title><meta name="author" content="DONG"><meta name="copyright" content="DONG"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、函数定义 1.1 函数简介 1.2 函数定义的语法 1.3 文档字符串（DocStrings） 1.4 类型标注 1.4.1 概述 1.4.2 语法格式 1.4.3 常用类型标注 1）基本内置类型 2）typing 模块提供的类型 （1）容器类型 （2）Any 类型 （3）Union 类型 （4）Optional 类型 （5）Sequence 类型 （6）Callable 类型 （7）Ite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3 函数（上）">
+<meta property="og:url" content="http://example.com/program/python3/09/">
+<meta property="og:site_name" content="东北的冬DONG">
+<meta property="og:description" content="一、函数定义 1.1 函数简介 1.2 函数定义的语法 1.3 文档字符串（DocStrings） 1.4 类型标注 1.4.1 概述 1.4.2 语法格式 1.4.3 常用类型标注 1）基本内置类型 2）typing 模块提供的类型 （1）容器类型 （2）Any 类型 （3）Union 类型 （4）Optional 类型 （5）Sequence 类型 （6）Callable 类型 （7）Ite">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg">
+<meta property="article:published_time" content="2024-01-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:46:26.703Z">
+<meta property="article:author" content="DONG">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/favicon.png"><link rel="canonical" href="http://example.com/program/python3/09/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":30,"languages":{"author":"作者: DONG","link":"链接: ","source":"来源: 东北的冬DONG","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python3 函数（上）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:46:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xindong2020/ButterflyEffects/footer/heart.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="东北的冬DONG"><span class="site-name">东北的冬DONG</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python3 函数（上）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-18T16:00:00.000Z" title="发表于 2024-01-19 00:00:00">2024-01-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:46:26.703Z" title="更新于 2024-04-07 15:46:26">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python3 函数（上）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><ul>
+<li><a href="#%E4%B8%80%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89">一、函数定义</a><ul>
+<li><a href="#11-%E5%87%BD%E6%95%B0%E7%AE%80%E4%BB%8B">1.1 函数简介</a></li>
+<li><a href="#12-%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E7%9A%84%E8%AF%AD%E6%B3%95">1.2 函数定义的语法</a></li>
+<li><a href="#13-%E6%96%87%E6%A1%A3%E5%AD%97%E7%AC%A6%E4%B8%B2docstrings">1.3 文档字符串（DocStrings）</a></li>
+<li><a href="#14-%E7%B1%BB%E5%9E%8B%E6%A0%87%E6%B3%A8">1.4 类型标注</a><ul>
+<li><a href="#141-%E6%A6%82%E8%BF%B0">1.4.1 概述</a></li>
+<li><a href="#142-%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F">1.4.2 语法格式</a></li>
+<li><a href="#143-%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%9E%8B%E6%A0%87%E6%B3%A8">1.4.3 常用类型标注</a><ul>
+<li><a href="#1%E5%9F%BA%E6%9C%AC%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B">1）基本内置类型</a></li>
+<li><a href="#2typing-%E6%A8%A1%E5%9D%97%E6%8F%90%E4%BE%9B%E7%9A%84%E7%B1%BB%E5%9E%8B">2）typing 模块提供的类型</a><ul>
+<li><a href="#1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B">（1）容器类型</a></li>
+<li><a href="#2any-%E7%B1%BB%E5%9E%8B">（2）Any 类型</a></li>
+<li><a href="#3union-%E7%B1%BB%E5%9E%8B">（3）Union 类型</a></li>
+<li><a href="#4optional-%E7%B1%BB%E5%9E%8B">（4）Optional 类型</a></li>
+<li><a href="#5sequence-%E7%B1%BB%E5%9E%8B">（5）Sequence 类型</a></li>
+<li><a href="#6callable-%E7%B1%BB%E5%9E%8B">（6）Callable 类型</a></li>
+<li><a href="#7iterator-%E7%B1%BB%E5%9E%8B">（7）Iterator 类型</a></li>
+<li><a href="#8generator-%E7%B1%BB%E5%9E%8B">（8）Generator 类型</a></li>
+<li><a href="#9iterable-%E7%B1%BB%E5%9E%8B">（9）Iterable 类型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8">二、函数调用</a><ul>
+<li><a href="#21-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8">2.1 函数调用</a></li>
+<li><a href="#22-%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92">2.2 参数传递</a><ul>
+<li><a href="#221-%E5%BD%A2%E5%8F%82-vs-%E5%AE%9E%E5%8F%82">2.2.1 形参 VS 实参</a></li>
+<li><a href="#222-%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B-vs-%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B">2.2.2 可变类型 VS 不可变类型</a></li>
+<li><a href="#223-%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F">2.2.3 传递方式</a></li>
+<li><a href="#224-%E5%8F%82%E6%95%B0%E7%B1%BB%E5%88%AB">2.2.4 参数类别</a><ul>
+<li><a href="#1%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E5%BF%85%E9%9C%80%E5%8F%82%E6%95%B0">（1）位置参数（必需参数）</a></li>
+<li><a href="#2%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0">（2）关键字参数</a></li>
+<li><a href="#3%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0">（3）默认参数</a></li>
+<li><a href="#4%E4%B8%8D%E5%AE%9A%E9%95%BF%E5%8F%82%E6%95%B0">（4）不定长参数</a></li>
+<li><a href="#5%E7%89%B9%E6%AE%8A%E5%8F%82%E6%95%B0">（5）特殊参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">三、lambda 表达式（匿名函数）</a><ul>
+<li><a href="#31-%E6%A6%82%E8%BF%B0">3.1 概述</a></li>
+<li><a href="#32-%E5%BA%94%E7%94%A8">3.2 应用</a><ul>
+<li><a href="#321-lambda-%E4%BD%9C%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92">3.2.1 lambda 作为一个参数传递</a></li>
+<li><a href="#322-lambda-%E4%B8%8E-python-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8">3.2.2 lambda 与 Python 内置函数配合使用</a></li>
+<li><a href="#323-lambda-%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC">3.2.3 lambda 作为函数的返回值</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0">四、常用内置函数</a><ul>
+<li><a href="#41-help">4.1 help</a></li>
+<li><a href="#42-abs">4.2 abs</a></li>
+<li><a href="#43-divmod">4.3 divmod</a></li>
+<li><a href="#44-max">4.4 max</a></li>
+<li><a href="#45-min">4.5 min</a></li>
+<li><a href="#46-pow">4.6 pow</a></li>
+<li><a href="#47-round">4.7 round</a></li>
+<li><a href="#48-sum">4.8 sum</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="一、函数定义"><a href="#一、函数定义" class="headerlink" title="一、函数定义"></a>一、函数定义</h2><h3 id="1-1-函数简介"><a href="#1-1-函数简介" class="headerlink" title="1.1 函数简介"></a>1.1 函数简介</h3><ul>
+<li><p>函数是一段 <strong>封装好</strong> 的，<strong>可重复使用</strong> 的，用来实现单一或相关联功能的代码。</p>
+</li>
+<li><p>函数可以简化程序，清晰结构。</p>
+</li>
+<li><p>在类中定义的函数又被称为 <strong>方法</strong>。</p>
+</li>
+</ul>
+<h3 id="1-2-函数定义的语法"><a href="#1-2-函数定义的语法" class="headerlink" title="1.2 函数定义的语法"></a>1.2 函数定义的语法</h3><ul>
+<li><p>语法格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">[形参列表]</span>):</span><br><span class="line">    函数体 或 <span class="keyword">pass</span></span><br><span class="line">    [<span class="keyword">return</span> 返回值]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>关键字：</p>
+<ul>
+<li><p><code>def</code>：定义函数的关键字，所有函数都以此开头，后接函数名。</p>
+</li>
+<li><p><code>return</code>：结束函数，返回一个值给调用者，不填写返回值的 <code>return</code> 相当于返回 <code>None</code>，即 <code>return None</code>。</p>
+</li>
+<li><p><code>pass</code>：如果函数不做任何事情，或者函数体中的某些分支语句不做任何事情，可以使用 <code>pass</code> 语句用作占位语句，保持程序结构的完整性。</p>
+</li>
+</ul>
+</li>
+<li><p>函数名：一个符合 <code>Python</code> 语法的标识符，建议做到见名知意。</p>
+</li>
+<li><p>形参列表：形参列表中的参数用逗号 <code>,</code> 分开，声明了调用函数时需要传入的参数。如果函数不接收任何参数，参数列表就为空 <code>()</code>。</p>
+<ul>
+<li>注：函数不需要参数，也要保留括号 “<code>()</code>”，否则 <code>Python</code> 解释器报错 “<code>invaild syntax</code>”。</li>
+</ul>
+</li>
+<li><p>函数体：定义一个函数功能的所有代码组成的整体，以冒号 <code>:</code> 开头并缩进。第一行语句可以选择性地使用注释书写函数说明。</p>
+<ul>
+<li>注：可以使用 <code>pass</code> 定义空函数。</li>
+</ul>
+</li>
+<li><p>返回值：使用 <code>return</code> 返回函数被调用后得出的结果，可以是表达式，也可以是变量，默认为 <code>return None</code>。<code>return</code> 语句起到结束函数的作用。</p>
+<ul>
+<li><strong>注</strong>：<code>Python</code> <strong>函数支持多返回值</strong>（<strong>封包</strong>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>示例 <code>1</code>：计算长方形的面积</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rectangleArea</span>(<span class="params">width, height</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    该方法计算长方形的面积并返回</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> width * height</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例 <code>2</code>：打印三角形图案</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">triangle</span>(<span class="params">pattern, layer, reverse=<span class="literal">False</span></span>):</span><br><span class="line">    rg = <span class="built_in">range</span>(layer + <span class="number">1</span>, <span class="number">1</span>, -<span class="number">1</span>) <span class="keyword">if</span> reverse <span class="keyword">else</span> <span class="built_in">range</span>(<span class="number">1</span>, layer + <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> rg:</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">str</span>(pattern * (<span class="number">2</span> * i - <span class="number">1</span>)).center(<span class="number">2</span> * layer - <span class="number">1</span>))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-3-文档字符串（DocStrings）"><a href="#1-3-文档字符串（DocStrings）" class="headerlink" title="1.3 文档字符串（DocStrings）"></a>1.3 文档字符串（DocStrings）</h3><ul>
+<li><p>文档字符串是一个重要工具，用于解释说明函数的功能与用法，是一个函数的使用说明书。</p>
+</li>
+<li><p>我们可以在函数体的 <strong>第一行</strong> 使用 <strong>一对</strong> 三个单引号 <code>&#39;&#39;&#39;</code> 或 <strong>一对</strong> 三个双引号 <code>&quot;&quot;&quot;</code> 来定义文档字符串。</p>
+</li>
+<li><p>文档字符串应该：</p>
+<ul>
+<li><p>包含函数做什么，而不是怎么做的。</p>
+</li>
+<li><p>让使用者不需要看一行代码，只需要看文档就可以。</p>
+</li>
+<li><p>包含输入和输出的详细描述。</p>
+</li>
+<li><p>对于复杂的代码可以在代码旁边加注释。</p>
+</li>
+<li><p>覆盖基类的方法可以加：<code>See base class</code></p>
+</li>
+</ul>
+</li>
+<li><p>在文档字符串中，应该根据不同的内容进行分组。文档字符串常用的分组：</p>
+<ul>
+<li><p><code>Args</code>：</p>
+<ul>
+<li><p>列出每个参数的名字，并在名字后使用一个冒号和一个空格，分隔对该参数的描述。</p>
+</li>
+<li><p>如果描述太长超过了单行 <code>80</code> 字符，使用 <code>2</code> 或 <code>4</code> 个空格的悬挂缩进（与文件其他部分保持一致）。</p>
+</li>
+<li><p>描述应该包括所需的类型和含义，如果一个函数接受 <code>*args</code>（元组可变长参数列表）或 <code>**bar</code>（字典可变长参数列表），应该详细列出 <code>*foo</code> 和 <code>**bar</code>。</p>
+</li>
+</ul>
+</li>
+<li><p><code>Returns</code>：（或 <code>Yields</code>：用于生成器）</p>
+<ul>
+<li>描述返回值的类型和含义。如果函数返回 <code>None</code>，这一部分可以省略。</li>
+</ul>
+</li>
+<li><p><code>Raises</code>：</p>
+<ul>
+<li>列出与接口有关的所有异常。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通过调用 <code>Python</code> 的 <code>help()</code> <strong>内置函数</strong> 或 <code>__doc__</code> <strong>属性</strong>，我们可以查看某个函数的使用说明文档。</p>
+<ul>
+<li>示例：<code>help(rectangleArea)</code> 或 <code>rectangleArea.__doc__</code></li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Determine whether the input is a non-negative integer</span></span><br><span class="line"><span class="string">    :return: Match input</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> (str_num := <span class="built_in">input</span>(<span class="string">&quot;请输入一个非负整数：&quot;</span>)).isdigit():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;您的输入有误&quot;</span>, end=<span class="string">&quot;, &quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> str_num</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-4-类型标注"><a href="#1-4-类型标注" class="headerlink" title="1.4 类型标注"></a>1.4 类型标注</h3><h4 id="1-4-1-概述"><a href="#1-4-1-概述" class="headerlink" title="1.4.1 概述"></a>1.4.1 概述</h4><ul>
+<li><p><code>Python</code> 属于动态类型语言，在创建数据时并不强制标注函数和变量类型，所以只有在运行代码的时候才能够知道变量类型。这通常会让我们在使用他人代码时传入错误的变量类型。为了解决这些问题，在 <code>Python 3.5</code> 中，<code>Python PEP 484</code> 引入了类型注解（<code>Type Hints</code>），在 <code>Python 3.6</code> 中，<code>PEP 526</code> 又进一步引入了变量注解（<code>Variable Annotations</code>）。</p>
+<ul>
+<li><code>PEP</code> 是 <code>Python Enhancement Proposals</code> 的缩写。一个 <code>PEP</code> 是一份为 <code>Python</code> 社区提供各种增强功能的技术规格，也是提交新特性，以便让社区指出问题，精确化技术文档的提案。</li>
+</ul>
+</li>
+<li><p>基本内置类型的表述能力有限，不能说明复杂的类型组成情况，因此 <code>Python</code> 自 <code>3.5</code> 开始发布了 <code>typing</code> 包，为类型标注提供了支持，让我们能够更好的标注变量类型。</p>
+</li>
+<li><p>类型标注可被用于第三方工具，例：类型检查器、集成开发环境、静态检查器等。</p>
+</li>
+<li><p><code>Python</code> 对类型标注并 <strong>不强制</strong>，不按照类型标注传入变量也不会报错，仅会 <strong>警告</strong>，<code>PyCharm</code> 支持 <code>typing</code> 检查，错误时会出现黄色波浪线警告。</p>
+</li>
+<li><p>类型标注以 <strong>字典</strong> 的形式存放在函数的 <code>__annotations__</code> 属性中。</p>
+</li>
+</ul>
+<h4 id="1-4-2-语法格式"><a href="#1-4-2-语法格式" class="headerlink" title="1.4.2 语法格式"></a>1.4.2 语法格式</h4><ul>
+<li><p>变量类型：在变量名后加一个冒号 <code>:</code>，冒号后加变量的数据类型（例：<code>int</code>、<code>float</code>、<code>list</code>、<code>dict</code> 等）。</p>
+</li>
+<li><p>函数参数：和普通变量类型的语法格式没区别，都是冒号 + 数据类型。</p>
+</li>
+<li><p>函数返回类型：在形参列表的括号后加一个箭头 <code>-&gt;</code>，箭头后加返回值的类型，类型标注完成后加函数的冒号 <code>:</code>。</p>
+</li>
+<li><p>格式要求（<code>PEP 8</code>，非强制）：变量名和冒号之间无空格，冒号和数据类型之间加一个空格，箭头左右均有一个空格。</p>
+</li>
+</ul>
+<h4 id="1-4-3-常用类型标注"><a href="#1-4-3-常用类型标注" class="headerlink" title="1.4.3 常用类型标注"></a>1.4.3 常用类型标注</h4><h5 id="1）基本内置类型"><a href="#1）基本内置类型" class="headerlink" title="1）基本内置类型"></a>1）基本内置类型</h5><ul>
+<li><p><strong>常用</strong>：<code>int</code> 整型、<code>float</code> 浮点型、<code>bool</code> 布尔型、<code>str</code> 字符串类型。</p>
+</li>
+<li><p><code>Python</code> 中的内置类型（存放于 <code>builtins</code> <strong>模块</strong> 中）都可以用于类型标注。例：<code>int</code>、<code>float</code>、<code>bool</code>、<code>complex</code>、<code>str</code>、<code>list</code>、<code>tuple</code>、<code>dict</code>、<code>set</code>、<code>range</code>、<code>reversed</code>、<code>zip</code> 等。</p>
+</li>
+</ul>
+<h5 id="2）typing-模块提供的类型"><a href="#2）typing-模块提供的类型" class="headerlink" title="2）typing 模块提供的类型"></a>2）typing 模块提供的类型</h5><ul>
+<li><p>除了内置在 <code>builtins</code> 模块中的类型，<code>typing</code> 模块提供了更强大的类型支持。使用 <code>print(dir(typing))</code> 即可查看。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> typing</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dir</span>(typing))</span><br></pre></td></tr></table></figure>
+
+<div align=center>
+  <img alt="" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/program/python3/09/01.png" width="799"/>
+</div>
+</li>
+<li><p><code>typing</code> 模块中常用的类型：<code>List</code> 列表、<code>Tuple</code> 元组、<code>Dict</code> 字典、<code>Set</code> 集合、<code>Iterable</code> 可迭代类型、<code>Iterator</code> 迭代器类型、<code>Generator</code> 生成器类型。</p>
+<ul>
+<li><strong>注</strong>：使用 <code>typing</code> 模块中的类型，需要提前导入。例：<code>from typing import List, Tuple, Dict</code>。</li>
+</ul>
+</li>
+</ul>
+<h6 id="（1）容器类型"><a href="#（1）容器类型" class="headerlink" title="（1）容器类型"></a>（1）容器类型</h6><ul>
+<li><p><code>Python</code> 中，可包含其他对象的对象，称之为 “容器”。容器是一种 <strong>数据结构</strong>。常用的容器主要划分为两种：<strong>序列</strong>（例：列表、元祖等）和 <strong>映射</strong>（例：字典）。</p>
+</li>
+<li><p>列表、元组、字典和集合等包含元素的容器，用简单的 <code>list</code>，<code>dict</code>，<code>tuple</code>和 <code>set</code> 不能够明确说明内部元素的具体类型。</p>
+</li>
+<li><p><code>List</code> <strong>列表</strong> 是 <code>list</code> 的泛型，其后紧跟一个方括号 <code>[]</code>，方括号中是构成这个列表的元素类型。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line">lst1: <span class="type">List</span>[<span class="built_in">int</span>] = [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">lst2: <span class="type">List</span>[<span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">float</span> <span class="keyword">or</span> <span class="built_in">str</span>] = [<span class="number">1</span>, <span class="number">3.14</span>, <span class="string">&quot;dong&quot;</span>]  <span class="comment"># 使用 or 关键字表示列表可以接收多种类型</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Tuple</code> <strong>元组</strong> 是 <code>tuple</code> 的泛型，其后紧跟一个方括号 <code>[]</code>，方括号中按顺序声明了构成本元组的元素类型。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Tuple</span></span><br><span class="line">tup1: <span class="type">Tuple</span>[<span class="built_in">int</span>, <span class="built_in">float</span>, <span class="built_in">str</span>] = (<span class="number">1</span>, <span class="number">3.14</span>, <span class="string">&quot;dong&quot;</span>)  <span class="comment"># 表示构成元组的三个元素的类型按顺序是 int、float 和 str</span></span><br><span class="line">tup2: <span class="type">Tuple</span>[<span class="built_in">int</span>, ...] = (<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)  <span class="comment"># 表示元组由多个 int 类型的元素构成</span></span><br><span class="line">tup3: <span class="type">Tuple</span>[<span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">float</span> <span class="keyword">or</span> <span class="built_in">str</span>, ...] = (<span class="number">3.14</span>, <span class="string">&quot;dong&quot;</span>, <span class="number">7</span>)  <span class="comment"># 表示由多个 int、float 或 str 类型的元素构成</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Set</code> <strong>集合</strong> 是 <code>set</code> 的泛型，<code>AbstractSet</code> 是 <code>collections.abc.Set</code> 的泛型，其后紧跟一个方括号 <code>[]</code>，方括号中是构成这个集合的元素类型。<code>Set</code> 推荐用于标注函数返回类型，<code>AbstractSet</code> 用于标注参数。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Set</span></span><br><span class="line">set1: <span class="type">Set</span>[<span class="built_in">int</span>] = &#123;<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">set2: <span class="type">Set</span>[<span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">float</span> <span class="keyword">or</span> <span class="built_in">str</span>] = &#123;<span class="number">3.14</span>, <span class="string">&quot;dong&quot;</span>, <span class="number">7</span>&#125;  <span class="comment"># 使用 or 关键字表示集合可以接收多种类型</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>由于 <strong>字典</strong> 是有 <code>key</code> 和 <code>value</code> 的，因此需要在方括号 <code>[]</code> 中同时对两者进行类型标注，中间使用用逗号 <code>,</code> 分隔。</p>
+<ul>
+<li><p>字典 <code>Dict</code> 是 <code>dict</code> 的泛型，主要用于标注返回类型。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Dict</span></span><br><span class="line"></span><br><span class="line">stu = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>, <span class="string">&quot;sid&quot;</span>: <span class="number">88888</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_person</span>(<span class="params">sid: <span class="built_in">int</span></span>) -&gt; <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">str</span>]:</span><br><span class="line">    <span class="keyword">if</span> sid == stu.get(<span class="string">&quot;sid&quot;</span>):</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;name&quot;</span>: stu.get(<span class="string">&quot;name&quot;</span>), <span class="string">&quot;age&quot;</span>: stu.get(<span class="string">&quot;age&quot;</span>)&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>映射 <code>Mapping</code> 是 <code>collections.abc.Mapping</code> 的泛型，主要用于注解参数。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Mapping</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_person</span>(<span class="params">person: Mapping[<span class="built_in">str</span>, <span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">str</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    person_88 = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> person.items():</span><br><span class="line">        person_88[k] = v</span><br><span class="line">    <span class="keyword">return</span> <span class="number">88</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h6 id="（2）Any-类型"><a href="#（2）Any-类型" class="headerlink" title="（2）Any 类型"></a>（2）Any 类型</h6><ul>
+<li><code>Any</code> 是一种特殊的类型，它可以表示 <strong>所有类型</strong>，类型检查器认为所有类型均与 <code>Any</code> 兼容，<code>Python</code> 中所有无明显类型标注的地方，都默认是 <code>Any</code> 类型。例：<code>num = 7</code> 与 <code>num: Any = 7</code> 等价。</li>
+</ul>
+<h6 id="（3）Union-类型"><a href="#（3）Union-类型" class="headerlink" title="（3）Union 类型"></a>（3）Union 类型</h6><ul>
+<li><code>Union</code> 联合类型的语法格式：<code>Union[X, Y]</code>，相当于 <code>X | Y</code>，即并集，意思是类型是 <code>X</code> 或 <code>Y</code>，效果与关键字 <code>or</code> 等同。例：<code>lst: List[Union[int, float, str]] = [5, 2, 7, &quot;xin&quot;, 6.25]</code></li>
+</ul>
+<h6 id="（4）Optional-类型"><a href="#（4）Optional-类型" class="headerlink" title="（4）Optional 类型"></a>（4）Optional 类型</h6><ul>
+<li><p><code>Optional</code> 是指这个参数可以为空或是已经声明的类型，即 <code>Optional[X]</code> 等价于 <code>Union[X, None]</code>。</p>
+</li>
+<li><p><code>Optional</code> 并不等价于可选参数，当它作为参数类型标注的时候，不意味着这个参数可以不传递了，而是说这个参数可以传为 <code>None</code>。</p>
+</li>
+</ul>
+<h6 id="（5）Sequence-类型"><a href="#（5）Sequence-类型" class="headerlink" title="（5）Sequence 类型"></a>（5）Sequence 类型</h6><ul>
+<li><code>Sequence</code> 是 <code>collections.abc.Sequence</code> 的泛型，在某些情况下，我们可能并不需要严格区分一个变量或参数到底是列表 <code>list</code> 类型还是元组 <code>tuple</code> 类型，我们可以使用一个更为泛化的类型，叫做 <code>Sequence</code>。</li>
+</ul>
+<h6 id="（6）Callable-类型"><a href="#（6）Callable-类型" class="headerlink" title="（6）Callable 类型"></a>（6）Callable 类型</h6><ul>
+<li><p><code>Callable</code> 表示可调用类型，格式：<code>Callable[[ArgsType], ReturnType]</code>，如果只指定可调用类型的返回值类型，则可以使用 <code>Callable[..., ReturnType]</code> 的形式。</p>
+<ul>
+<li><code>Python</code> 中有 <code>7</code> 种可调用对象：内置函数（例：<code>isinstance()</code>）、内置方法（例：<code>list.append()</code>）、自定义函数、生成器函数、类的方法、类本身、类的实例。</li>
+</ul>
+</li>
+</ul>
+<h6 id="（7）Iterator-类型"><a href="#（7）Iterator-类型" class="headerlink" title="（7）Iterator 类型"></a>（7）Iterator 类型</h6><ul>
+<li><code>Iterator</code> 表示迭代器类型，迭代器属于可迭代对象，可迭代对象都构建了 <code>__iter__</code> 方法，迭代器还需构建 <code>__next__</code> 方法。</li>
+</ul>
+<h6 id="（8）Generator-类型"><a href="#（8）Generator-类型" class="headerlink" title="（8）Generator 类型"></a>（8）Generator 类型</h6><ul>
+<li><p><code>Generator</code> 表示生成器类型，Generator[YieldType、SendType、ReturnType]</p>
+</li>
+<li><p>生成器是一种特殊的迭代器，内部支持了生成器协议，不需要明确定义 <code>__iter__</code> 方法和 <code>__next__</code> 方法。</p>
+</li>
+</ul>
+<h6 id="（9）Iterable-类型"><a href="#（9）Iterable-类型" class="headerlink" title="（9）Iterable 类型"></a>（9）Iterable 类型</h6><ul>
+<li><code>Iterable</code> 表示可迭代类型，<code>collections.abc.Iterator</code> 的泛型版本，例：字符串、列表、元组、集合、字典等都属于可迭代对象。</li>
+</ul>
+<h2 id="二、函数调用"><a href="#二、函数调用" class="headerlink" title="二、函数调用"></a>二、函数调用</h2><h3 id="2-1-函数调用"><a href="#2-1-函数调用" class="headerlink" title="2.1 函数调用"></a>2.1 函数调用</h3><ul>
+<li><p>函数调用也就是执行函数体，可以在一个函数中调用其他函数。</p>
+</li>
+<li><p>函数调用的基本语法格式：<code>[返回值] = 函数名([实参列表])</code></p>
+<ul>
+<li><p>返回值：如果调用的函数存在返回值，我们可以通过一个变量来接收，也可以不接收。</p>
+</li>
+<li><p>函数名：要调用的函数的名称。</p>
+</li>
+<li><p>实参列表：创建函数时要求传入的各个形参的值。实参数量与形参数量要保持一致。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：<code>area = rectangleArea(6, 8)</code></p>
+</li>
+</ul>
+<h3 id="2-2-参数传递"><a href="#2-2-参数传递" class="headerlink" title="2.2 参数传递"></a>2.2 参数传递</h3><h4 id="2-2-1-形参-VS-实参"><a href="#2-2-1-形参-VS-实参" class="headerlink" title="2.2.1 形参 VS 实参"></a>2.2.1 形参 VS 实参</h4><ul>
+<li><p>形参（形式参数）：在定义函数时，函数名后面括号中的参数可以看做是一个占位符，它没有数据，只能等到函数被调用时接收传递进来的数据，所以称为形式参数，简称形参。</p>
+</li>
+<li><p>实参（实际参数）：在调用函数时，函数名后面括号中的参数包含了真实存在的数据，会被函数内部的函数体使用，所以称为实际参数，简称实参。</p>
+</li>
+</ul>
+<h4 id="2-2-2-可变类型-VS-不可变类型"><a href="#2-2-2-可变类型-VS-不可变类型" class="headerlink" title="2.2.2 可变类型 VS 不可变类型"></a>2.2.2 可变类型 VS 不可变类型</h4><ul>
+<li><p>可变类型（可变数据类型）：当该数据类型对应的变量的 <strong>值发生变化</strong> 时，如果变量的 <strong>内存地址不发生改变</strong>，那么这个变量对应的数据类型就是 <strong>可变数据类型</strong>。</p>
+<ul>
+<li><code>list</code>（列表）、<code>dict</code>（字典）、<code>set</code>（集合）</li>
+</ul>
+</li>
+<li><p>不可变类型（不可变数据类型）：当该数据类型对应的变量的 <strong>值发生变化</strong> 时，如果变量的 <strong>内存地址发生改变</strong>，那么这个变量对应的数据类型就是 <strong>不可变数据类型</strong>。</p>
+<ul>
+<li><code>numbers</code> （数值类型）、<code>string</code>（字符串）、<code>tuple</code>（元组）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-传递方式"><a href="#2-2-3-传递方式" class="headerlink" title="2.2.3 传递方式"></a>2.2.3 传递方式</h4><ul>
+<li><p>值传递：在调用函数时将实参复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实参。</p>
+</li>
+<li><p>引用传递：在调用函数时将实参的地址传递到函数中，那么在函数中对参数所进行的修改，将影响到实参。</p>
+<ul>
+<li><strong>函数</strong> 的 <strong>引用</strong> 表示函数存储在内存中的地址。</li>
+</ul>
+</li>
+<li><p>在 <code>python</code> 中，<strong>一切皆对象</strong>，数字、字符串、元组、列表、字典、函数、方法、类、模块等都是对象，所以参数传递时，只是让新变量与原变量 <strong>指向相同的对象</strong> 而已，并不存在值传递或是引用传递一说。准确地说，<code>Python</code> 的参数传递是 <strong>赋值传递</strong>，或者叫作 <strong>对象的引用传递</strong>。</p>
+<ul>
+<li><p>如果函数收到的是一个 <strong>可变对象</strong>（例：列表、字典、集合等）的引用，就能修改对象的原始值，相当于 “引用传递”。</p>
+</li>
+<li><p>如果函数收到的是一个 <strong>不可变对象</strong>（例：数字、字符串、元组等）的引用，就不能直接修改原始对象，相当于 “值传递”。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-4-参数类别"><a href="#2-2-4-参数类别" class="headerlink" title="2.2.4 参数类别"></a>2.2.4 参数类别</h4><h5 id="（1）位置参数（必需参数）"><a href="#（1）位置参数（必需参数）" class="headerlink" title="（1）位置参数（必需参数）"></a>（1）位置参数（必需参数）</h5><ul>
+<li><p>调用函数时，按照传递的实际参数的 <strong>位置</strong> 识别对应的形式参数。</p>
+<ul>
+<li><p>在调用函数时，传递的实际参数的数量必须和形式参数的 <strong>数量</strong> 一致，否则会抛出 <code>TypeError</code> 异常。</p>
+</li>
+<li><p>在调用函数时，传递的实际参数的位置必须和形式参数的 <strong>位置</strong> 一致，否则会抛出 <code>TypeError</code> 异常（数据类型不一致）或得到错误的结果。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="（2）关键字参数"><a href="#（2）关键字参数" class="headerlink" title="（2）关键字参数"></a>（2）关键字参数</h5><ul>
+<li><p>调用函数时，按照传递的实际参数的 <strong>名字</strong> 识别对应的形式参数。</p>
+<ul>
+<li><p>通过此方式指定函数实参时，不再需要与形参的位置完全一致，只需 <strong>参数名对应</strong> 即可。</p>
+</li>
+<li><p>在调用函数时，可以同时使用位置参数和关键字参数，但是 <strong>位置参数必须放在关键字参数之前</strong>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="（3）默认参数"><a href="#（3）默认参数" class="headerlink" title="（3）默认参数"></a>（3）默认参数</h5><ul>
+<li><p><code>Python</code> 允许为形式参数设置默认值，即在定义函数时，直接为形式参数指定一个默认值。</p>
+<ul>
+<li><p>语法格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">..., 形参名, 形参名 = 默认值</span>):</span><br><span class="line">  函数体 或 <span class="keyword">pass</span></span><br><span class="line">  [<span class="keyword">return</span> 返回值]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认参数不能写在必须参数之前，也不能写在 <code>**kwargs</code> 之后。</p>
+</li>
+<li><p>使用 “<code>函数名.__defaults__</code>” 可以查看函数的默认参数所具有的默认值。</p>
+<ul>
+<li>注：<code>函数名.__defaults__</code> 返回的是一个元组。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="（4）不定长参数"><a href="#（4）不定长参数" class="headerlink" title="（4）不定长参数"></a>（4）不定长参数</h5><ul>
+<li><p><code>*args</code>：将参数打包成 <strong>元组</strong> 给函数体调用，没有值传给它，就是个空元组 <code>[]</code>。<code>*args</code> 不能放到位置参数之前。</p>
+</li>
+<li><p><code>**kwargs</code>：将参数打包成 <strong>字典</strong> 给函数体调用，没有值传给它，就是个空字典 <code>&#123;&#125;</code>。<code>**kwargs</code> 要放到形参列表的末尾。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">a, b=<span class="number">10</span>, *c, **d</span>):</span><br><span class="line">    <span class="built_in">print</span>(a)  <span class="comment"># 1</span></span><br><span class="line">    <span class="built_in">print</span>(b)  <span class="comment"># 2</span></span><br><span class="line">    <span class="built_in">print</span>(c)  <span class="comment"># (3, 4, 5)</span></span><br><span class="line">    <span class="built_in">print</span>(d)  <span class="comment"># &#123;&#x27;k1&#x27;: 6, &#x27;k2&#x27;: 7, &#x27;k3&#x27;: 8&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, k1=<span class="number">6</span>, k2=<span class="number">7</span>, k3=<span class="number">8</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="（5）特殊参数"><a href="#（5）特殊参数" class="headerlink" title="（5）特殊参数"></a>（5）特殊参数</h5><ul>
+<li><p>默认情况下，函数的参数传递形式可以是位置参数或显式的关键字参数。</p>
+</li>
+<li><p>在 <code>python3.8</code> 之后函数参数中允许出现 <code>/</code> 和 <code>*</code> 号。</p>
+<ul>
+<li><p><code>/</code> 用来指明在它 <strong>之前</strong> 的参数必须以 <strong>位置参数</strong> 的形式传入。</p>
+</li>
+<li><p><code>*</code> 用来指明在它 <strong>之后</strong> 的参数必须以 <strong>关键字参数</strong> 的形式传入。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、lambda-表达式（匿名函数）"><a href="#三、lambda-表达式（匿名函数）" class="headerlink" title="三、lambda 表达式（匿名函数）"></a>三、lambda 表达式（匿名函数）</h2><h3 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h3><ul>
+<li><p><code>lambda</code> 表达式，又称匿名函数，常用来表示内部仅包含 <code>1</code> 行表达式的函数。</p>
+</li>
+<li><p><code>lambda</code> 表达式的语法格式：<code>lambda [arg1[, arg2, ..., argN]] : expression</code>。</p>
+<ul>
+<li><p>定义 <code>lambda</code> 表达式，必须使用 <code>lambda</code> 关键字。</p>
+</li>
+<li><p>参数 <code>[arg1[, arg2, ..., argN]]</code> 可以有 <code>0</code> 或多个, 但是后面的 <code>expression</code> 只能有一个。</p>
+</li>
+<li><p><code>lambda</code> 表达式的返回值就是 <code>expression</code> 的结果，而不需要 <code>return</code> 语句。</p>
+</li>
+</ul>
+</li>
+<li><p>匿名函数可以在需要函数对象的任何地方使用（例：赋值给变量、作为参数传入其他函数等），因为匿名函数可以作为一个表达式，而不是一个结构化的代码块。</p>
+</li>
+<li><p>不推荐把 <code>lambda</code> 表达式赋给另一个变量，再通过变量调用函数这种方式。因为 <code>lambda</code> 表达式本就是一个匿名的函数，赋值给变量再调用就失去了匿名的意义。</p>
+</li>
+</ul>
+<h3 id="3-2-应用"><a href="#3-2-应用" class="headerlink" title="3.2 应用"></a>3.2 应用</h3><h4 id="3-2-1-lambda-作为一个参数传递"><a href="#3-2-1-lambda-作为一个参数传递" class="headerlink" title="3.2.1 lambda 作为一个参数传递"></a>3.2.1 lambda 作为一个参数传递</h4><ul>
+<li><p>可以把 <code>lambda</code> 表达式作为参数传递给自定义函数。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">lam_f, x, y, z</span>):</span><br><span class="line">    num = <span class="built_in">pow</span>(x, y)</span><br><span class="line">    <span class="keyword">return</span> lam_f(num, z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(func(<span class="keyword">lambda</span> a, b: <span class="built_in">divmod</span>(a, b), <span class="number">2</span>, <span class="number">8</span>, <span class="number">10</span>))  <span class="comment"># (25, 6)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-2-2-lambda-与-Python-内置函数配合使用"><a href="#3-2-2-lambda-与-Python-内置函数配合使用" class="headerlink" title="3.2.2 lambda 与 Python 内置函数配合使用"></a>3.2.2 lambda 与 Python 内置函数配合使用</h4><ul>
+<li><p>可以把 <code>lambda</code> 表达式作为参数传入其他内置函数。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">member_list = [&#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;dong&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">19</span>, <span class="string">&quot;height&quot;</span>: <span class="number">177</span>&#125;,</span><br><span class="line">              &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;xin&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>, <span class="string">&quot;height&quot;</span>: <span class="number">168</span>&#125;,</span><br><span class="line">              &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;man&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">20</span>, <span class="string">&quot;height&quot;</span>: <span class="number">179</span>&#125;]]</span><br><span class="line">new_list = <span class="built_in">sorted</span>(member_list, key=<span class="keyword">lambda</span> mem_d: mem_d[<span class="string">&quot;height&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(new_list)  <span class="comment"># [&#123;&#x27;name&#x27;: &#x27;xin&#x27;, &#x27;age&#x27;: 18, &#x27;height&#x27;: 168&#125;, &#123;&#x27;name&#x27;: &#x27;dong&#x27;, &#x27;age&#x27;: 19, &#x27;height&#x27;: 177&#125;, &#123;&#x27;name&#x27;: &#x27;man&#x27;, &#x27;age&#x27;: 20, &#x27;height&#x27;: 179&#125;]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3-2-3-lambda-作为函数的返回值"><a href="#3-2-3-lambda-作为函数的返回值" class="headerlink" title="3.2.3 lambda 作为函数的返回值"></a>3.2.3 lambda 作为函数的返回值</h4><ul>
+<li><p><code>lambda</code> 表达式可以作为一个函数的返回值。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">lambda</span> c: <span class="built_in">divmod</span>(a ** b, c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fc = func(<span class="number">2</span>, <span class="number">7</span>)</span><br><span class="line"><span class="built_in">print</span>(fc(<span class="number">5</span>))  <span class="comment"># (25, 3)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>func</code> 返回的是一个匿名函数，使用 <code>fc</code> 接收函数对象，当我们执行匿名函数对象 <code>fc</code> 时，可以得到 lambda 的结果。</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、常用内置函数"><a href="#四、常用内置函数" class="headerlink" title="四、常用内置函数"></a>四、常用内置函数</h2><h3 id="4-1-help"><a href="#4-1-help" class="headerlink" title="4.1 help"></a>4.1 help</h3><ul>
+<li><p>格式：<code>help([object])</code>，用于 <strong>打印</strong> 指定对象 <code>object</code> 的 <strong>帮助文档</strong>。如果不指定任何参数，则进入交互式帮助模式。</p>
+<ul>
+<li><p>在交互式帮助模式下，可以输入任何 <code>Python</code> 语句或表达式，程序会返回它们的帮助信息。使用 <code>quit</code> 命令可以退出交互式帮助模式。</p>
+</li>
+<li><p>如果实参是一个字符串，则在 <code>Python</code> 系统中搜索该字符串内容所对应的对象，并在控制台上打印帮助信息。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">help</span>(<span class="built_in">abs</span>)</span><br></pre></td></tr></table></figure>
+
+<div align=center>
+  <img alt="" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/program/python3/09/02.png" height="77"/>
+</div></li>
+</ul>
+<h3 id="4-2-abs"><a href="#4-2-abs" class="headerlink" title="4.2 abs"></a>4.2 abs</h3><ul>
+<li><p>格式：<code>abs(x)</code>，用于返回一个数 <code>x</code> 的绝对值。<code>x</code> 可以是 <code>int</code>，<code>float</code>，<code>complex</code> 或实现了 <code>__abs__</code> 方法的对象。</p>
+<ul>
+<li>如果 <code>x</code> 是一个复数，则返回它的模，即实部与虚部平方和的正平方根。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">abs</span>(-<span class="number">1</span>))  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">abs</span>(<span class="number">6</span> + <span class="number">8j</span>))  <span class="comment"># 10.0</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-3-divmod"><a href="#4-3-divmod" class="headerlink" title="4.3 divmod"></a>4.3 divmod</h3><ul>
+<li><p>格式：<code>divmod(divident, divisor)</code>，用于返回包含参数 <code>divident</code> 除以参数 <code>divisor</code> 的商和余数的元组，即 <code>(divident // divisor, divident % divisor)</code>。</p>
+<ul>
+<li><code>divident</code>，<code>divisor</code> 可以为 <code>int</code> 或 <code>float</code> 类型。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">quo, rem = <span class="built_in">divmod</span>(<span class="number">79</span>, <span class="number">20</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;商：<span class="subst">&#123;quo&#125;</span>，余：<span class="subst">&#123;rem&#125;</span>&quot;</span>)  <span class="comment"># 商：3，余：19</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-4-max"><a href="#4-4-max" class="headerlink" title="4.4 max"></a>4.4 max</h3><ul>
+<li><p>格式：<code>max(iterable, *[, default=obj, key=func])</code> 或 <code>max(arg1, arg2, *args[, key])</code>，返回可迭代对象中最大的元素或者返回多个实参中的最大值。</p>
+<ul>
+<li><p>如果 <code>max</code> 函数只传入了一个位置参数，那么使用的是 <code>max(iterable, *[, default=obj, key=func])</code> 这个函数，因此实参必须是可迭代对象，<code>max</code> 函数返回可迭代对象中最大的元素。</p>
+<ul>
+<li><p>当可迭代对象为空时，如果没有指定 <code>default</code> 默认值，则抛出异常 <code>ValueError: max() arg is an empty sequence</code>。</p>
+</li>
+<li><p>如果传入了多个位置参数，则使用的是 <code>max(arg1, arg2, *args[, key])</code> 这个函数，返回多个实参中的最大值。</p>
+</li>
+<li><p>当传入的参数为数据类型不一致时，传入的所有参数将进行隐式数据类型转换后再比较，如果不能进行隐式数据类型转换，则会报错。</p>
+</li>
+<li><p>关键字参数 <code>key</code> 可以接收一个函数，用来指定获取最大值的方法。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Python</code> 中比较大小通常指的是元素的大小比较：</p>
+<ul>
+<li><p>数字类型（<code>int</code>、<code>float</code> 等）：按 <strong>数值</strong> 大小比较。</p>
+</li>
+<li><p>字符串类型（<code>str</code>）：按 <strong>字典序</strong> 比较，即从左到右依次比较每个字符的 <code>ASCII</code> 码值大小。</p>
+</li>
+<li><p>序列类型（<code>list</code>、<code>tuple</code>）：从左到右依次比较 <strong>每个元素</strong> 的大小，如果有一个元素不相等，则返回比较结果，否则继续比较后面的元素。</p>
+<ul>
+<li>如果 <strong>序列长度</strong> 不同，而且短序列和长序列的前几项对应相等，则 <strong>默认长序列大于短序列</strong>，与长序列剩余项的值无关。</li>
+</ul>
+</li>
+<li><p>映射类型（<code>dict</code>）：无法进行大小比较。</p>
+</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">lst = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    lst.append(random.randint(-<span class="number">50</span>, <span class="number">50</span>))</span><br><span class="line"><span class="built_in">print</span>(lst)  <span class="comment"># [34, -43, -6, 36, 33, -50, 27, -6, -29, -30]</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">max</span>(lst, default=<span class="number">0</span>, key=<span class="built_in">abs</span>))  <span class="comment"># -50</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-5-min"><a href="#4-5-min" class="headerlink" title="4.5 min"></a>4.5 min</h3><ul>
+<li><code>min</code> 函数的格式与用法与 <code>max</code> 函数相同，只是 <code>min</code> 函数返回的时最小值。</li>
+</ul>
+<h3 id="4-6-pow"><a href="#4-6-pow" class="headerlink" title="4.6 pow"></a>4.6 pow</h3><ul>
+<li><p>格式：<code>pow(base, exp[, mod])</code>，返回一个数 <code>base</code> 的 <code>exp</code> 次幂，即 <code>base ** exp</code>。如果指定了 <code>mod</code> 参数，则先进行幂运算，然后对 <code>mod</code> 取模，即 <code>(base ** exp) % mod</code>。</p>
+<ul>
+<li><code>base</code> 和 <code>exp</code> 可以为 <code>int</code> 或 <code>float</code> 类型，但是 <code>mod</code> 必须为 <code>int</code> 类型。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(<span class="number">2.0</span>, <span class="number">5</span>))  <span class="comment"># 32.0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">5.0</span>))  <span class="comment"># 32.0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>))  <span class="comment"># 2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="4-7-round"><a href="#4-7-round" class="headerlink" title="4.7 round"></a>4.7 round</h3><ul>
+<li><p>格式：<code>round(number[, ndigits])</code>，返回 <code>number</code> 舍入到小数点后 <code>ndigits</code> 位精度的值，通常用于 <code>float</code> 类型数据，保留指定位数。</p>
+<ul>
+<li><p><code>ndigits</code> 只能为 <code>int</code> 类型，如果 <code>ndigits</code> 被省略或为 <code>None</code>，则返回最接近输入值的整数。例：<code>round(2.675)</code> 返回的是 <code>3</code>，<code>round(3.14)</code> 返回的也是 <code>3</code>。</p>
+<ul>
+<li><p>当小数点后仅一位为 <code>0.5</code> 时，遵循 <strong>从偶原则</strong>，即向着整数为偶数的方向取整。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">5.5</span>))  <span class="comment"># 6</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">6.5</span>))  <span class="comment"># 6</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">7.5</span>))  <span class="comment"># 8</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">8.5</span>))  <span class="comment"># 8</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>由于大多数十进制小数实际上都不能以浮点数精确地表示，因此 <code>round</code> 函数的返回值有时并不能符合预期，例：<code>round(2.675, 2)</code> 返回的是 <code>2.67</code>，而非 <code>2.68</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-8-sum"><a href="#4-8-sum" class="headerlink" title="4.8 sum"></a>4.8 sum</h3><ul>
+<li><p>格式：<code>sum(iterable, /, start=0)</code> 返回可迭代对象中所有元素的总和与 <code>start</code>（默认 <code>0</code>）相加之后的结果。</p>
+<ul>
+<li><code>iterable</code> 元素必需为数字类型。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>(lst))  <span class="comment"># 80</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>(lst, start=<span class="number">100</span>))  <span class="comment"># 180</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="一个学渣">DONG</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/program/python3/09/">http://example.com/program/python3/09/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">东北的冬DONG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/deeplearning/pytorch/01/" title="配置 GPU 版本 PyTorch"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover03.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">配置 GPU 版本 PyTorch</div></div></a></div><div class="next-post pull-right"><a href="/program/python3/08/" title="Python3 迭代问题"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover39.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python3 迭代问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ide/pycharm/" title="PyCharm 的配置及使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover38.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">PyCharm 的配置及使用</div></div></a></div><div><a href="/program/python3/01/" title="Python3 入门"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover44.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">Python3 入门</div></div></a></div><div><a href="/program/python3/02/" title="Python3 基本数据类型"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover40.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-12</div><div class="title">Python3 基本数据类型</div></div></a></div><div><a href="/program/python3/03/" title="Python3 序列（上）"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover02.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-13</div><div class="title">Python3 序列（上）</div></div></a></div><div><a href="/program/python3/04/" title="Python3 序列（下）"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover19.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-14</div><div class="title">Python3 序列（下）</div></div></a></div><div><a href="/program/python3/05/" title="Python3 字典和集合"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover27.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-15</div><div class="title">Python3 字典和集合</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">DONG</div><div class="author-info__description">一个还未入门人工智能的学渣</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xindong2020"><i class="iconfont icon-GitHub"></i><span>点个关注不迷路</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="mailto:641743220@qq.com" target="_blank" title="Email"><i class="iconfont icon-mail-fill"></i></a><a class="social-icon" href="https://github.com/xindong2020" target="_blank" title="Github"><i class="iconfont icon-GitHub"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">走过路过不要错过，点个关注，打个赏，你的鼓励是我坚持下去的动力</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">一、函数定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%87%BD%E6%95%B0%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 函数简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 函数定义的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%96%87%E6%A1%A3%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88DocStrings%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 文档字符串（DocStrings）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%B1%BB%E5%9E%8B%E6%A0%87%E6%B3%A8"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 类型标注</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 语法格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-3-%E5%B8%B8%E7%94%A8%E7%B1%BB%E5%9E%8B%E6%A0%87%E6%B3%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 常用类型标注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E5%9F%BA%E6%9C%AC%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">1）基本内置类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89typing-%E6%A8%A1%E5%9D%97%E6%8F%90%E4%BE%9B%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">2）typing 模块提供的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.1.</span> <span class="toc-text">（1）容器类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%882%EF%BC%89Any-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.2.</span> <span class="toc-text">（2）Any 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%883%EF%BC%89Union-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.3.</span> <span class="toc-text">（3）Union 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%884%EF%BC%89Optional-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.4.</span> <span class="toc-text">（4）Optional 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%885%EF%BC%89Sequence-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.5.</span> <span class="toc-text">（5）Sequence 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%886%EF%BC%89Callable-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.6.</span> <span class="toc-text">（6）Callable 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%887%EF%BC%89Iterator-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.7.</span> <span class="toc-text">（7）Iterator 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%888%EF%BC%89Generator-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.8.</span> <span class="toc-text">（8）Generator 类型</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%EF%BC%889%EF%BC%89Iterable-%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.3.2.9.</span> <span class="toc-text">（9）Iterable 类型</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">二、函数调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 函数调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 参数传递</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%BD%A2%E5%8F%82-VS-%E5%AE%9E%E5%8F%82"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 形参 VS 实参</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B-VS-%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 可变类型 VS 不可变类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 传递方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E5%8F%82%E6%95%B0%E7%B1%BB%E5%88%AB"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 参数类别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0%EF%BC%88%E5%BF%85%E9%9C%80%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">（1）位置参数（必需参数）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.4.2.</span> <span class="toc-text">（2）关键字参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.4.3.</span> <span class="toc-text">（3）默认参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E4%B8%8D%E5%AE%9A%E9%95%BF%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.4.4.</span> <span class="toc-text">（4）不定长参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E7%89%B9%E6%AE%8A%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.4.5.</span> <span class="toc-text">（5）特殊参数</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">三、lambda 表达式（匿名函数）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%BA%94%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-lambda-%E4%BD%9C%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">3.2.1.</span> <span class="toc-text">3.2.1 lambda 作为一个参数传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-lambda-%E4%B8%8E-Python-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-number">3.2.2.</span> <span class="toc-text">3.2.2 lambda 与 Python 内置函数配合使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-lambda-%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.2.3.</span> <span class="toc-text">3.2.3 lambda 作为函数的返回值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">四、常用内置函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-help"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 help</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-abs"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 abs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-divmod"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 divmod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-max"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 max</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-min"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 min</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-pow"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 pow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-round"><span class="toc-number">4.7.</span> <span class="toc-text">4.7 round</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-sum"><span class="toc-number">4.8.</span> <span class="toc-text">4.8 sum</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/deeplearning/pytorch/01/" title="配置 GPU 版本 PyTorch"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover03.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置 GPU 版本 PyTorch"/></a><div class="content"><a class="title" href="/deeplearning/pytorch/01/" title="配置 GPU 版本 PyTorch">配置 GPU 版本 PyTorch</a><time datetime="2024-01-19T16:00:00.000Z" title="发表于 2024-01-20 00:00:00">2024-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/program/python3/09/" title="Python3 函数（上）"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 函数（上）"/></a><div class="content"><a class="title" href="/program/python3/09/" title="Python3 函数（上）">Python3 函数（上）</a><time datetime="2024-01-18T16:00:00.000Z" title="发表于 2024-01-19 00:00:00">2024-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/program/python3/08/" title="Python3 迭代问题"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover39.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 迭代问题"/></a><div class="content"><a class="title" href="/program/python3/08/" title="Python3 迭代问题">Python3 迭代问题</a><time datetime="2024-01-17T16:00:00.000Z" title="发表于 2024-01-18 00:00:00">2024-01-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover29.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2024 <i id="heartbeat" class="fa fas fa-heartbeat"></i> By DONG</div><div class="footer_custom_text"><img src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/config/beian.png"> <a href="https://beian.miit.gov.cn/" target="_blank">琼ICP备2022012184号-1</a> <p> <a style="margin-inline:5px" target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=plastic&logo=Hexo" title="本站框架使用 Hexo 7.0.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://github.com/jerryc127/hexo-theme-butterfly"><img src="https://img.shields.io/badge/Theme-Butterfly-pink?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACEAAAAZCAYAAAC%2FzUevAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAISUlEQVRIiZVWW2xcVxVde59z78yd8TtOHD9iOzi10yQtgYa8SiGRUgpFrSiQSPzRH6p%2B0A9EK%2FgazQcIKGpVCRDhA8QXUlK1qPRBafOoqjYtoa2a4KRp3DhxnDh%2Be2zPzJ17z9mbj8TFOJGA%2FXV19%2BOsu9e6%2B2zCMhtGIduEuvsEuFuhNYWerAHvp6hMrUcxxv9pV1DI5ZBdkxq73Xr6HECqoOOnUDq6F0W3FEdLD4pCWELjnQ7uUQXtJlAqpNNCdNqLHjHAiTY8PkWA%2FLfDD2G%2F2YltbaHhL5HSXlK9nVRXMQgKOhKCfvUxzg1vw%2B9SALBLieOoCxhuPYM2ElAnwKgCgZLuJIP2Gmv3xbRw%2BBgwtfwrVto%2FUQgZQbu39B0F7QK0gxSxAhUPdDJ0QKBdd6F9BMB%2FgmAsEqM%2Bq1AF9A2FPOeVlRQbxNBdnnFAolzYrslzGhcuEYo3deQYClbDXF%2FAZj9Ev%2BpUPzGCY1AMeyBngW8rtDkBsqNo%2FJSFT0GkgFjoIhOmvOK9KVRejDGmLdLTQhyc9oJ9PjD3phy5k5r%2BRWoYZkCXU9Bal7vNEn%2FDidxDTo%2BSw5EKKqcXMFYC2oN1qNsA4m1QLDqU9CYQFazyDYgnPPGMkFS3SDEBAAEmTrsfvmnClhFQ%2BF0h2s75oHwiePIFLD4%2BsZS%2FOtrWXrX0lVBxZ6B42zv54wQmxnbi6fgG2HQcv6g6QklVJnvR4f%2FNwg3bgDedRTKipGWAs3JDtAzoZ%2FHL8qbkR2eTNP51wjKcMu2RPHa8iifzAOhYU6GJGsw9acC7EsYp0fQ3A%2Fjxhd14urrUrfP4fkaZAiGdy6ByRfGIuwkE4bBvwetjnmheGPm38fO65XwzWIfiD0erwKHYYDKxZq%2Fv4P6DOGhdVL%2FFG9rrQENVr88%2BW04mV%2BolQtdqbzUgorFVKM4vp5KXBxKOO0864iywOjSdKwsdwGFfg7%2BUAscqrG3O6MbmrnJ91WBj1VB9jd2x8fnyWPEWok0j25Uyi2MMr%2FTxyhcJ63CNVTWQ3pU%2BANg3W12IIadTIBbDa41xvWK51ZFOLKQ4NwhUbpWXGOlNGeL1fwAh8EPeGO%2FI9N2qGKEoCxk3p4wropqzZPs9NOsZw1514VZdAABP6HFGxGXSCyt99iM8UZ%2FJt%2FZ5CfLe%2B2lT05lKVmdJsead%2FE%2FadpSTyZUzoa7CLq3DGARrnOp6JjJgf7UcmpuG2DEUbH0m35MazhroxeoccDb%2FszvY20YrXAqTy0M2F639uvOyV9i3%2BlCnK5FeTI1GwqbOUXbPK5nkFcxgfnnhkmGpIzOlJB2AtirJovc8vW583q%2FAQL4%2B0xhnsFehjSzUaxrCR1XRQ4omIRlLMu0vc43k3pSwzxMGlDUHpdVKRM4APsC2MGrafAhPRcsrZ8eNiGJeCZaI1kDJetX505jR5XGv4slcmjNbXcCbEgvxpBbQVVDkPXCnAPvE8N3Wk84I8Zw3%2BndV98zcQm3UtOb7vaF%2BH6AzVtkRdmvp0Mj%2Bcwdw2ANAHayUvauQVQtFMxFfzZIvZ7DlU9oKKNiFDtefY7stYVziFJdI%2BJNr86VPupuyA1bsE%2FDUB%2Bg0J0xvpUYmUgIqGvJxoLI4lR2M4tLLZe9f86qxEO3MdO1arygwACxiWkOgyteFXQ8V48BxP64qcH2E39HdOEBBZldqeNI7%2B9fZ1B%2BZmx3%2B%2BD0U41jBqWFJjF5zrCftQhp%2FEEbZ8451bWK0az8wtAWP1TCD2h9mCh%2FXd9VFTLTDBbTnuc5cfPDK98Zn0aGrdD4xyqxAXgHOCGqT2KyHUAjRYztB2GcYaerxQe3q7PABXL8GDuGpKLGyDqR1FjRYS%2FQ8J3E67onecIaMZnjbWHu0dmlkP4xiLDCnXConSWRAQ%2Fu11s6%2BtmZcJTaSiqoBKEsgSjM%2BncXrzN3ZLoP8N1X9Kuf1RC4IziwBEAg1tkuPC3R3YlB1hKMXy%2BUZ%2FjKKtQWdP1llvF01tL1ied%2BfO3%2FaIhACgAOjP6jGbvwU%2BephBvphzYO2J9fnGKIgVtVQoAQAjZ2f2UQUPASWJo394RE%2F%2BtH9Q4%2FVbmiEn299Zm1icF9s%2BPYa4%2BhirXbqAIoJAcA%2FcDCYbl%2FoSww%2F4I32KGjYef%2BeonY%2BTufmWuu73WJpOuCgcSeF%2BgVAvSFzwbM%2BSKL3QfA3MfiTet1KrKmV8K35S8mHrRsybrE0HRhbv4otDwjpXUbRyarnOElfyk%2FEI3tRdAYAfosX9CydgI90tTK1KAMAZSwFXUHU3O1Z202UbzD1MkfXf8J1AG1m0FYoOggEIjZMHJtMMOgincw08LoEGOAgu5ksbmMyq8lQozKcKJ2ZqZY%2FeiguVgHAAEAvkLVtUT8MdgMYUsWbqjQPgzxIQyGFhXU2sosuTC%2BhQiVVWg9gC4AmJSkx8KFafY1yuJBVG7oUDQamDqDIQGpQHUpFzhIhz8wbTBhc3lf61tyLeFEsAOTRSJ4oY6FrAIwJZcdweWLGo9FgdclkWrop8OUken%2FaV3BGY2yfynbqrLFUIWCjkr6fJvo8Ll4b8RhNmrCJJnphe3NrbDJd0dK4EaDkfUfQZsIoEkhb4E3YjKsE3NisBlGqfT5uHkpzOA3lvOFqPzbkLgQssc%2F1ulpT3j1w%2FOGEwTcm4uHyoSuFM9SZqRCZJuNkYvra8JVHbmzPAKAXC3J8D2wltEG20VvxDVEiutEIW1F9N13QkQMopsCylb%2BAAm9tQoNraPiitdhAGbsYRJlRY%2FiycHz5%2FncfW8CyRWQpZzM20yAGdeXtKRB6dtfvm6PYrSNNuiRGl09c1gOD4wuldx6dLJaXFpt%2FAVb5XJ1uIF%2BlAAAAAElFTkSuQmCC&labelColor=%23EBF948&color=%23EE6C95" title="本站主题使用 Butterfly 4.11.0 版本"></a> <a style="margin-inline:5px" target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-yellow?style=plastic&logo=jsDelivr" title="本站使用 jsdelivr 加速静态资源"></a> <a style="margin-inline:5px" target="_blank" href="https://pages.github.com/"><img src="https://img.shields.io/badge/source-GitHub-pink?style=plastic&logo=GitHub&labelColor=%235DF5DC&color=%23F5805D" title="本站托管于 Github"></a> <a style="margin-inline:5px" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright%20-%20CC%20BY--NC--SA%204.0%20-%20red?style=plastic&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAAvXpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjabZBRDsQgCET%2FOcUeAUQFj6MpTXqDPf5isWmb7HzAc0xwEOx77PCZIs2Qi2httaIrt9xSd1AMuUsdCYszhVVqdBpvH4oFJHWL7wtM0Zjcmbyt2WsQp%2FApr0GyoDYVzPcgvVItbWpMMyEm%2BXcGk2FqVtoYZtJFMWq8yp6IK%2Fezdz9LmpRPVq%2BFZ0LfBOYnPFfaXbGa%2B4%2BE7SJ%2B%2B2pBcEWHH954UN5i%2FAOVAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAGbElEQVRYhc1Ya4hcZxl%2B3ve7nfvZmZ3J7uzMJtsk5jLBEhtqL3hZxF7SLrRWa0WL%2BkMKiph6KdQoBC1WWvpDsJT8ESWCWMGKgQq2ylICpaU2RkuMgsVm7c0aE%2BMmu%2Bvuzjn%2BmDlnzsycmcxefvjCgQPf8zzvc77vvN95vwP8nwath1SrjVbPn7t8cGVl5YYIqMdxPAnAtCQvE9FZMP1RG3OiXLzq2bm5Vy5soueeEJ5t36OknCWiBoB4mIuIF6U0P7P8wvs33ZGn9V2S%2Bc8DDEQANQA0mvf5GCnNrOOMXrthQxXfL2khnupNRgtE4hfM6ou2bV%2FvbtkyVq%2FXvd27d%2Fu2bVellNPM%2FCABswBWurirUtuPAgfUukwVPb1PMP8NHcsi%2FsmsHwTCwhqktjH4ewAWslpCmFmEW9eiA1RdtZ%2BJzrWFqCGU%2FXihsD1ck1AmLGCrIDqOzOwTm1NDmyu7GBfMc6kp4kvaHrlrvYa6giTzAwBWE30hzW%2BBaXlFohHiN2gv3UXLKr9vmIQzMzPO9PS0d%2BTIEb4SWAnx2Yy5SGrvoYGE0FKfQ%2BYlFSY42A9bLdo1S%2BtvKKmeE0KcI6IIQCSEnJdSvyi19S17dLTajy%2BZDyNdVl7W7ti7c4GVChxB9FZiTCr3sTxcHdC20Y8S0RJ6t4TuPeySMt6X%2BngjSfRsCxsJ6TyTiwqMuj8VZHUWlQNON6ZchmeknO00QKtSqpeVUseUUj8WQryAzi0iktr%2Fbl5O32AXgf6L5j4Y2UHtuh73WvCriZgyhfvyhFytfpJNKIT%2BpQnDHd04Y7C9swIp0s7YHXmaivloqqfcYx2DE759YyJCJN%2FB1LTVLbDFNTcRKC11obyjAAa96KyYf5rgWdlngN7C8DTqrdwRsbo0dvXNbmYm5MOZhE%2FkZXGUfAbpUutTw%2BzcRSAQRP8gogUh1YnS5Hsm8nCS6OWWduT41Zl0wFbiRGrMKd3eTTxQ8UtMtJxidPFjVzKVRBiGO2q1mj0Io5m%2FnRjTVvhwe0DwBbTeBW%2Fsxi3dxJJjZpBWmlhEZaanMDYSvsAdiTFp%2FOMAgPsOFEJu7kExsT6fRwyNfAAdy7i5Me7pfWi9Z1K7vwcA%2FtVrS14UxwQARHI%2BjxitRCPJPQvzr802tmrJZEIoiuMCALAxmcpixHnERrbTZV7dbGO0SNm8BAB8jRMuEVqGooabR2TJl9sul73NNlb2qZjmIvpP0wtASvA8mt%2Bsxsj%2BO0e6iQVLfArtVuWtTTfmiNsSfWm8XwMAMxBLxl%2BakIiW%2FvrSNd3EESV%2F1yIijpbHdHHnvmGThpb%2BulTqhOX4h0vV7bvyMPPL8f7knlieSQc8o77fdhw%2BksMlLds9vzDe48OYuqEGWzGfTXjKLh7KwylBzzUxFNvBxCfSgWrBuT0hs7Bew3Rv4%2BYaPoT2XrZseZUPXMmYY8TRlMPycnnq2vFuTKVgbSXQaqJb3fPe0XTw7jq0ZHq7JRLZYeWj3QI7AaOYXmmbkxe1PfKRPEO1IChaSvwQmTZaWv538rC2lo%2BkGOM%2F3ft0WiafhZil%2FQfgbtGNGdV6LxO9k%2BAARFLplxzHeygIgi%2B4rvtlS6sfMSVfkqR9tmZRr%2BtuvUnHmWCi%2BUTLBOO39Rir%2BH6pA%2BQWv5L3hJ7WeyXTn7KJB1yR1M7Py%2BV67hZjK%2FFkezLMSfT7M%2BBIPoz2e7TgBJO5h9MpwFLM9zPRaeQecKkhhHxe217fQ0yrjU%2F7NRNO3NQPizqgFfGp1BzLN0xQ29mXgGb34DjOnZZlfcayrE8bxzlYKm2rDOKUXXMrZ1pzof1jg%2FAAgFGt9zDh3xlzbzrB%2BMaP9a0ILP3JrCmW5kyxeF0wFNk18sNEWER7WReN7X81ryCGjZ3FYmAp9QQ6DrzidRNO9rTmA8Oz5IeIkK2uSEp92vaK9%2BTtc%2F2iXi57rlGHBHN6AgMQs9CvBkHtXWsylYSv9R5JfBJdlcZC%2Fl0p85jrBrfu2HF1R2MZAXRVpbLNtu2PKyF%2BQEQXuvlC28f9yq7SukxlQknmrxFwHj3Vl8ykuqSUnlNKzQkhFtHnVxSzmNNWcO9GDXVECBQk8zeZqP1fY6iLIpbqtDLO5zE11XP66hfr%2BdXJnmV9cGl5%2BZZGHF%2BPON4bA%2BWWVnICfxtMpwWJ57UbHF%2B4eO7kOvJsPKaaMzHuuu7Y9BoKY1D8D95GAkC2cGOlAAAAAElFTkSuQmCC&labelColor=%238FE79B" title="本站使用 CC BY-NC-SA 4.0 许可协议进行授权"></a> </p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="translateLink" type="button" title="简繁转换">繁</button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0176d32a129f49c7bc56e84867580f55';
+  var gaud_map_key = '959bdc1c930d3f31e1b6ac5a6e1685e8';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '121.455708,31.249574';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/01/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover16.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-01</span><a class="blog-slider__title" href="butterfly/01/" alt="">Hexo 框架 + Butterfly 主题打造个人博客</a><div class="blog-slider__text">使用 Hexo 框架与 Butterfly 主题，快速打造属于自己的个人网站</div><a class="blog-slider__button" href="butterfly/01/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="butterfly/05/" alt=""><img width="48" height="48" src="https://cdn.jsdelivr.net/gh/xindong2020/DONGPic/butterfly/cover/cover21.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-01-05</span><a class="blog-slider__title" href="butterfly/05/" alt="">Butterfly 主题自带美化效果</a><div class="blog-slider__text">详细讲解 Butterfly 主题自带的美化效果</div><a class="blog-slider__button" href="butterfly/05/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = '/';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
