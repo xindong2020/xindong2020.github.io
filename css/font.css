@@ -13,10 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-Categories:before {
-  content: "\e68f";
-}
-
 .icon-tags:before {
   content: "\e7e5";
 }
