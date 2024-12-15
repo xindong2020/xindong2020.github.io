@@ -1,0 +1,648 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>配置 GPU 版本 Pytorch | Mr.DONG</title><meta name="author" content="DONG"><meta name="copyright" content="DONG"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、Anaconda3 1.1 下载安装包 1.2 安装 Anaconda3（Windows） 1.3 配置环境变量 1.4 检查是否安装成功 1.5 换源 1.6 配置虚拟环境 1.7 conda 常用指令 1.8 PyCharm 使用 Jupyter   二、CUDA 11 2.1 下载 NVIDIA 驱动 2.2 查看 NVIDIA 驱动 2.3 安装 CUDA 工具包   三、cudnn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置 GPU 版本 Pytorch">
+<meta property="og:url" content="http://example.com/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/">
+<meta property="og:site_name" content="Mr.DONG">
+<meta property="og:description" content="一、Anaconda3 1.1 下载安装包 1.2 安装 Anaconda3（Windows） 1.3 配置环境变量 1.4 检查是否安装成功 1.5 换源 1.6 配置虚拟环境 1.7 conda 常用指令 1.8 PyCharm 使用 Jupyter   二、CUDA 11 2.1 下载 NVIDIA 驱动 2.2 查看 NVIDIA 驱动 2.3 安装 CUDA 工具包   三、cudnn">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/06.jpg">
+<meta property="article:published_time" content="2024-11-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-15T23:17:08.336Z">
+<meta property="article:author" content="DONG">
+<meta property="article:tag" content="PyTorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/06.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/config/favicon.png"><link rel="canonical" href="http://example.com/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 8 || hour >= 19
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"DP96NA4ZYC","apiKey":"ac671c7fd9575ba3fc547a7035c06dbd","indexName":"Mr.DONG","hitsPerPage":6,"languages":{"input_placeholder":"搜索文章","hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，耗时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '配置 GPU 版本 Pytorch',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/font.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/config/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/config/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-time-circle"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw iconfont icon-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw iconfont icon-categories"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw iconfont icon-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw iconfont icon-musiclist"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw iconfont icon-movies"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-about"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/06.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/config/logo.png" alt="Logo"><span class="site-name">Mr.DONG</span></a><a class="nav-page-title" href="/"><span class="site-name">配置 GPU 版本 Pytorch</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-time-circle"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw iconfont icon-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw iconfont icon-categories"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw iconfont icon-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw iconfont icon-musiclist"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw iconfont icon-movies"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-about"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">配置 GPU 版本 Pytorch</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-11-30T16:00:00.000Z" title="发表于 2024/12/01 00:00:00">2024/12/01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/PyTorch/">PyTorch</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><ul>
+<li><a href="#一anaconda3">一、Anaconda3</a><ul>
+<li><a href="#11-下载安装包">1.1 下载安装包</a></li>
+<li><a href="#12-安装-anaconda3windows">1.2 安装 Anaconda3（Windows）</a></li>
+<li><a href="#13-配置环境变量">1.3 配置环境变量</a></li>
+<li><a href="#14-检查是否安装成功">1.4 检查是否安装成功</a></li>
+<li><a href="#15-换源">1.5 换源</a></li>
+<li><a href="#16-配置虚拟环境">1.6 配置虚拟环境</a></li>
+<li><a href="#17-conda-常用指令">1.7 conda 常用指令</a></li>
+<li><a href="#18-pycharm-使用-jupyter">1.8 PyCharm 使用 Jupyter</a></li>
+</ul>
+</li>
+<li><a href="#二cuda-11">二、CUDA 11</a><ul>
+<li><a href="#21-下载-nvidia-驱动">2.1 下载 NVIDIA 驱动</a></li>
+<li><a href="#22-查看-nvidia-驱动">2.2 查看 NVIDIA 驱动</a></li>
+<li><a href="#23-安装-cuda-工具包">2.3 安装 CUDA 工具包</a></li>
+</ul>
+</li>
+<li><a href="#三cudnn">三、cudnn</a><ul>
+<li><a href="#31-下载-cudnn">3.1 下载 cudnn</a></li>
+<li><a href="#32-安装-cudnn">3.2 安装 cudnn</a></li>
+</ul>
+</li>
+<li><a href="#四安装-gpu-版本-pytorch">四、安装 GPU 版本 PyTorch</a></li>
+</ul>
+<h2 id="一、Anaconda3"><a href="#一、Anaconda3" class="headerlink" title="一、Anaconda3"></a>一、Anaconda3</h2><h3 id="1-1-下载安装包"><a href="#1-1-下载安装包" class="headerlink" title="1.1 下载安装包"></a>1.1 下载安装包</h3><ul>
+<li><p>官网：<a target="_blank" rel="noopener" href="https://www.anaconda.com/products/individual#Downloads">https://www.anaconda.com/products/individual#Downloads</a></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/01.png" width=555/>
+</div>
+</li>
+<li><p>清华大学开源软件镜像站：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/02.png" width=770/>
+</div>
+
+</li>
+</ul>
+<h3 id="1-2-安装-Anaconda3（Windows）"><a href="#1-2-安装-Anaconda3（Windows）" class="headerlink" title="1.2 安装 Anaconda3（Windows）"></a>1.2 安装 Anaconda3（Windows）</h3><ul>
+<li><p>双击安装包。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/03.png" width=350/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/04.png" width=350/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/05.jpg" width=350/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/06.jpg" width=350/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/07.jpg" width=350/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/08.png" width=350/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/09.png" width=350/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/10.png" width=350/>
+</div>
+
+</li>
+</ul>
+<h3 id="1-3-配置环境变量"><a href="#1-3-配置环境变量" class="headerlink" title="1.3 配置环境变量"></a>1.3 配置环境变量</h3><ul>
+<li><p>在系统变量的 <code>Path</code> 环境变量中添加 <code>C:\Users\DONG\anaconda3</code>、<code>C:\Users\DONG\anaconda3\Scripts</code>、<code>C:\Users\DONG\anaconda3\Library\bin</code>、<code>C:\Users\DONG\anaconda3\Library\mingw-w64\bin</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/11.jpg" width=360/>
+</div>
+
+</li>
+</ul>
+<h3 id="1-4-检查是否安装成功"><a href="#1-4-检查是否安装成功" class="headerlink" title="1.4 检查是否安装成功"></a>1.4 检查是否安装成功</h3><ul>
+<li><p><code>conda --version</code> 或 <code>conda -V</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/12.png" width=320/>
+</div>
+
+</li>
+</ul>
+<h3 id="1-5-换源"><a href="#1-5-换源" class="headerlink" title="1.5 换源"></a>1.5 换源</h3><ul>
+<li><p><code>Windows</code> 用户无法直接创建名为 <code>.condarc</code> 的文件，需要先执行如下命令，生成该文件（文件位于 <code>C:\Users\username</code>）后再修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> show_channel_urls <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/13.png" width=399/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/14.png" width=520/>
+</div>
+</li>
+<li><p>方式一：直接在文件中写入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">channels:</span><br><span class="line">  - defaults</span><br><span class="line">show_channel_urls: <span class="literal">true</span></span><br><span class="line">default_channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line">custom_channels:</span><br><span class="line">  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  deepmodeling: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方式二：执行下列命令，添加清华源：</p>
+<ul>
+<li><p>清华大学：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/deepmodeling/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/simpleitk/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch-lts/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line"></span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br><span class="line">conda config --<span class="built_in">set</span> ssl_verify false</span><br><span class="line">conda config --<span class="built_in">set</span> channel_priority flexible</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>conda config --set show_channel_urls yes</code> 下载资源时是否显示 <code>channel</code> 的来源。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>其他国内源，替换清华大学网址（<code>https://mirrors.tuna.tsinghua.edu.cn/anaconda/</code>）即可：</p>
+<ul>
+<li><p>北京大学：<code>https://mirrors.pku.edu.cn/anaconda/</code></p>
+</li>
+<li><p>阿里云：<code>https://mirrors.aliyun.com/anaconda/</code></p>
+</li>
+<li><p>北京外国语大学：<code>https://mirrors.bfsu.edu.cn/help/anaconda/</code></p>
+</li>
+<li><p>北京交通大学：<code>https://mirror.bjtu.edu.cn/anaconda/</code></p>
+</li>
+<li><p>哈尔滨工业大学：<code>https://mirrors.hit.edu.cn/anaconda/</code></p>
+</li>
+</ul>
+</li>
+<li><p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
+</li>
+<li><p>运行 <code>conda config --show channels</code> 检查当前 <code>channels</code>。</p>
+</li>
+<li><p>恢复默认源：<code>conda config --remove-key channels</code></p>
+</li>
+<li><p>查看 <code>pip</code> 源：<code>pip config list</code></p>
+</li>
+<li><p><code>pip</code> 换源（选择一个），写入 <code>C:\Users\username\AppData\Roaming\pip\pip.ini</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清华源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip config <span class="built_in">set</span> global.trusted-host pypi.tuna.tsinghua.edu.cn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 阿里源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">pip config <span class="built_in">set</span> global.trusted-host mirrors.aliyun.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 腾讯源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url http://mirrors.cloud.tencent.com/pypi/simple</span><br><span class="line">pip config <span class="built_in">set</span> global.trusted-host mirrors.cloud.tencent.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 豆瓣源</span></span><br><span class="line">pip config <span class="built_in">set</span> global.index-url http://pypi.douban.com/simple/</span><br><span class="line">pip config <span class="built_in">set</span> global.trusted-host pypi.douban.com</span><br></pre></td></tr></table></figure>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/15.png" width=570/>
+</div>
+
+<ul>
+<li><p>也可以直接在 <code>%appdata%</code> 的 <code>pip</code> 文件夹中直接创建配置文件：<code>pip.ini</code>，然后修改配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">trusted-host = pypi.tuna.tsinghua.edu.cn</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-6-配置虚拟环境"><a href="#1-6-配置虚拟环境" class="headerlink" title="1.6 配置虚拟环境"></a>1.6 配置虚拟环境</h3><ul>
+<li><p>默认情况下，<code>conda</code> 创建的虚拟环境及安装的模块缓存都存储在用户目录 <code>C:\Users\username\.conda\envs</code> 下，这一点不会在 <code>conda</code> 配置文件 <code>.condarc</code> 中体现出来。当前的默认信息可通过 <code>conda info</code> 指令打印查看，其中不仅能够查看当前默认环境路径和默认缓存路径，还能查看 <code>conda</code> 的源设置。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/16.jpg" width=770/>
+</div>
+
+<ul>
+<li><p>修改 <code>.condarc</code> 中的 <code>envs_dirs</code> 和 <code>pkgs_dirs</code> 配置项，可以分别设置虚拟环境和包缓存路径，配置项中的第一个路径会作为默认路径。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/17.jpg" width=300/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/18.jpg" width=399/>
+</div>
+</li>
+</ul>
+</li>
+<li><p>创建虚拟环境：<code>conda create --name &lt;env_name&gt; [--prefix &lt;path&gt;] [interpreter_version] [package_names]</code></p>
+<ul>
+<li><p><code>--name</code> 参数指定虚拟环境名称，缩写为 <code>-n</code>。</p>
+</li>
+<li><p><code>&lt;env_name&gt;</code>：创建的虚拟环境名称。</p>
+</li>
+<li><p><code>--prefix</code> 参数指定虚拟环境路径，缩写为 <code>-p</code>。</p>
+</li>
+<li><p><code>&lt;path&gt;</code>：创建的虚拟环境路径。</p>
+</li>
+<li><p><code>[interpreter_version]</code>：创建虚拟环境时指定的 <code>Python</code> 解释器版本，可选参数。例：<code>python=3.9</code>。</p>
+<ul>
+<li><code>conda search python</code> 可以查询当前 <code>channel</code> 中所有的 <code>python</code> 版本</li>
+</ul>
+</li>
+<li><p><code>[package_names]</code>：创建时需要安装的第三方包，多个之间包用空格隔开。例：<code>requests flask</code>。</p>
+<ul>
+<li>所有的包，不论 <code>base</code> 环境还是虚拟环境都是放在 <code>pkgs</code> 文件夹下。如果虚拟环境需要安装的包与 <code>pkgs</code> 中已有的包版本完全一样，则不会再下载。当一个包被多个环境使用时，从某一个环境卸载该包也不会将其从 <code>pkgs</code> 文件夹删除。</li>
+</ul>
+</li>
+<li><p>如果报错 <code>NoWritablePkgsDirError: No writeable pkgs directories configured.</code>，需将 <code>pkgs_dirs</code> 路径权限进行修改，允许用户写入。</p>
+</li>
+</ul>
+</li>
+<li><p>创建与 <code>base</code> 环境基本相同的虚拟环境：<code>conda create -n &lt;env_name&gt; [--prefix &lt;path&gt;] [interpreter_version] anaconda</code></p>
+</li>
+<li><p>查看虚拟环境：<code>conda env list</code> / <code>conda info --envs</code></p>
+</li>
+<li><p>激活虚拟环境：</p>
+<ul>
+<li><p><strong>Windows</strong>：<code>conda activate env_name</code></p>
+<ul>
+<li>报错 <code>CommandNotFoundError: Your shell has not been properly configured to use &#39;conda activate&#39;</code> 时，运行 <code>conda init cmd.exe</code>。</li>
+</ul>
+</li>
+<li><p><strong>Linux &amp; Mac</strong>：<code>source activate env_name</code></p>
+</li>
+</ul>
+</li>
+<li><p>退出虚拟环境：退出虚拟环境时并不需要指定虚拟环境名。</p>
+<ul>
+<li><p><strong>Windows</strong>：<code>conda deactivate</code></p>
+</li>
+<li><p><strong>Linux &amp; Mac</strong>：<code>source deactivate</code></p>
+</li>
+</ul>
+</li>
+<li><p>修改虚拟环境名称：</p>
+<ul>
+<li><p>将旧环境克隆到新环境中：<code>conda create --name new_name --clone old_name</code></p>
+</li>
+<li><p>删掉旧环境：<code>conda remove --name old_name --all</code></p>
+</li>
+</ul>
+</li>
+<li><p>共享虚拟环境：<code>conda</code> 提供了将虚拟环境中的所有依赖包统一导出到一个配置文件中的功能，在本机之外的机器上使用这套代码时，根据 <code>conda</code> 导出的配置文件重建虚拟环境即可。</p>
+<ul>
+<li><p>导出依赖包到配置文件：<code>conda env export --file environment.yml</code></p>
+<ul>
+<li><p><code>--file</code> 参数缩写为 <code>-f</code>，可以替换为 <code>&gt;</code>。</p>
+</li>
+<li><p><code>environment.yml</code> 为导出的文件，其中文件名 <code>environment</code> 可以更改。</p>
+</li>
+<li><p>如果导出的路径中已经有了 <code>environment.yml</code> 文件，<code>conda</code> 会重写这个文件。</p>
+</li>
+</ul>
+</li>
+<li><p>根据配置文件创建虚拟环境：<code>conda env create -f environment.yml</code></p>
+</li>
+</ul>
+</li>
+<li><p>删除虚拟环境：<code>conda remove -n env_name --all</code></p>
+</li>
+</ul>
+<h3 id="1-7-conda-常用指令"><a href="#1-7-conda-常用指令" class="headerlink" title="1.7 conda 常用指令"></a>1.7 conda 常用指令</h3><ul>
+<li><p>查看 <code>conda</code> 版本：<code>conda --version</code></p>
+</li>
+<li><p>更新至最新版本：<code>conda update conda</code></p>
+</li>
+<li><p>查找指定包的信息：<code>conda search package_name</code></p>
+</li>
+<li><p>更新所有包：<code>conda update --all</code></p>
+</li>
+<li><p>更新 <strong>当前环境</strong> 下的指定包：<code>conda update package_name</code></p>
+</li>
+<li><p>更新 <strong>指定环境</strong> 下的指定包：<code>conda update --name env_name package_name</code></p>
+</li>
+<li><p>查看 <strong>当前环境</strong> 所有已安装的包：<code>conda list</code></p>
+</li>
+<li><p>查看 <strong>指定环境</strong> 所有已安装的包：<code>conda list --name env_name</code></p>
+</li>
+<li><p>在 <strong>当前环境</strong> 中安装包：<code>conda install package_name</code></p>
+</li>
+<li><p>在 <strong>指定环境</strong> 中安装包：<code>conda install --name env_name package_name</code></p>
+</li>
+<li><p>删除 <strong>当前环境</strong> 中的包：<code>conda remove package_name</code></p>
+</li>
+<li><p>删除 <strong>指定环境</strong> 中的包：<code>conda remove --name env_name package_name</code></p>
+</li>
+</ul>
+<h3 id="1-8-PyCharm-使用-Jupyter"><a href="#1-8-PyCharm-使用-Jupyter" class="headerlink" title="1.8 PyCharm 使用 Jupyter"></a>1.8 PyCharm 使用 Jupyter</h3><ul>
+<li><p>生成 <code>Jupyter</code> 配置文件：<code>jupyter notebook --generate-config</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/19.png" width=500/>
+</div>
+</li>
+<li><p>设置密码：<code>jupyter notebook password</code>（输入密码、验证密码）</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/20.png" width=600/>
+</div>
+</li>
+<li><p>设置服务器启动时打开的文件夹（默认文件夹 <code>C:\Users\username</code>）</p>
+<ul>
+<li>打开生成的配置文件 <code>jupyter_notebook_config.py</code>，设置 <code>c.NotebookApp.notebook_dir = &#39;E:/Jupyter&#39;</code>，要将路径中的 <code>\</code> 改为 <code>/</code>。</li>
+</ul>
+</li>
+<li><p>修改 <code>Jupyter Notebook</code> 快捷方式的目标属性：右击 <code>JupyterNotebook</code> 快捷方式 $\rightarrow$ 属性 $\rightarrow$  删除目标属性中的 <code>%USERPROFILE%</code> $\rightarrow$ 应用 $\rightarrow$ 确定。</p>
+</li>
+<li><p>登录服务器：<code>jupyter notebook</code>，输入设置的密码</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/21.png" width=200/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/22.png" width=700/>
+</div>
+</li>
+<li><p>新建 <code>Jupyter Notebook</code> 文件</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/50.png" width=399/>
+</div>
+</li>
+<li><p>配置 <code>Jupyter</code> 服务器</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/51.png" width=577/>
+</div>
+
+</li>
+</ul>
+<h2 id="二、CUDA-11"><a href="#二、CUDA-11" class="headerlink" title="二、CUDA 11"></a>二、CUDA 11</h2><h3 id="2-1-下载-NVIDIA-驱动"><a href="#2-1-下载-NVIDIA-驱动" class="headerlink" title="2.1 下载 NVIDIA 驱动"></a>2.1 下载 NVIDIA 驱动</h3><ul>
+<li><p>根据 <code>PyTorch</code> 版本查看可安装的 <code>cuda</code> 版本：<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/23.png" width=520/>
+</div>
+</li>
+<li><p>查看 <code>cuda</code> 与 <code>NVIDIA</code> 驱动版本的对照：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/24.png" width=520/>
+</div>
+</li>
+<li><p>官网 <a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/drivers/">https://www.nvidia.cn/geforce/drivers/</a> 选择自己电脑显卡的型号（注意：笔记本的话选择型号后面带 <code>Notebooks</code> 的），下载驱动安装包 <code>516.94</code>，双击安装即可。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/25.png" width=320/>
+</div>
+
+</li>
+</ul>
+<h3 id="2-2-查看-NVIDIA-驱动"><a href="#2-2-查看-NVIDIA-驱动" class="headerlink" title="2.2 查看 NVIDIA 驱动"></a>2.2 查看 NVIDIA 驱动</h3><ul>
+<li><p>使用 <code>nvidia-smi</code> 查看 <code>NVIDIA</code> 驱动信息：<code>nvidia-smi</code> 是 <code>NVIDIA</code> 的系统管理界面 ，其中 <code>smi</code> 是 <code>system management interface</code> 的缩写，它可以收集各种级别的信息，查看显存使用情况。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/26.png" width=520/>
+</div>
+
+</li>
+</ul>
+<h3 id="2-3-安装-CUDA-工具包"><a href="#2-3-安装-CUDA-工具包" class="headerlink" title="2.3 安装 CUDA 工具包"></a>2.3 安装 CUDA 工具包</h3><ul>
+<li><p>官网下载适合自己电脑 <code>NVIDIA</code> 驱动的 <code>CUDA</code> 工具包：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">https://developer.nvidia.com/cuda-toolkit-archive</a>，双击安装即可。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/27.png" width=399/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/28.png" width=599/>
+</div>
+</li>
+<li><p>双击安装</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/29.png" width=300/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/30.png" width=350/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/31.png" width=370/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/32.png" width=370/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/33.png" width=370/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/34.png" width=370/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/35.png" width=370/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/36.png" width=370/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/37.png" width=370/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/38.png" width=370/>
+</div>
+</li>
+<li><p>验证安装：<code>nvcc -V</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/39.png" width=360/>
+</div>
+
+</li>
+</ul>
+<h2 id="三、cudnn"><a href="#三、cudnn" class="headerlink" title="三、cudnn"></a>三、cudnn</h2><h3 id="3-1-下载-cudnn"><a href="#3-1-下载-cudnn" class="headerlink" title="3.1 下载 cudnn"></a>3.1 下载 cudnn</h3><ul>
+<li><p>进入 <code>cudnn</code> 官网：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn">https://developer.nvidia.com/cudnn</a> 下载 <code>cuDNN</code> 安装包。<strong>注</strong>：需要使用 <code>NVIDIA</code> 账号登陆网站才可以下载，没有账号注册即可。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/40.png" width=770/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/41.png" width=770/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/42.png" width=770/>
+</div>
+
+</li>
+</ul>
+<h3 id="3-2-安装-cudnn"><a href="#3-2-安装-cudnn" class="headerlink" title="3.2 安装 cudnn"></a>3.2 安装 cudnn</h3><ul>
+<li><p>解压压缩包 <code>cudnn-windows-x86_64-8.6.0.163_cuda11-archive.zip</code>，解压后有如下文件及文件夹。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/43.png" width=500/>
+</div>
+</li>
+<li><p>将 <code>bin</code>、<code>include</code>、<code>lib</code> 三个文件夹 <strong>合并</strong> 到 <code>CUDA</code> 安装目录：<code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7</code>。</p>
+</li>
+<li><p>编辑系统变量的 <code>Path</code> 环境变量，加入下列四条路径。</p>
+<ul>
+<li><p><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\bin</code></p>
+</li>
+<li><p><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\include</code></p>
+</li>
+<li><p><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\lib\x64</code></p>
+</li>
+<li><p><code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\libnvvp</code></p>
+</li>
+</ul>
+</li>
+<li><p>测试 <code>cudnn</code> 是否安装成功</p>
+<ul>
+<li><p><code>cmd</code> 进入到 <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\extras\demo_suite</code> 文件夹。</p>
+</li>
+<li><p>分别执行 <code>deviceQuery.exe</code> 和 <code>bandwidthTest.exe</code>。</p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/44.png" width=790/>
+</div>
+
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/45.png" width=750/>
+</div>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、安装-GPU-版本-PyTorch"><a href="#四、安装-GPU-版本-PyTorch" class="headerlink" title="四、安装 GPU 版本 PyTorch"></a>四、安装 GPU 版本 PyTorch</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/torch_stable.html">https://download.pytorch.org/whl/torch_stable.html</a> 下载 <code>torch</code> 安装包。<code>GPU</code> 版本以 <code>cu</code> 开头，<code>cuda 11.7</code> 对应于 <code>cu117</code>。<code>cp</code> 后面对应于电脑已安装的 <code>python</code> 版本，<code>anaconda 2022.10</code> 自带的 <code>python</code> 版本为 <code>3.9</code>。因此，下载 <code>torch</code> 安装包：<code>cu117/torch-1.13.1%2Bcu117-cp39-cp39-win_amd64.whl</code>。</p>
+</li>
+<li><p>同理下载 <code>torchvision</code> 安装包：<code>cu117/torchvision-0.14.1%2Bcu117-cp39-cp39-win_amd64.whl</code> 和 <code>torchaudio</code> 安装包：<code>cu117/torchaudio-0.13.1%2Bcu117-cp39-cp39-win_amd64.whl</code>。</p>
+</li>
+<li><p>进入到 <code>torch</code>、<code>torchvision</code> 和 <code>torchaudio</code> 的下载位置进行安装。</p>
+<ul>
+<li><p><code>pip install &quot;torch-1.13.1+cu117-cp39-cp39-win_amd64.whl&quot;</code></p>
+</li>
+<li><p><code>pip install &quot;torchvision-0.14.1+cu117-cp39-cp39-win_amd64.whl&quot;</code></p>
+</li>
+<li><p><code>pip install &quot;torchaudio-0.13.1+cu117-cp39-cp39-win_amd64.whl&quot;</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/46.png" width=880/>
+</div>
+</li>
+</ul>
+</li>
+<li><p>检查是否安装成功：</p>
+<ul>
+<li><p><code>conda list</code> / <code>pip list</code></p>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/47.png" width=500/>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/48.png" width=339/>
+</div>
+</li>
+<li><p>导入 <code>torch</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">torch.__version__</span><br><span class="line"><span class="built_in">print</span>(torch.version.cuda)</span><br><span class="line">torch.cuda.is_available()</span><br></pre></td></tr></table></figure>
+<div align=center>
+  <img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/pytorch/01/49.png" width=570/>
+</div>
+</li>
+<li><p>进一步验证 <code>PyTorch</code> 是否在使用 <code>GPU</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 测试 CUDA</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Support CUDA ?: &quot;</span>, torch.cuda.is_available())  <span class="comment"># Support CUDA ?:  True</span></span><br><span class="line">    x = torch.tensor([<span class="number">10.0</span>])</span><br><span class="line">    x = x.cuda()</span><br><span class="line">    <span class="built_in">print</span>(x)  <span class="comment"># tensor([10.], device=&#x27;cuda:0&#x27;)</span></span><br><span class="line">    y = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    y = y.cuda()</span><br><span class="line">    <span class="built_in">print</span>(y)</span><br><span class="line">    <span class="comment"># tensor([[-0.2928,  0.4661, -0.6477],</span></span><br><span class="line">    <span class="comment">#         [-1.0861,  1.5696,  1.0819]], device=&#x27;cuda:0&#x27;)</span></span><br><span class="line">    z = x + y</span><br><span class="line">    <span class="built_in">print</span>(z)</span><br><span class="line">    <span class="comment"># tensor([[ 9.7072, 10.4661,  9.3523],</span></span><br><span class="line">    <span class="comment">#         [ 8.9139, 11.5696, 11.0819]], device=&#x27;cuda:0&#x27;)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试 CUDNN</span></span><br><span class="line">    <span class="keyword">from</span> torch.backends <span class="keyword">import</span> cudnn</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Support cudnn ?: &quot;</span>, cudnn.is_acceptable(x))  <span class="comment"># Support cudnn ?:  True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">DONG</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/">http://example.com/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Mr.DONG</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PyTorch/">PyTorch</a></div><div class="post-share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/06.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/04/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/04/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/04/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/04/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2024/11/12/hexo/butterfly/06.Butterfly%20%E4%B8%BB%E9%A2%98%E8%87%AA%E5%B8%A6%E7%BE%8E%E5%8C%96%E6%95%88%E6%9E%9C/" title="Butterfly 主题自带美化效果"><img class="cover" src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/13.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Butterfly 主题自带美化效果</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/config/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">DONG</div><div class="author-info-description">个人学习记录</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xindong2020"><i class="iconfont icon-github-fill"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/xindong2020" target="_blank" title="Github"><i class="iconfont icon-github-fill" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:641743220@qq.com" target="_blank" title="Email"><i class="iconfont icon-email" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到本站，希望本站内容可以帮到您</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Anaconda3"><span class="toc-number">1.</span> <span class="toc-text">一、Anaconda3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 下载安装包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%89%E8%A3%85-Anaconda3%EF%BC%88Windows%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 安装 Anaconda3（Windows）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 检查是否安装成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%8D%A2%E6%BA%90"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 换源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 配置虚拟环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-conda-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 conda 常用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-PyCharm-%E4%BD%BF%E7%94%A8-Jupyter"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 PyCharm 使用 Jupyter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81CUDA-11"><span class="toc-number">2.</span> <span class="toc-text">二、CUDA 11</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%8B%E8%BD%BD-NVIDIA-%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 下载 NVIDIA 驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%9F%A5%E7%9C%8B-NVIDIA-%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 查看 NVIDIA 驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%AE%89%E8%A3%85-CUDA-%E5%B7%A5%E5%85%B7%E5%8C%85"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 安装 CUDA 工具包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81cudnn"><span class="toc-number">3.</span> <span class="toc-text">三、cudnn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%B8%8B%E8%BD%BD-cudnn"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 下载 cudnn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AE%89%E8%A3%85-cudnn"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 安装 cudnn</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-GPU-%E7%89%88%E6%9C%AC-PyTorch"><span class="toc-number">4.</span> <span class="toc-text">四、安装 GPU 版本 PyTorch</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/" title="配置 GPU 版本 Pytorch"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/06.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="配置 GPU 版本 Pytorch"/></a><div class="content"><a class="title" href="/2024/12/01/PyTorch/01.%E9%85%8D%E7%BD%AE%20GPU%20%E7%89%88%E6%9C%AC%20Pytorch/" title="配置 GPU 版本 Pytorch">配置 GPU 版本 Pytorch</a><time datetime="2024-11-30T16:00:00.000Z" title="发表于 2024/12/01 00:00:00">2024/12/01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/hexo/butterfly/06.Butterfly%20%E4%B8%BB%E9%A2%98%E8%87%AA%E5%B8%A6%E7%BE%8E%E5%8C%96%E6%95%88%E6%9E%9C/" title="Butterfly 主题自带美化效果"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Butterfly 主题自带美化效果"/></a><div class="content"><a class="title" href="/2024/11/12/hexo/butterfly/06.Butterfly%20%E4%B8%BB%E9%A2%98%E8%87%AA%E5%B8%A6%E7%BE%8E%E5%8C%96%E6%95%88%E6%9E%9C/" title="Butterfly 主题自带美化效果">Butterfly 主题自带美化效果</a><time datetime="2024-11-11T16:00:00.000Z" title="发表于 2024/11/12 00:00:00">2024/11/12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/12/Python/Python3/02.Python3%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="Python3 基本数据类型"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/19.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 基本数据类型"/></a><div class="content"><a class="title" href="/2024/11/12/Python/Python3/02.Python3%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="Python3 基本数据类型">Python3 基本数据类型</a><time datetime="2024-11-11T16:00:00.000Z" title="发表于 2024/11/12 00:00:00">2024/11/12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/11/Python/Python3/01.Python3%20%E5%85%A5%E9%97%A8/" title="Python3 入门"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/10.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 入门"/></a><div class="content"><a class="title" href="/2024/11/11/Python/Python3/01.Python3%20%E5%85%A5%E9%97%A8/" title="Python3 入门">Python3 入门</a><time datetime="2024-11-10T16:00:00.000Z" title="发表于 2024/11/11 00:00:00">2024/11/11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/11/hexo/butterfly/05.Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89/" title="Butterfly 主题配置文件（三）"><img src="https://cdn.jsdelivr.net/gh/xindong2020/Mr.DONG-PicBed/hexo/butterfly/cover/04.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Butterfly 主题配置文件（三）"/></a><div class="content"><a class="title" href="/2024/11/11/hexo/butterfly/05.Butterfly%20%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E4%B8%89%EF%BC%89/" title="Butterfly 主题配置文件（三）">Butterfly 主题配置文件（三）</a><time datetime="2024-11-10T16:00:00.000Z" title="发表于 2024/11/11 00:00:00">2024/11/11</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2024 By DONG</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+      
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
