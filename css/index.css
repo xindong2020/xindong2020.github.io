@@ -1336,8 +1336,8 @@ canvas:not(#ribbon-canvas),
   --global-font-size: 14px;
   --global-bg: #fff;
   --font-color: #4c4948;
-  --hr-border: #a4d8fa;
-  --hr-before-color: #80c8f8;
+  --hr-border: #d2ebfd;
+  --hr-before-color: #bfe4fb;
   --search-bg: #f6f8fa;
   --search-input-color: #4c4948;
   --search-a-color: #4c4948;
@@ -3379,13 +3379,6 @@ figure.highlight pre .javascript .function {
   background-position: bottom;
   background-size: cover;
 }
-#footer:before {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--mark-bg);
-  content: '';
-}
 #footer > * {
   position: relative;
   color: var(--light-grey);
@@ -4152,9 +4145,10 @@ figure.highlight pre .javascript .function {
 .container {
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: justify;
 }
 .container a {
-  color: #49b1f5;
+  color: #99a9bf;
 }
 .container a:hover {
   text-decoration: underline;
@@ -4467,7 +4461,7 @@ figure.highlight pre .javascript .function {
 #rightside {
   position: fixed;
   right: -48px;
-  bottom: 40px;
+  bottom: 27px;
   z-index: 100;
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
