@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4973886 */
-  src: url('//at.alicdn.com/t/c/font_4973886_cq8evlslw4g.woff2?t=1752422505939') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4973886_cq8evlslw4g.woff?t=1752422505939') format('woff'),
-       url('//at.alicdn.com/t/c/font_4973886_cq8evlslw4g.ttf?t=1752422505939') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4973886_7sp5kjtcuq.woff2?t=1752508869525') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4973886_7sp5kjtcuq.woff?t=1752508869525') format('woff'),
+       url('//at.alicdn.com/t/c/font_4973886_7sp5kjtcuq.ttf?t=1752508869525') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-python:before {
+  content: "\e767";
 }
 
 .icon-github:before {

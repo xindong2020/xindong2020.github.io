@@ -1,0 +1,736 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python3 入门 | DXQ冬心淇</title><meta name="author" content="DONG"><meta name="copyright" content="DONG"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="[TOC] 一、Python 解释器   Python 是一种高级计算机语言，设计它们的目的是为了方便程序员理解和使用。但严格意义上来说，计算机只能理解一种非常低级的计算机语言，也就是 机器语言。   我们需要设计一种方法，将高级语言翻译成计算机可以执行的机器语言。目前，有两种方法可以实现，分别是 编译器 和 解释器。   使用 编译器 将自身转换成机器语言的高级语言，通常称为 编译型语言；而使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3 入门">
+<meta property="og:url" content="http://xindong2020.github.io/posts/python/python3/01">
+<meta property="og:site_name" content="DXQ冬心淇">
+<meta property="og:description" content="[TOC] 一、Python 解释器   Python 是一种高级计算机语言，设计它们的目的是为了方便程序员理解和使用。但严格意义上来说，计算机只能理解一种非常低级的计算机语言，也就是 机器语言。   我们需要设计一种方法，将高级语言翻译成计算机可以执行的机器语言。目前，有两种方法可以实现，分别是 编译器 和 解释器。   使用 编译器 将自身转换成机器语言的高级语言，通常称为 编译型语言；而使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xindong2020.github.io/img/cover40.jpg">
+<meta property="article:published_time" content="2024-11-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-15T06:20:06.701Z">
+<meta property="article:author" content="DONG">
+<meta property="article:tag" content="Python3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xindong2020.github.io/img/cover40.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python3 入门",
+  "url": "http://xindong2020.github.io/posts/python/python3/01",
+  "image": "http://xindong2020.github.io/img/cover40.jpg",
+  "datePublished": "2024-11-30T16:00:00.000Z",
+  "dateModified": "2025-07-15T06:20:06.701Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "DONG",
+      "url": "http://xindong2020.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="http://xindong2020.github.io/posts/python/python3/01"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"EDP4N8LG9P","apiKey":"3438f8c0406b80c3b5a10fc9091ec01a","indexName":"my-hexo-blog","hitsPerPage":6,"languages":{"input_placeholder":"搜索文章","hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"找到 ${hits} 条结果，耗时 ${time} 毫秒"}},
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: DONG","link":"链接: ","source":"来源: DXQ冬心淇","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python3 入门',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/font.css"><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="web_bg" style="background-image: url(/img/background.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">38</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/posts/hexo/butterfly/"><i class="fa-fw iconfont icon-wangzhan"></i><span> 建站</span></a></li><li><a class="site-page child" href="/posts/"><i class="fa-fw iconfont icon-python"></i><span> Python</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/cover40.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/logo.png" alt="Logo"><span class="site-name">DXQ冬心淇</span></a><a class="nav-page-title" href="/"><span class="site-name">Python3 入门</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/posts/hexo/butterfly/"><i class="fa-fw iconfont icon-wangzhan"></i><span> 建站</span></a></li><li><a class="site-page child" href="/posts/"><i class="fa-fw iconfont icon-python"></i><span> Python</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Python3 入门</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2024-11-30T16:00:00.000Z" title="发表于 2024-12-01 00:00:00">2024-12-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python3/">Python3</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>[TOC]</p>
+<h1>一、Python 解释器</h1>
+<ul>
+<li>
+<p><code>Python</code> 是一种高级计算机语言，设计它们的目的是为了方便程序员理解和使用。但严格意义上来说，计算机只能理解一种非常低级的计算机语言，也就是 <strong>机器语言</strong>。</p>
+</li>
+<li>
+<p>我们需要设计一种方法，将高级语言翻译成计算机可以执行的机器语言。目前，有两种方法可以实现，分别是 <strong>编译器</strong> 和 <strong>解释器</strong>。</p>
+</li>
+<li>
+<p>使用 <strong>编译器</strong> 将自身转换成机器语言的高级语言，通常称为 <strong>编译型语言</strong>；而使用 <strong>解释器</strong> 将自身转换成机器语言的高级语言，称为 <strong>解释型语言</strong>，<code>Python</code> 就是一种解释型编程语言。</p>
+</li>
+<li>
+<p><strong>解释型语言</strong> 由 <strong>解释器</strong> 逐行对源码进行解释，一边解释一边执行，<strong>不会生成可执行程序</strong>。</p>
+</li>
+<li>
+<p><code>Python</code> 官方针对 <strong>不同平台</strong>（例：<code>Windows</code>、<code>MacOS</code>、<code>Linux</code>）开发了不同的解释器，这些解释器必须要遵守同样的语法，识别同样的函数，完成同样的功能。只有这样，同一份代码才能在不同平台上拥有相同的执行结果。</p>
+</li>
+<li>
+<p><code>Python</code> 解析器种类</p>
+<ul>
+<li>
+<p><code>CPython</code>，<code>C</code> 语言开发的解释器，应用广泛的解释器。</p>
+</li>
+<li>
+<p><code>IPython</code>，基于 <code>CPython</code> 的一种 <strong>交互式</strong> 解释器。</p>
+</li>
+<li>
+<p><code>PyPy</code>，基于 <code>Python</code> 语言开发的解释器，解析效率低。</p>
+</li>
+<li>
+<p><code>JPython</code>，运行在 <code>Java</code> 平台的解释器，直接把 <code>Python</code> 代码编译成 <code>Java</code> 字节码执行。</p>
+</li>
+<li>
+<p><code>IronPython</code>，运行在微软 <code>.Net</code> 平台的解释器，直接把 <code>Python</code> 代码编译成 <code>.Net</code> 字节码执行。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 解析器下载</p>
+<ul>
+<li>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span> <code>Download Python 3.11.4</code></p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/01.png" width="666"/>
+</div>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 解析器安装</p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/02.png" width="399"/>
+</div>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/03.png" width="399"/>
+</div>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/04.png" width="399"/>
+</div>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/05.png" width="399"/>
+</div>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/06.png" width="399"/>
+</div>
+</li>
+<li>
+<p>测试安装成功：命令提示符 <code>cmd</code> 中输入 <code>python</code>，出现交互式语言即为安装成功，输入 <code>exit()</code> 退出。</p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/07.png" width="666"/>
+</div>
+</li>
+</ul>
+<h1>二、Python 之禅（Zen of Python）</h1>
+<ul>
+<li>
+<p><code>Python</code> 之禅最早由 <code>Tim Peters</code> 在 <code>Python</code> 邮件列表中发表，它包含了影响 <code>Python</code> 编程语言设计的 <code>19</code> 条软件编写原则。</p>
+</li>
+<li>
+<p>执行 <code>import this</code> 会输出一段文字。</p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/08.png" width="666"/>
+</div>
+<ul>
+<li><code>import</code> 是一个关键字，用来导入模块、包或库，导入后可以使用 <code>.</code> 访问模块、包或库中相应的成员。
+<ul>
+<li>一个 <code>python</code> 文件就是一个模块，在导入模块时，只需要导入模块名（文件名）即可。</li>
+<li>包本质上就是一个文件夹，可以存放模块、子包或其他文件，便于文件管理、分区，避免模块名冲突。</li>
+<li>库一定是包，但是包不一定是库，可以理解为一种特殊的包，即一种功能相对集中的包。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 之禅列出了 <code>Python</code> 设计的原则与哲学，有助于理解与使用这种语言。</p>
+<ul>
+<li>
+<p>优美优于丑陋（<code>Python</code> 以编写优美的代码为目标）</p>
+</li>
+<li>
+<p>明了优于晦涩（优美的代码应当是明了的，命名规范，风格相似）</p>
+</li>
+<li>
+<p>简洁优于复杂（优美的代码应当是简洁的，不要有复杂的内部实现）</p>
+</li>
+<li>
+<p>复杂优于凌乱（如果复杂不可避免，那代码间也不能有难懂的关系，要保持接口简洁）</p>
+</li>
+<li>
+<p>扁平优于嵌套（优美的代码应当是扁平的，不能有太多的嵌套）</p>
+</li>
+<li>
+<p>稀疏优于稠密（优美的代码有适当的间隔，不要奢望一行代码解决问题）</p>
+</li>
+<li>
+<p>可读性很重要（优美的代码是可读的）</p>
+</li>
+<li>
+<p>即便假借特例的实用性之名，也不可违背这些规则（这些规则至高无上）</p>
+</li>
+<li>
+<p>不要包容所有错误，除非你确定需要这样做（精准地捕获异常，不写<br>
+<code>except:pass</code> 风格的代码）</p>
+</li>
+<li>
+<p>面对不确定性，拒绝妄加猜测。</p>
+</li>
+<li>
+<p>任何问题应有一种，且最好只有一种，显而易见的解决方法。</p>
+</li>
+<li>
+<p>尽管这并不容易，除非你是荷兰人（这里的荷兰人 <code>Dutch</code> 是指 <code>Python</code> 之父 <code>Guido van Rossum</code>，生于荷兰哈勒姆）。</p>
+</li>
+<li>
+<p>做优于不做，然而不假思索就做还不如不做。</p>
+</li>
+<li>
+<p>如果你无法向人描述你的方案，那肯定不是一个好方案；反之亦然（方案测评标准）</p>
+</li>
+<li>
+<p>命名空间是个绝妙的理念，我们应该好好利用它。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1>三、行结构、缩进、注释</h1>
+<h2 id="3-1-行结构">3.1 行结构</h2>
+<ul>
+<li>
+<p><code>python</code> 程序中每条语句都以默认换行符结束，无需书写分号 <code>;</code>，例：<code>print(&quot;1234&quot;)</code>。</p>
+</li>
+<li>
+<p>存在可以跨越多行的语句，例：复合语句（函数、序列、条件语句、循环语句等）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dict</span> = &#123;</span><br><span class="line">  <span class="string">&#x27;title&#x27;</span>:<span class="string">&#x27;行者&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;name&#x27;</span> :<span class="string">&#x27;武松&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;num&#x27;</span> : <span class="number">12</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如果要在同一行上放置多条语句，可使用分号 <code>;</code> 隔开。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">123</span>); <span class="built_in">print</span>(<span class="number">456</span>); <span class="built_in">print</span>(<span class="number">789</span>) <span class="comment"># 输出格式如下</span></span><br><span class="line"><span class="comment"># 123</span></span><br><span class="line"><span class="comment"># 456</span></span><br><span class="line"><span class="comment"># 789</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>可以使用续行符（<code>\</code>）将长语句分为几行。</p>
+<ul>
+<li>
+<p>显示的行拼接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> \</span><br><span class="line">       + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span> \</span><br><span class="line">       + <span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span> + <span class="number">5</span> + <span class="number">6</span> + <span class="number">7</span> + <span class="number">8</span> + <span class="number">9</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>隐式的行拼接：<strong>圆括号</strong> <code>()</code>、<strong>方括号</strong> <code>[]</code> 和 <strong>花括号</strong> <code>&#123;&#125;</code> 内部的多行语句，无需使用续行符（<code>\</code>），可以自动实现行拼接。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">numbers = [<span class="string">&quot;one&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="string">&quot;three&quot;</span>, <span class="string">&quot;four&quot;</span>, <span class="string">&quot;five&quot;</span>, </span><br><span class="line">           <span class="string">&quot;six&quot;</span>, <span class="string">&quot;seven&quot;</span>, <span class="string">&quot;eight&quot;</span>, <span class="string">&quot;nine&quot;</span>, <span class="string">&quot;ten&quot;</span></span><br><span class="line">           <span class="string">&quot;eleven&quot;</span>, <span class="string">&quot;twelve&quot;</span>, <span class="string">&quot;thirteen&quot;</span>, <span class="string">&quot;fourteen&quot;</span>, <span class="string">&quot;fifteen&quot;</span>,</span><br><span class="line">           <span class="string">&quot;sixteen&quot;</span>, <span class="string">&quot;seventeen&quot;</span>, <span class="string">&quot;eighteen&quot;</span>, <span class="string">&quot;nineteen&quot;</span>, <span class="string">&quot;twenty&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(numbers) <span class="comment"># [&#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;, &#x27;four&#x27;, &#x27;five&#x27;, &#x27;six&#x27;, &#x27;seven&#x27;, &#x27;eight&#x27;, &#x27;nine&#x27;, &#x27;teneleven&#x27;, &#x27;twelve&#x27;, &#x27;thirteen&#x27;, &#x27;fourteen&#x27;, &#x27;fifteen&#x27;, &#x27;sixteen&#x27;, &#x27;seventeen&#x27;, &#x27;eighteen&#x27;, &#x27;nineteen&#x27;, &#x27;twenty&#x27;]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-2-缩进">3.2 缩进</h2>
+<ul>
+<li>
+<p>每条语句开头处的空白被用来计算该行的缩进等级，以决定语句段落的组织结构。</p>
+</li>
+<li>
+<p>不正确的缩进会导致程序的逻辑不对，甚至报错。</p>
+</li>
+<li>
+<p>缩进常用于标示不同的代码块，如：函数体、条件语句、循环语句和类等。</p>
+</li>
+<li>
+<p>每条语句的缩进量是任意的（常用 <code>4</code> 个空格，即单个 <code>Tab</code> 键），但是同一个代码块中的缩进量必须保持一致。</p>
+</li>
+</ul>
+<h2 id="3-3-python-注释">3.3 Python 注释</h2>
+<ul>
+<li>
+<p>注释在 <code>Python</code> 解释器的语法分析中会被忽略，即在程序运行过程中会被忽略，对程序不产生影响。</p>
+</li>
+<li>
+<p>作用：</p>
+<ul>
+<li>
+<p>对代码进行解释和说明，提高程序的可读性。</p>
+</li>
+<li>
+<p>暂时注释掉某一段代码，不执行。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 中的注释有 <strong>单行注释</strong> 和 <strong>多行注释</strong>。</p>
+<ul>
+<li>
+<p><code>Python</code> 中单行注释以 <code>#</code> 开头，<code>PyCharm</code> 快捷键 <code>Ctrl + /</code>。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是单行注释</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>多行注释用三个单引号 <code>'''</code> 或者三个双引号 <code>&quot;&quot;&quot;</code> 将注释括起来，常用于代码块注释。例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">多行注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1>四、静\动态、强\弱类型语言</h1>
+  <div align=center>
+    <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/09.png" width="399"/>
+  </div>
+<h2 id="4-1-静-动态类型语言">4.1 静、动态类型语言</h2>
+<ul>
+<li>
+<p><strong>静态类型</strong> 的编程语言指的是在创建一份数据（变量、参数、返回值等）时需要 <strong>显式</strong> 指明该数据的类型。通常情况下，这些数据的类型一旦被定义，在程序的整个生命周期也不再改变。</p>
+<ul>
+<li>静态类型的编程语言有很多，常见的有 <code>C/C++</code>、<code>Java</code>、<code>C#</code>、<code>Go</code> 等。</li>
+</ul>
+</li>
+<li>
+<p><strong>动态类型</strong> 的编程语言在创建数据时往往不需要指明该数据的类型，而且数据的类型也会 <strong>随着值的改变而改变</strong>，给数据赋予不同的值，数据将得到不同的类型。</p>
+<ul>
+<li>
+<p>动态类型的编程语言会根据赋予数据的值进行猜测或者推断该数据的类型。</p>
+</li>
+<li>
+<p>常见的动态类型语言有 <code>JavaScript</code>、<code>PHP</code>、<code>Python</code>、<code>Ruby</code> 等。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>一般而言，在 <strong>编译期</strong> 就确定变量类型的是 <strong>静态类型语言</strong>，在 <strong>运行期</strong> 才确定变量类型的则是 <strong>动态类型语言</strong>。</p>
+</li>
+<li>
+<p><strong>静态语言</strong> 为我们提供了一个更加严格的编程环境，并且通常会生成更加健壮的代码。<strong>动态语言</strong> 为编写代码带来了灵活性，同时也提高了编写代码的效率，但是如果你不注意数据的类型，可能就会导致代码更容易出错。</p>
+</li>
+</ul>
+<h2 id="4-2-强-弱类型语言">4.2 强、弱类型语言</h2>
+<ul>
+<li>
+<p><strong>强</strong>、<strong>弱类型指的是编程语言如何处理运算过程中的值</strong>。当值的类型 <strong>不符合运算规则</strong> 时，编程语言究竟是做出一些猜测，临时转换值的类型以帮助人们解决问题，还是停止运行，提醒人们不应该这样做。</p>
+</li>
+<li>
+<p>对于 “强弱类型” 概念，它的核心问题是 “<strong>不同类型的变量是否允许隐式转化</strong>”。</p>
+</li>
+<li>
+<p><strong>强类型语言</strong> 的典型特征：它们不会处理与数据类型定义明显矛盾的运算，而是把它标记为一个语法错误，并且停止程序运行，将错误抛出。</p>
+<ul>
+<li>通常人们认为 <code>Java</code>、<code>C#</code>、<code>Python</code>、<code>Go</code> 都是强类型语言。</li>
+</ul>
+</li>
+<li>
+<p>和强类型语言不一样，当我们执行一些与类型定义不匹配的运算时，<strong>弱类型语言</strong> 尝试提供帮助，它可能会对其中一些值的类型进行转换，让它符合当前运算。</p>
+</li>
+</ul>
+<h1>五、Python 变量与常量</h1>
+<h2 id="5-1-python-变量的定义">5.1 Python 变量的定义</h2>
+<ul>
+<li>
+<p>变量就是可以变化的量。</p>
+</li>
+<li>
+<p>变量需要 <strong>先定义再使用</strong>，解释器执行到变量定义的代码时会申请 <strong>内存空间</strong> 存放 <strong>变量值</strong>，然后将变量值的 <strong>内存地址</strong> 绑定给 <strong>变量名</strong>。</p>
+</li>
+<li>
+<p>变量名是存储数据的一块内存地址的 <strong>别名</strong>。</p>
+<ul>
+<li>变量 <strong>存储</strong> 的只是一个变量的值所在的 <strong>内存地址</strong>，而不是这个变量的 <strong>值本身</strong>。</li>
+</ul>
+</li>
+<li>
+<p>每个变量都拥有 <strong>独一无二</strong> 的名字，通过变量的名字就能找到变量中的数据。</p>
+</li>
+<li>
+<p>变量存储的数据是 <strong>临时</strong> 的。</p>
+</li>
+</ul>
+<h2 id="5-2-python-变量的赋值">5.2 Python 变量的赋值</h2>
+<ul>
+<li>
+<p>将数据放入变量的过程就叫做 <strong>赋值</strong>。</p>
+<ul>
+<li>
+<p><code>Python</code> 使用等号 <code>=</code> 作为赋值运算符，用来将变量值的内存地址绑定给变量名，格式：<code>name = value</code>。</p>
+<ul>
+<li>其中 <code>name</code> 表示变量名，<code>value</code> 表示变量值，也就是内存地址对应存储的数据。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>变量的值可以随时被修改，只要重新赋值即可，可以将不同类型的数据赋值给同一个变量。</p>
+</li>
+<li>
+<p><strong>变量名要遵守</strong> <code>Python</code> <strong>标识符命名规范</strong>，<strong>还要避免和</strong> <code>Python</code> <strong>内置函数及</strong> <code>Python</code> <strong>保留字重名</strong>。</p>
+</li>
+<li>
+<p><strong>标识符</strong> 主要作用是作为变量、函数、类、模块及其他对象的名称，<code>Python</code> 标识符命名规范：</p>
+<ul>
+<li>
+<p>标识符是由字母（<code>A ~ Z</code> 和 <code>a ~ z</code>）、数字和下划线（<code>_</code>）组成。</p>
+</li>
+<li>
+<p>标识符第一个字符不能是数字。</p>
+</li>
+<li>
+<p>标识符不能与 <code>Python</code> 中的 <strong>保留字</strong>（报错）和 <strong>内置函数名</strong>（不报错）相同。</p>
+</li>
+<li>
+<p>标识符严格区分大小写。</p>
+</li>
+<li>
+<p>以下划线开头的标识符通常有特殊含义，例：</p>
+<ul>
+<li>
+<p>以 <strong>单下划线开头</strong> 的标识符（例：<code>_width</code>）表示不能直接访问的 <strong>类属性</strong>，其无法通过 <code>from ... import *</code> 的方式导入。</p>
+</li>
+<li>
+<p>以 <strong>双下划线开头</strong> 的标识符（例：<code>__add</code>）表示 <strong>类的私有成员</strong>。</p>
+</li>
+<li>
+<p>以 <strong>双下划线开头和结尾</strong> 的标识符（例：<code>__init__</code>），是 <strong>专用标识符</strong>。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 变量的 <strong>命名习惯</strong>：</p>
+<ul>
+<li>
+<p><code>Python</code> 变量命名一定要做到 <strong>见名知义</strong>。</p>
+</li>
+<li>
+<p>当标识符用作 <strong>模块名</strong> 或 <strong>包名</strong> 时，应全部使用小写字母，尽量不使用下划线。</p>
+</li>
+<li>
+<p>当标识符用作 <strong>类名</strong> 时，应采用单词首字母大写的形式（<strong>大驼峰</strong>）。</p>
+</li>
+<li>
+<p>当标识符用作 <strong>函数名</strong> 或 <strong>变量名</strong> 时，应全部使用小写字母，多个单词之间使用下划线分割。</p>
+<ul>
+<li>也可采用第一个单词首字母小写，其余单词首字母大写的形式（<strong>小驼峰</strong>）。</li>
+</ul>
+</li>
+<li>
+<p>当标识符用作 <strong>常量</strong> 时，应全部使用大写字母，多个单词之间使用下划线分割。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-3-引用计数">5.3 引用计数</h2>
+<ul>
+<li>
+<p>在一些代码中，如果存在一些变量但是没有用，会造成内存空间，因此叫做垃圾，所以要回收。</p>
+</li>
+<li>
+<p>引用计数是一种最直观，最简单的垃圾收集技术。原理非常简单，每一个对象都包含了两个头部信息，一个是 <strong>类型标志符</strong>，标识这个对象的类型；另一个是 <strong>计数器</strong>，记录当前指向该对象的引用数目，表示这个对象被多少个变量名所引用。</p>
+</li>
+<li>
+<p><code>CPython</code> 使用引用计数来管理内存，所有 <code>Python</code> 脚本中创建的实例，都会有一个引用计数，来记录有多少个指针指向它。当引用计数只有 <code>0</code> 时，则会自动释放内存。</p>
+</li>
+<li>
+<p>引用计数是用来记录对象被引用的次数，每当对象被创建或者被引用时将该对象的引用次数加一，当对象的引用被销毁时该对象的引用次数减一，当对象的引用次数减到零时说明程序中已经没有任何对象持有该对象的引用，换言之就是在以后的程序运行中不会再次使用到该对象了，那么其所占用的空间也就可以被释放了了。</p>
+<ul>
+<li>
+<p>引用计数 <strong>增加</strong> 的场景：</p>
+<ul>
+<li>
+<p>对象被创建并赋值给某个变量，例：<code>a = 'ABC'</code>。</p>
+</li>
+<li>
+<p>变量间的相互引用（相当于变量指向了同一个对象），例：<code>b=a</code>。</p>
+</li>
+<li>
+<p>变量作为参数传到函数中。例：<code>ref_method(a)</code>。</p>
+</li>
+<li>
+<p>将对象放到某个容器对象中（列表、元组、字典）。比如：<code>c = [1, a, 'abc']</code>。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>引用计数 <strong>减少</strong> 的场景：</p>
+<ul>
+<li>
+<p>当一个变量离开了作用域，例：函数执行完成时，执行函数前后的引用计数保持不变，这就是因为函数执行完后，对象的引用计数也会减少，如果在函数内打印，则能看到引用计数增加的效果。</p>
+</li>
+<li>
+<p>对象的引用变量被销毁时，例：<code>del a</code> 或 <code>del b</code>。注：如果 <code>del a</code>，再去获取 <code>a</code> 的引用计数会直接报错。</p>
+</li>
+<li>
+<p>对象被从容器对象中移除，例：<code>c.remove(a)</code>。</p>
+</li>
+<li>
+<p>直接将整个容器销毁，例：<code>del c</code></p>
+</li>
+<li>
+<p>对象的引用被赋值给其他对象，相当于变量不指向之前的对象，而是指向了一个新的对象。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-4-python-常量">5.4 Python 常量</h2>
+<ul>
+<li>
+<p>变量是变化的量，常量则是不变的量。</p>
+</li>
+<li>
+<p><code>Python</code> 中没有使用语法强制定义常量，也就是说，<code>Python</code> 中定义常量 <strong>本质上</strong> 就是 <strong>变量</strong>。</p>
+</li>
+<li>
+<p>如果非要定义常量，<strong>变量名</strong> 必须 <strong>全大写</strong>。并且 <code>Python</code> 只制定了一个规范，即常量的值 <strong>不应该</strong> 被更改，但 <strong>不是不可以</strong> 更改，而没指定常量的语法，因此常量也是可以修改的，但不建议。</p>
+</li>
+</ul>
+<h1>六、Python 保留字和内置函数</h1>
+<h2 id="6-1-python-保留字">6.1 Python 保留字</h2>
+<ul>
+<li>
+<p><strong>保留字</strong>（关键字）是 <code>Python</code> 语言中一些已经被官方赋予特定意义的单词，所以不能使用这些保留字作为标识符给变量、函数、类、模块及其他对象命名。</p>
+<ul>
+<li>
+<p>可以在 <code>keyword</code> 模块，即 <code>keyword.py</code> 文件中查询到保留字。</p>
+<ul>
+<li>
+<p>可以通过 <code>print(keyword.kwlist)</code> 打印保留字列表，需要导入 <code>keyword</code> 模块（<code>import keyword</code>）。演示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keyword</span><br><span class="line"><span class="built_in">print</span>(keyword.kwlist) <span class="comment"># [&#x27;False&#x27;, &#x27;None&#x27;, &#x27;True&#x27;, &#x27;and&#x27;, &#x27;as&#x27;, &#x27;assert&#x27;, &#x27;async&#x27;, &#x27;await&#x27;, &#x27;break&#x27;, &#x27;class&#x27;, &#x27;continue&#x27;, &#x27;def&#x27;, &#x27;del&#x27;, &#x27;elif&#x27;, &#x27;else&#x27;, &#x27;except&#x27;, &#x27;finally&#x27;, &#x27;for&#x27;, &#x27;from&#x27;, &#x27;global&#x27;, &#x27;if&#x27;, &#x27;import&#x27;, &#x27;in&#x27;, &#x27;is&#x27;, &#x27;lambda&#x27;, &#x27;nonlocal&#x27;, &#x27;not&#x27;, &#x27;or&#x27;, &#x27;pass&#x27;, &#x27;raise&#x27;, &#x27;return&#x27;, &#x27;try&#x27;, &#x27;while&#x27;, &#x27;with&#x27;, &#x27;yield&#x27;]</span></span><br></pre></td></tr></table></figure>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/10.png" width="666"/>
+</div>
+</li>
+<li>
+<p>可以直接通过 <code>help(&quot;keywords&quot;)</code> 打印保留字列表，无需导入 <code>keyword</code> 模块。演示：</p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/11.png" width="666"/>
+</div>
+<ul>
+<li>内置函数 <code>help()</code> 中实现了 <code>print</code> 函数，已经具备打印功能，如果 <code>print(help(&quot;keywords&quot;))</code> 会打印 <code>None</code>，因为 <code>help()</code> 函数没有返回值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Python</code> 中一共有 <code>35</code> 个保留字，如下表所示：</p>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/12.png" width="520"/>
+</div>
+<ul>
+<li>注：<code>Python</code> 严格区分大小写，保留字也不例外。所以，<code>False</code> 是保留字，但 <code>false</code> 不是保留字。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-2-python-内置函数">6.2 Python 内置函数</h2>
+<ul>
+<li>
+<p><strong>内置函数</strong> 是 <code>Python</code> 解释器自带的函数，这些函数由官方在 <code>builtins</code> 模块中定义，可以被直接使用，不需要导入某个模块。只需了解函数的功能，学会使用即可，无需了解函数具体实现。</p>
+<ul>
+<li>
+<p><code>python</code> 中所有内置函数都被定义在 <code>builtins</code> 模块中。可以通过下面代码查看 <code>Python</code> 的内置函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> builtins</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">dir</span>(builtins))</span><br></pre></td></tr></table></figure>
+<div align=center>
+  <img src="https://fastly.jsdelivr.net/gh/xindong2020/Mr.DONG_PicBed/Python/01/13.png" width="666"/>
+</div>
+<ul>
+<li>
+<p><code>dir()</code> 函数不带参数时，返回 <code>dir</code> 所在作用域内所有 <strong>属性</strong> 和 <strong>方法名</strong> 组成的 <strong>已排序</strong> 的字符串列表。返回的列表按字母表排序（按照 <code>ASCII</code> 码）</p>
+</li>
+<li>
+<p><code>dir(object)</code> 函数带参数 <code>object</code> 时，返回给定 <code>object</code> 自身所具备的 <strong>属性</strong> 和 <strong>方法名</strong> 组成的已排序的字符串列表。返回的列表按字母表排序（按照 <code>ASCII</code> 码）</p>
+<ul>
+<li>如果给定的 <code>object</code> 中包含 <code>__dir__()</code> 方法，该方法将被调用。</li>
+</ul>
+</li>
+<li>
+<p><code>builtins</code> 模块中使用 <code>def</code> 定义的为 <strong>函数</strong>，使用 <code>class</code> 定义的是一种 <strong>内置类型</strong>。</p>
+</li>
+<li>
+<p>不要使用内置函数作为标识符，虽然这样做 <code>Python</code> 解释器不会报错，但这会导致同名的内置函数被覆盖，从而无法使用。</p>
+</li>
+<li>
+<p><code>builtins</code> 模块中不仅内置了函数，还内置了类型。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://xindong2020.github.io">DONG</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://xindong2020.github.io/posts/python/python3/01">http://xindong2020.github.io/posts/python/python3/01</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://xindong2020.github.io" target="_blank">DXQ冬心淇</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python3/">Python3</a></div><div class="post-share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_wechat"></a><a class="a2a_button_sina_weibo"></a><a class="a2a_button_facebook_messenger"></a><a class="a2a_button_email"></a><a class="a2a_button_copy_link"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/posts/python/python3/02" title="python3"><img class="cover" src="/img/cover41.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">python3</div></div></div></a><a class="pagination-related  no-desc" href="/posts/python/python3/02" title="Python3 基本数据类型"><img class="cover" src="/img/cover15.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Python3 基本数据类型</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related no-desc" href="/posts/python/python3/13" title="Python3 面向对象编程（上）"><img class="cover" src="/img/cover17.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-13</div><div class="info-item-2">Python3 面向对象编程（上）</div></div></div></a><a class="pagination-related no-desc" href="/posts/python/python3/04" title="Python3 序列（字符串）"><img class="cover" src="/img/cover30.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-04</div><div class="info-item-2">Python3 序列（字符串）</div></div></div></a><a class="pagination-related no-desc" href="/posts/python/python3/06" title="Python3 浅拷贝和深拷贝"><img class="cover" src="/img/cover17.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-06</div><div class="info-item-2">Python3 浅拷贝和深拷贝</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">DONG</div><div class="author-info-description">冬心淇</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">38</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xindong2020"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/xindong2020" target="_blank" title="Github"><i class="iconfont icon-github"></i></a><a class="social-icon" href="mailto:641743220@qq.com" target="_blank" title="Email"><i class="iconfont icon-icon-email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到冬心淇的秘密基地</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、Python 解释器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Python 之禅（Zen of Python）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、行结构、缩进、注释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%A1%8C%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 行结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E7%BC%A9%E8%BF%9B"><span class="toc-text">3.2 缩进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-python-%E6%B3%A8%E9%87%8A"><span class="toc-text">3.3 Python 注释</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、静\动态、强\弱类型语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E9%9D%99-%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80"><span class="toc-text">4.1 静、动态类型语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E5%BC%BA-%E5%BC%B1%E7%B1%BB%E5%9E%8B%E8%AF%AD%E8%A8%80"><span class="toc-text">4.2 强、弱类型语言</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、Python 变量与常量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-python-%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">5.1 Python 变量的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-python-%E5%8F%98%E9%87%8F%E7%9A%84%E8%B5%8B%E5%80%BC"><span class="toc-text">5.2 Python 变量的赋值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="toc-text">5.3 引用计数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-python-%E5%B8%B8%E9%87%8F"><span class="toc-text">5.4 Python 常量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、Python 保留字和内置函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-python-%E4%BF%9D%E7%95%99%E5%AD%97"><span class="toc-text">6.1 Python 保留字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-python-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="toc-text">6.2 Python 内置函数</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/13" title="Python3 面向对象编程（上）"><img src="/img/cover17.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 面向对象编程（上）"></a><div class="content"><a class="title" href="/posts/python/python3/13" title="Python3 面向对象编程（上）">Python3 面向对象编程（上）</a><time datetime="2024-12-12T16:00:00.000Z" title="发表于 2024-12-13 00:00:00">2024-12-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/11" title="Python3 函数（下）"><img src="/img/cover08.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 函数（下）"></a><div class="content"><a class="title" href="/posts/python/python3/11" title="Python3 函数（下）">Python3 函数（下）</a><time datetime="2024-12-10T16:00:00.000Z" title="发表于 2024-12-11 00:00:00">2024-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/10" title="Python3 函数（上）"><img src="/img/cover23.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 函数（上）"></a><div class="content"><a class="title" href="/posts/python/python3/10" title="Python3 函数（上）">Python3 函数（上）</a><time datetime="2024-12-09T16:00:00.000Z" title="发表于 2024-12-10 00:00:00">2024-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/09" title="Python3 推导式 &amp; random 模块"><img src="/img/cover05.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 推导式 &amp; random 模块"></a><div class="content"><a class="title" href="/posts/python/python3/09" title="Python3 推导式 &amp; random 模块">Python3 推导式 &amp; random 模块</a><time datetime="2024-12-08T16:00:00.000Z" title="发表于 2024-12-09 00:00:00">2024-12-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/08" title="Python3 迭代问题"><img src="/img/cover36.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 迭代问题"></a><div class="content"><a class="title" href="/posts/python/python3/08" title="Python3 迭代问题">Python3 迭代问题</a><time datetime="2024-12-07T16:00:00.000Z" title="发表于 2024-12-08 00:00:00">2024-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/07" title="Python3 流程控制"><img src="/img/cover38.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 流程控制"></a><div class="content"><a class="title" href="/posts/python/python3/07" title="Python3 流程控制">Python3 流程控制</a><time datetime="2024-12-06T16:00:00.000Z" title="发表于 2024-12-07 00:00:00">2024-12-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/06" title="Python3 浅拷贝和深拷贝"><img src="/img/cover17.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 浅拷贝和深拷贝"></a><div class="content"><a class="title" href="/posts/python/python3/06" title="Python3 浅拷贝和深拷贝">Python3 浅拷贝和深拷贝</a><time datetime="2024-12-05T16:00:00.000Z" title="发表于 2024-12-06 00:00:00">2024-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/05" title="Python3 字典和集合"><img src="/img/cover27.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 字典和集合"></a><div class="content"><a class="title" href="/posts/python/python3/05" title="Python3 字典和集合">Python3 字典和集合</a><time datetime="2024-12-04T16:00:00.000Z" title="发表于 2024-12-05 00:00:00">2024-12-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/04" title="Python3 序列（字符串）"><img src="/img/cover30.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 序列（字符串）"></a><div class="content"><a class="title" href="/posts/python/python3/04" title="Python3 序列（字符串）">Python3 序列（字符串）</a><time datetime="2024-12-03T16:00:00.000Z" title="发表于 2024-12-04 00:00:00">2024-12-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/03" title="Python3 序列（列表、元组）"><img src="/img/cover07.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 序列（列表、元组）"></a><div class="content"><a class="title" href="/posts/python/python3/03" title="Python3 序列（列表、元组）">Python3 序列（列表、元组）</a><time datetime="2024-12-02T16:00:00.000Z" title="发表于 2024-12-03 00:00:00">2024-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/02" title="Python3 基本数据类型"><img src="/img/cover15.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 基本数据类型"></a><div class="content"><a class="title" href="/posts/python/python3/02" title="Python3 基本数据类型">Python3 基本数据类型</a><time datetime="2024-12-01T16:00:00.000Z" title="发表于 2024-12-02 00:00:00">2024-12-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/python/python3/01" title="Python3 入门"><img src="/img/cover40.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python3 入门"></a><div class="content"><a class="title" href="/posts/python/python3/01" title="Python3 入门">Python3 入门</a><time datetime="2024-11-30T16:00:00.000Z" title="发表于 2024-12-01 00:00:00">2024-12-01</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/cpp/08" title="C++ 指针 &amp; 引用"><img src="/img/cover45.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 指针 &amp; 引用"/></a><div class="content"><a class="title" href="/posts/cpp/08" title="C++ 指针 &amp; 引用">C++ 指针 &amp; 引用</a><time datetime="2025-02-25T16:00:00.000Z" title="发表于 2025-02-26 00:00:00">2025-02-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/cpp/07" title="C++ 函数"><img src="/img/cover18.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 函数"/></a><div class="content"><a class="title" href="/posts/cpp/07" title="C++ 函数">C++ 函数</a><time datetime="2025-02-24T16:00:00.000Z" title="发表于 2025-02-25 00:00:00">2025-02-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/cpp/06" title="C++ 程序流程结构"><img src="/img/cover40.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 程序流程结构"/></a><div class="content"><a class="title" href="/posts/cpp/06" title="C++ 程序流程结构">C++ 程序流程结构</a><time datetime="2025-02-23T16:00:00.000Z" title="发表于 2025-02-24 00:00:00">2025-02-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/cpp/05" title="C++ 数组 &amp; 字符串"><img src="/img/cover16.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 数组 &amp; 字符串"/></a><div class="content"><a class="title" href="/posts/cpp/05" title="C++ 数组 &amp; 字符串">C++ 数组 &amp; 字符串</a><time datetime="2025-02-22T16:00:00.000Z" title="发表于 2025-02-23 00:00:00">2025-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/cpp/04" title="C++ 运算符"><img src="/img/cover23.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 运算符"/></a><div class="content"><a class="title" href="/posts/cpp/04" title="C++ 运算符">C++ 运算符</a><time datetime="2025-02-21T16:00:00.000Z" title="发表于 2025-02-22 00:00:00">2025-02-22</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2024 - 2025 By DONG</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'xindong2020/xindong2020.github.io',
+      'data-repo-id': 'R_kgDOPLvJQw',
+      'data-category-id': 'DIC_kwDOPLvJQ84Cs7sp',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      'data-lang': 'zh-CN',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/lite/builds/browser.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js"></script></div></div></body></html>
