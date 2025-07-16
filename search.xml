@@ -505,22 +505,22 @@
     
     <entry>
       <title>python3</title>
-      <link href="/posts/python/python3/02.html"/>
-      <url>/posts/python/python3/02.html</url>
+      <link href="/posts/python/python3/index.html"/>
+      <url>/posts/python/python3/index.html</url>
       
         <content type="html"><![CDATA[<ul><li><a href="01.html">01.python3 入门</a></li><li><a href="02.html">02.python3 基本数据类型</a></li><li><a href="03.html">03.python3 序列（列表、元组）</a></li><li><a href="04.html">04.python3 序列（字符串）</a></li><li><a href="05.html">05 python3 字典和集合</a></li><li><a href="06.html">06.python3 浅拷贝和深拷贝</a></li><li><a href="07.html">07.python3 流程控制</a></li><li><a href="08.html">08.python3 迭代问题</a></li><li><a href="09.html">09.python3 推导式 &amp; random模块</a></li><li><a href="10.html">10.Python3 函数（上）</a></li><li><a href="11.html">11.Python3 函数（下）</a></li></ul>]]></content>
       
       
       <categories>
           
-          <category> Python </category>
+          <category> Python3 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Python </tag>
+            <tag> Python3 </tag>
             
         </tags>
       
